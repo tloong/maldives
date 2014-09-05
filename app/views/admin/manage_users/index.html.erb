@@ -1,0 +1,35 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h1 class="panel-title">Users</h1>
+  </div>
+ <%= link_to 'All users', :action => "index" ,:class => "btn btn-primary btn-sm"%>
+  <%= link_to 'Users waiting approval', {:action => "index", :approved => "false"} , {:class => "btn btn-primary btn-sm"} %>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>使用者email</th>
+          <th>使用者認証?</th>
+          <th>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= notice_message %>
+        <% @users.each do |user| %>
+        <tr>
+          <td> <%= user.email %> </td>
+          <td> <%= user.approved %> </td>
+          <td> <%= link_to "Edit", "#" %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="pull-left" style="padding-bottom: 20px;">
+    <br>
+    <%= link_to '回上頁', :back ,:class => "btn btn-primary btn-sm"%>
+  </div>
+
+</div>

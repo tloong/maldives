@@ -1,0 +1,24 @@
+<h2> 資產列表 </h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>資產編號</th>
+      <th>資產名稱</th>
+      <th>規格</th>
+      <th>數量</th>
+      <th>所屬部門</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fixedassets.each do |fixedasset| %>
+    <tr>
+      <td> <%= link_to(fixedasset.fixed_asset_id, fixedasset_path(fixedasset))  %>
+      <%= link_to("[修改]", edit_fixedasset_path(fixedasset)) %></td>
+      <td> <%= link_to(fixedasset.name, fixedasset_path(fixedasset)) %> </td>
+      <td> <%= fixedasset.spec %> </td>
+      <td> <%= fixedasset.quantity %> <%= fixedasset.unit %> </td>
+      <td> <%= "#{fixedasset.department.dep_id} #{fixedasset.department.alias}" %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

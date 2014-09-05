@@ -1,0 +1,10 @@
+<div class="nested-fields">
+<%= f.input :name, label: '聯絡人姓名' %>
+<%= f.input :email, label: 'Email' %>
+<%= f.input :phone, label: '電話1' %>
+<%= f.input :phone2, label: '電話2' %>
+<%= f.input :phone3, label: '電話3' %>
+<%= f.input :_destroy, as: :hidden %>
+  &nbsp;&nbsp;&nbsp;
+<%= link_to_remove_association "移除聯絡人", f %>
+</div>

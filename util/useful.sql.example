@@ -1,0 +1,3 @@
+Fixedasset.joins(:fixedasset_redepreciation).select(:department_id,:id, "sum(re_original_value) as oc","sum(original_cost) as occ").where("category_id=3 and status<6").group(:department_id)
+
+Fixedasset.select(:department_id).where("ab_type='A' and status < 6").distinct

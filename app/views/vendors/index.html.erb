@@ -1,0 +1,38 @@
+<h2> 廠商列表 </h2>
+<div><%= will_paginate @vendors, renderer: BootstrapPagination::Rails %></div>
+<div><%= page_entries_info @vendors, renderer:  BootstrapPagination::Rails %></div>
+<%= search_form_for @q , :class => "navbar-form navbar-left" do |f| %>
+  <div class="form-group">
+  <%= f.search_field :name_cont, {:class=>"form-control",   :placeholder =>"搜尋廠商名稱"}%>
+  </div>
+  <button type="submit" class="btn btn-default btn-sm">Submit</button>
+<% end %>
+<div class="pull-right" style="padding-bottom: 20px;">
+  <%= link_to("新增廠商", new_vendor_path, :class => "btn btn-primary btn-sm") %>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>廠商編號</th>
+      <th>廠商名稱</th>
+      <th>廠商電話</th>
+      <th>聯絡人</th>
+      <th>地址</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= notice_message %>
+    <% @vendors.each do |vendor| %>
+    <tr>
+      <td> <%= vendor.id.to_s.rjust(4,'0') %></td>
+      <td> 
+        <%= link_to(vendor.alias, vendor_path(vendor)) %>
+        <%= link_to("[修改]", edit_vendor_path(vendor)) %>
+      </td>
+      <td><%= vendor.vendor_contacts.first.phone if vendor.vendor_contacts.first%></td>
+      <td><%= vendor.vendor_contacts.first.name if vendor.vendor_contacts.first%></td>
+      <td><%= vendor.vendor_addresses.first.building_and_street if vendor.vendor_addresses.first%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

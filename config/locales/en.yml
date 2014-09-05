@@ -1,0 +1,57 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+  enums:
+    fixedasset:
+      status:
+        in_use: 正常折舊使用中
+        in_use_exteneded: 續提折舊使用中
+        depreciated_done: 已折舊完成
+        in_use_mortgaged: 正常折舊使用中(抵押)
+        in_use_extended_mortgaged: 續提折舊使用中(抵押)
+        depreciation_mortgaged: 已折舊完成(抵押)
+        is_scrapped: 已報廢
+        is_sold: 已出售
+    vendor_address:
+      address_type:
+        company: 公司地址
+        factory: 工廠地址
+    vendor:
+      payment_location:
+        banqiao: 板橋總公司
+        taoyuan: 桃園廠
+        zhanghua: 彰化廠
+      payment_type:
+        draw_money: 領款
+        send_ty_post: 郵寄
+      payment_time:
+        regular: 定期
+        in_normal_time: 平時
+      notification_method:
+        not_notify: 不通知
+        fax: 傳真
+        phone: 電話
+        email: 電子郵件
+
+
+  

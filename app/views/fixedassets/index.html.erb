@@ -1,0 +1,49 @@
+<div><%= will_paginate @fixedassets, renderer: BootstrapPagination::Rails %></div>
+<div><%= page_entries_info @fixedassets, renderer:  BootstrapPagination::Rails %></div>
+<%= search_form_for @q , :class => "navbar-form navbar-left" do |f| %>
+  <div class="form-group">
+  <%= f.search_field :fixed_asset_id_or_name_cont, {:class=>"form-control",   :placeholder =>"搜尋資產名稱"}%>
+  </div>
+  <button type="submit" class="btn btn-default btn-sm">Submit</button>
+<% end %>
+<div class="pull-right" style="padding-bottom: 20px;">
+  <%= link_to("新增資產", new_fixedasset_path, :class => "btn btn-primary btn-sm") %>
+</div>
+<br>
+<br>
+<br>
+
+<div class="tabbable tabs-left">
+<ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#tab1" data-toggle="tab">所有資產</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <h2> 資產列表 </h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>資產編號</th>
+            <th>資產名稱</th>
+            <th>規格</th>
+            <th>數量</th>
+            <th>所屬部門</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @fixedassets.each do |fixedasset| %>
+          <tr>
+            <td> <%= link_to(fixedasset.fixed_asset_id, fixedasset_path(fixedasset))  %>
+            <%= link_to("[修改]", edit_fixedasset_path(fixedasset)) %></td>
+            <td> <%= link_to(fixedasset.name, fixedasset_path(fixedasset)) %> </td>
+            <td> <%= fixedasset.spec %> </td>
+            <td> <%= fixedasset.quantity %> <%= fixedasset.unit %> </td>
+            <td> <%= "#{fixedasset.department.dep_id} #{fixedasset.department.alias}" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>

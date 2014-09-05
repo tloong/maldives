@@ -1,0 +1,61 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h2 class="panel-title">編輯廠商</h2>
+  </div>
+<%= simple_form_for [ @vendor ] , :html => { :class => 'form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+<div class="panel-body">
+  <div class="col-sm-6">
+    <legend> 廠商基本資料 </legend>
+    <%= f.input :name, label: '客戶名稱'%>
+    <%= f.input :alias, label: '客戶簡稱'%>
+    <%= f.input :pic_name, label: '負責人姓名'%>
+    <%= f.input :fax, label: '傳真'%>
+    <%= f.input :vat_id, label: '統編', as: :integer %>
+    <%= f.input :product_type, label: '產品類別'%>
+    <%= f.input :main_business, label: '主要產品'%>
+    <legend> 聯絡人資料 </legend>
+    <%= f.simple_fields_for :vendor_contacts do |c| %>
+      <% render 'vendor_contact_fields', f: c %>
+    <% end %>
+    <div>
+      <%= link_to_add_association '新增聯絡人', f, :vendor_contacts %>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <legend> 付款資料 </legend>
+    <%= f.input :payment_location, label: '付款廠區' %>
+    <%= f.input :payment_type, label: '付款方式' %>
+    <%= f.input :payment_time, label: '付款時間' %>
+    <%= f.input :check_usance, label: '票期', :placeholder => '天' %>
+    <%= f.input :bank_id, label: '銀行代號'%>
+    <%= f.input :bank_account_id, label: '銀行帳號'%>
+    <%= f.input :bank_account_name, label: '銀行戶名'%>
+    <%= f.input :receipter_vat_id, label: '收款人統編'%>
+    <%= f.input :notification_method, label: '通知方式' %>
+    <%= f.input :is_pay_for_wire_fee, label: '手續費負擔' %>
+  </div>
+</div>
+<div class="panel-body">
+  <legend> 地址資料 </legend>
+  <%= f.simple_fields_for :vendor_addresses do |g| %>
+    <%= render 'vendor_address_fields', f: g %>
+  <% end %>
+  <div>
+<%= link_to_add_association '新增地址', f, :vendor_addresses %>
+</div>
+</div>
+  <div class="panel-body">
+    <%= f.submit "確認修改", :class => "btn btn-primary btn-lg pull-right", :disable_with => 'Submiting...'%>
+  </div>
+  <!fftf +TAB !>
+  <!fftf +TAB !>
+  <!ffs +TAB !>
+<% end %>
+</div>

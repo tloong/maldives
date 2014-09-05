@@ -1,0 +1,36 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h2 class="panel-title">修改資產: <%= @fixedasset.name %></h2>
+  </div>
+
+<%= simple_form_for [@fixedasset ] , :html => { :class => '.form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <%= f.input :fixed_asset_id , label: '資產編號', placeholder: '例: A000c000-00', :disabled => true %>
+      <%= f.input :name, label: '資產名稱', :disabled => true%>
+      <%= f.input :quantity, label: '數量', :disabled => true%>
+      <%= f.input :unit, label: '單位', placeholder: '例: 公斤、台', :disabled => true %>
+      <%= f.input :spec, label: '規格', :disabled => true %>
+      <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456', :disabled => true %>
+      <%= f.association :department, :label_method => :to_label, label:'使用部門', collection: Department.where('docket_head <> ?',1), :disabled => true %>
+      <%= f.input :original_cost, label: '取得成本', :disabled => true %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.input :service_life_year, label: '使用年限', placeholder: '5年請輸入: 5', :disabled => true%>
+      <%= f.input :service_life_month, label: '使用月數', placeholder: '8個月請輸入: 8', :disabled => true %>
+   
+      <%= f.input :get_date, label: '取得日期', :disabled => true%>
+      <%= f.input :start_use_date, label: '起始日期', discard_day: true, :disabled => true%>
+      <%= f.input :note, label: '備註' %>
+    
+    <%= f.submit "新增資產", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
+    </div>
+</div>
+<% end %>

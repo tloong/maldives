@@ -1,0 +1,7 @@
+@import "bootstrap";
+@import "bootstrap-sprockets";
+@import 'bootstrap-datepicker';
+
+.datepicker .switch {
+  display: table-cell;
+}

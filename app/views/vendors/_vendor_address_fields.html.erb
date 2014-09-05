@@ -1,0 +1,12 @@
+<div class="nested-fields">
+  <div class="col-sm-6">
+  <%= f.input :address_type, label: '類別' %>
+  <%= f.input :zipcode, label: '郵遞區號' %>
+  <%= f.input :building_and_street, label: '地址' %>
+  <%= f.input :country, label: '國家', priority: [ "台灣","美國" ]%>
+  <%= f.input :_destroy, as: :hidden %>
+  &nbsp;&nbsp;&nbsp;
+  <%= link_to_remove_association "移除地址", f %>
+  </div>
+</div>
+

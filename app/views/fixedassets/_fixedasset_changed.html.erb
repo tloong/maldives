@@ -1,0 +1,30 @@
+<% if fixedasset_changed.change_type == "transfer" %>
+  <h4> 轉移記錄 </h4>
+  <div>異動單號 : <%= fixedasset_changed.voucher_no.to_s.rjust(6,'0') %> </div>
+  <div>原部門: <%= "#{fixedasset_changed.old_department.dep_id} #{fixedasset_changed.old_department.alias}" %> </div>
+  <div>新部門: <%= "#{fixedasset_changed.department.dep_id} #{fixedasset_changed.department.alias}" %> </div>
+  <div>異動時間: <%= fixedasset_changed.changed_date %> </div>
+  <div>登錄者姓名:<%= fixedasset_changed.username %> </div>
+<% elsif fixedasset_changed.change_type == "depreciation" %>
+  <h4> 報廢記錄 </h4>
+  <div>異動單號 : <%= fixedasset_changed.voucher_no.to_s.rjust(6,'0') %> </div>
+  <div>原部門: <%= "#{fixedasset_changed.old_department.dep_id} #{fixedasset_changed.old_department.alias}" %> </div>
+  <div>報廢部門: <%= "#{fixedasset_changed.department.dep_id} #{fixedasset_changed.department.alias}" %> </div>
+  <div>異動時間: <%= fixedasset_changed.changed_date %> </div>
+  <div>登錄者姓名:<%= fixedasset_changed.username %> </div>
+  <div>報廢價值: <%= number_to_currency(fixedasset_changed.price) %></div>
+<% elsif fixedasset_changed.change_type == "sold" %>
+  <h4> 出售記錄 </h4>
+  <div>異動單號 : <%= fixedasset_changed.voucher_no.to_s.rjust(6,'0') %> </div>
+  <div>原部門: <%= "#{fixedasset_changed.old_department.dep_id} #{fixedasset_changed.old_department.alias}" %> </div>
+  <div>出售部門: <%= "#{fixedasset_changed.department.dep_id} #{fixedasset_changed.department.alias}" %> </div>
+  <div>異動時間: <%= fixedasset_changed.changed_date %> </div>
+  <div>登錄者姓名:<%= fixedasset_changed.username %> </div>
+  <div>出售價值: <%= number_to_currency(fixedasset_changed.price) %></div>
+<% elsif fixedasset_changed.change_type == "reevaluation" %>
+  <h4> 重估記錄 </h4>
+  <div>異動時間: <%= fixedasset_changed.changed_date %> </div>
+  <div>登錄者姓名:<%= fixedasset_changed.username %> </div>
+  <div>重估價值: <%= number_to_currency(fixedasset_changed.evaluated_value) %></div>
+  <div>重估殘值: <%= number_to_currency(fixedasset_changed.evaluated_scrap_value) %></div>
+<% end %>

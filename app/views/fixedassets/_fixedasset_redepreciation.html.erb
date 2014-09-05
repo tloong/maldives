@@ -1,0 +1,6 @@
+  <div>續提折舊總值 : <%= number_with_delimiter(fixedasset_redepreciation.re_original_value - fixedasset_redepreciation.re_final_scrap_value)%> </div>
+  <div>續提折舊殘值: <%= number_with_delimiter(fixedasset_redepreciation.re_final_scrap_value) %> </div>
+  <div>續提起始日期: <%= fixedasset_redepreciation.re_start_use_date%> </div>
+  <div>每月折舊:<%= fixedasset_redepreciation.re_depreciated_value_per_month %></div>
+  <div>最後一個月折舊<%= fixedasset_redepreciation.re_depreciated_value_last_month %> </div>
+  <div>續提結束日期: <%= fixedasset_redepreciation.re_end_use_date - 1.day %> </div>

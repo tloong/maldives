@@ -1,0 +1,60 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h1 class="panel-title">資產: <%= "#{@fixedasset.fixed_asset_id}" %></h1>
+  </div>
+
+  <div class="panel-body">
+    <div class="col-sm-6">
+    <h3> 基本資訊</h3>  
+    <div style="height:20px;">狀態:<%= @fixedasset.status_i18n %></div>
+    <div style="height:20px;">資產編號: <%= @fixedasset.fixed_asset_id %></div>
+    <div style="height:20px;">資產名稱: <%= @fixedasset.name %></div>
+    <div style="height:20px;">數量: <%= @fixedasset.quantity %><%= @fixedasset.unit %></div>
+    <div style="height:20px;">規格: <%= @fixedasset.spec %></div>
+    <div style="height:20px;">異動單編號: <%= @fixedasset.voucher_no %></div>
+    <div style="height:20px;">使用部門: <%= "#{@fixedasset.department.dep_id} #{@fixedasset.department.alias}" %></div>
+    <div style="height:20px;">使用年限: <%= "#{@fixedasset.service_life_year}年#{@fixedasset.service_life_month}個月" %></div>
+    <div style="height:20px;">取得日期: <%= @fixedasset.get_date.strftime("%Y/%m/%d") %></div>
+    <div style="height:20px;">折舊期間: <%= @fixedasset.start_use_date.strftime("%Y/%m") %> - <%= @fixedasset.end_use_date.strftime("%Y/%m") %> (共 <%= @fixedasset.total_depreciated_month %> 個月)</div>
+    <div style="height:20px;">備註: <%= @fixedasset.note %> </div>
+    <hr> 
+    <h3> 價值資訊 </h3>   
+    <div style="height:20px;">取得價值:<%= number_to_currency(@fixedasset.original_cost) %>元</div>
+    <div style="height:20px;">目前殘值:<%= number_to_currency(@fixedasset.scrap_value) %>元</div>
+    <hr>   
+    <h3> 折舊資訊 </h3>
+    <div style="height:20px;">84年底時折抵:<%= number_to_currency(@fixedasset.depreciation84) %></div>
+    <div style="height:20px;">已折舊:<%= number_to_currency(@fixedasset.accumulated_depreciated_value) %>元</div>
+    <div style="height:20px;">每月折抵:<%= number_to_currency(@fixedasset.depreciated_value_per_month) %>元</div>
+    <div style="height:20px;">已折抵:<%= is_scraped_how_many_month(@fixedasset.service_life_year,@fixedasset.service_life_month,@fixedasset.start_use_date) %>個月</div>
+
+    <hr>   
+    <%  unless @fixedasset_redepreciation == nil%>
+    <h3> 續提資訊</h3>
+      <%= render(:partial => "fixedasset_redepreciation", object: @fixedasset.fixedasset_redepreciation )%>
+    <hr>
+    <% end %>
+ 
+
+    <div style="height:20px;">此資產由 <%= @fixedasset.username %> 於 <%= @fixedasset.created_at.strftime("%Y/%m/%d") %> 建立 </div>
+    
+  </div>
+  <div class="col-md-6">
+
+    <%  unless @fixedasset.fixedasset_changeds.empty? %>
+    <h3> 變更資訊</h3>
+     <%= render(:partial => "fixedasset_changed", :collection => @fixedasset_changeds )%>
+    <% end %>
+  </div>
+  <div class="col-md-6 pull-left" style="padding-left: 10px;">
+  <hr>
+    
+    <%= link_to '回上頁', :back ,:class => "btn btn-primary btn-sm pull-right"%>
+    <%= render partial: "fixedasset_opmenu", locals: {fixedasset: @fixedasset} %>
+
+  </div>
+
+    
+  </div>
+
+</div>

@@ -1,0 +1,42 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h2 class="panel-title">資產報廢</h2>
+  </div>
+<%= simple_form_for [ @fixedasset_changed ] ,:url => fixedasset_depreciate_index_path, :html => { :class => '.form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <div style="height:20px;">資產編號: <%= @fixedasset.fixed_asset_id %></div>
+      <div style="height:20px;">資產名稱: <%= @fixedasset.name %></div>
+      <div style="height:20px;">數量: <%= @fixedasset.quantity %><%= @fixedasset.unit %></div>
+      <div style="height:20px;">規格: <%= @fixedasset.spec %></div>
+      <div style="height:20px;">異動單編號: <%= @fixedasset.voucher_no %></div>
+      <div style="height:20px;">使用部門: <%= "#{@fixedasset.department.dep_id} #{@fixedasset.department.alias}" %></div>
+      <div>
+        <hr>
+        <%= f.input :fixedasset_id, :as => :hidden, :input_html => { :value => "#{@fixedasset.id}" } %>
+        <%= f.input :username, :as => :hidden, :input_html => { :value => "#{current_user.username}" } %>
+        <%= f.input :change_type, :as => :hidden, :input_html => { :value => "sold" } %>
+        <%= f.input :old_department_id, :as => :hidden, :input_html => { :value => "#{@fixedasset.department_id}" } %>
+        <%= f.input :price,  label: '報廢殘值', :input_html => { :value => "#{@fixedasset.scrap_value}"}%>
+        <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456' %>
+        
+        <%= f.input :changed_date, label: '異動單日期' %>  :as => :datepicker
+        <%= f.input :reason,  label: '報廢原因' %>
+        <%= f.input :note,  label: '備註' %>
+        <%= f.association :department, :label_method => :to_label, label:'出售部門', collection: Department.where('docket_head <> ?',1) %>
+        <div>
+          <%= f.submit "確認報廢", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+  
+</div>

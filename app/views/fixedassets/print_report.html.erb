@@ -1,0 +1,108 @@
+<br>
+<br>
+<br>
+
+<div class="tabbable tabs-left">
+<ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#print_cat1" data-toggle="tab">明細表(依部門/種類)</a>
+    </li>
+    <li>
+      <a href="#print_cat2" data-toggle="tab">簡表(依部門/種類)</a>
+    </li>
+    <li>
+      <a href="#print_cat3" data-toggle="tab">財產目錄總表</a>
+    </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="print_cat1">
+    <%= form_tag "/fixedassets/do_print" do %>
+      <div class="panel-body">
+          <legend> 各部門折舊明細表 </legend>
+          <div><label>主要分類</label> </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="dep" checked>
+              依資產所屬部門
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="cat">
+              依資產類別
+            </label>
+          </div>
+          <div><label>報表月份</label> </div>
+          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="hidden" name="print_type" value="1" >
+          <hr>
+          <div>
+            <%= submit_tag "確定列印"%>
+          </div>
+        
+      </div>    
+    <% end %>
+  </div>
+  <div class="tab-pane" id="print_cat2">
+    <%= form_tag "/fixedassets/do_print" do %>
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <legend> 各部門折舊簡表 </legend>
+          <div><label>主要分類</label> </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="dep" checked>
+              依資產所屬部門
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="cat">
+              依資產類別
+            </label>
+          </div>
+          <div><label>報表月份</label> </div>
+          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="hidden" name="print_type" value="2" >
+          <hr>
+          <div>
+            <%= submit_tag "確定列印"%>
+          </div>
+        </div>
+      </div>    
+    <% end %>
+  </div>
+  <div class="tab-pane" id="print_cat3">
+    <%= form_tag "/fixedassets/do_print" do %>
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <legend> 財產目錄總表 </legend>
+          <div><label>報表月份</label> </div>
+          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="hidden" name="print_type" value="3" > 
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="checked" name="is_mortgaged">
+              只列印抵押資產
+            </label>
+          </div>
+          <hr>
+          <div>
+            <%= submit_tag "確定列印"%>
+          </div>
+        </div>
+      </div>    
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){    
+    $("[data-behaviour~=datepicker]").datepicker({
+                           format: 'yyyy/mm',
+                           autoclose: true,
+                           viewMode: "months", 
+                           minViewMode: "months"
+                           })
+
+  })
+</script>            

@@ -1,0 +1,26 @@
+<%= simple_form_for @department, :url=>   department_part_path(@department,@part_no)  ,:html => { :class => '.form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %> 
+  <div class="panel-body">
+  <div class="col-sm-12">
+  <div><%= f.input :id, as: :hidden%></div>
+  <input class="hidden form-control" id="department_counts" name="department[counts]" type="hidden" value="<%= @count %>">
+  <%= f.simple_fields_for :fixedasset_parts,  as: @parts do |c| %>
+    <% if c.object.part_no == @part_no.to_i %>
+      <div><%= c.input :department_id, as: :hidden%></div>
+      <div><%= c.input :part_no, as: :hidden%></div>
+      <div><%= c.input :refed_department_id, as: :hidden%></div>
+      <div><%= c.input :weight, :input_html => {:style => "width: 100px;"}, label: "[#{get_department_depid_and_alias(c.object.refed_department_id)}] 權重" %></div>
+    <% end %>
+  <% end %>
+  <div>
+    <%= f.submit "確認修改", :class => "btn btn-primary btn-lg pull-center " ,:onclick => 'onClickCheck()', :disable_with => 'Submiting...' %>
+  </div>
+  </div>
+  </div>
+<% end %>

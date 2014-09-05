@@ -1,0 +1,22 @@
+<h2> 設定分攤比例 </h2>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>名稱</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @parts.each do |key, value| %>
+    <tr>
+      <td><%= key %> </td>
+      <td> 
+        <%= value %>
+        <%= link_to("[修改]", edit_department_part_path(@departments[key],key)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

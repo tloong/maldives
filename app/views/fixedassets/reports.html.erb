@@ -1,0 +1,7 @@
+各部門折舊明細表 
+<% @files_map.keys.sort.reverse.each do |k| %>
+  <% @files_map[k].each do |file| %>
+    <li><%= link_to File.basename(file), "../fixedassets_pdf/"+File.basename(file) %></li>
+    <li><%= DateTime.parse(k.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s %> </li>
+  <% end %>
+<% end %>

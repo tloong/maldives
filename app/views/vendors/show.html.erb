@@ -1,0 +1,42 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h1 class="panel-title">廠商: <%= "#{@vendor.id.to_s.rjust(4,'0')} #{@vendor.name}" %></h1>
+  </div>
+
+<div class="panel-body">
+    <div class="col-sm-4">
+    <h3> 基本資訊</h3>
+    <div style="height:20px;">負責人: <%= @vendor.pic_name %></div>
+    <div style="height:20px;">別名: <%= @vendor.alias %></div>
+    <div style="height:20px;">傳真: <%= @vendor.fax %></div>
+    <div style="height:20px;">統編: <%= @vendor.vat_id %></div>
+    <div style="height:20px;">產品: <%= @vendor.product_type %></div>
+    <div style="height:20px;"> 主要產品: <%= @vendor.main_business %></div>
+    <div style="height:20px;">付費廠區: <%= @vendor.payment_location_i18n %></div>
+    <div style="height:20px;">付費方式: <%= @vendor.payment_type_i18n %></div>
+    <div style="height:20px;">付費時間: <%= @vendor.payment_time_i18n %></div>
+    <div style="height:20px;">票期: <%= @vendor.check_usance %> 天</div>
+    
+    <h3> 聯絡人資訊</h3>
+     <%= render(:partial => "vendor_contact", :collection => @vendor_contacts )%>
+    
+    <h3> 解款銀行資訊</h3>
+    <div style="height:20px;">銀行代號:<%= @vendor.bank_id %></div>
+    <div style="height:20px;">銀行帳號:<%= @vendor.bank_account_id %></div>
+    <div style="height:20px;">銀行戶名:<%= @vendor.bank_account_name %></div>
+    <div style="height:20px;">收款人統編:<%= @vendor.receipter_vat_id %></div>
+    <div style="height:20px;">手續費付擔:<%= @vendor.is_pay_for_wire_fee %></div>
+    <div style="height:20px;">通知方式:<%= @vendor.notification_method_i18n %></div>
+
+  </div>
+
+
+  <div class="col-md-8">
+    <h3> 地址資訊</h3>
+    <%= render(:partial => "vendor_address", :collection => @vendor_addresses) %>
+  </div>
+  <div class="pull-left" style="padding-bottom: 20px;">
+    <br>
+    <%= link_to '回上頁', :back ,:class => "btn btn-primary btn-sm"%>
+  </div>
+</div>

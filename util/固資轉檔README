@@ -1,0 +1,39 @@
+
+# 1 導入fixin, 建立基本資料 (含85年底資產重估資料)
+ rails runner util/dbf_parser_fixedassets.rb
+# 2 導入fixmove, 建立資產部門移轉資料 (ignore 借還資料)
+ rails runner util/dbf_parser_fixedassets_transfer.rb
+# 3 導入fixout, 建立出售/報廢資料
+ rails runner util/dbf_parser_fixedassets_out.rb
+# 4 導入fixre, assign 資產重估價值資料 (先ignore 續提資訊)
+ rails runner util/dbf_parser_fixedassets_re.rb
+# 5 調整每月折價記錄 
+ rails runner util/dbf_parser_fixedassets_d84.rb
+# 6 導入續提資料
+ rails runner util/dbf_parser_fixedassets_redep.rb
+# 7 導入比例分配
+ rails runner util/dbf_parser_fixedassets_part.rb
+
+
+
+
+
+ 
+for each fixedasset, |f| do
+  if !f.d84.blank
+    if f.end_use_date < 85/12
+      f.scrap_value = 0
+      f.d_per_m = 0
+      f.d_last_m = 0
+    else
+      total_scrap_value = f.original_cost * 12 / (total_month+12)
+      f.d_per_m = (total_scrap_value - f.d84)/total_month
+      f.d_last_m = f.d84 - f.d_per_m*(total_month-1)
+    end
+  else # d84 沒有值的 
+    next # 不改
+  end
+end
+
+
+  
