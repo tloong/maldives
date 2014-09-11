@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826045553) do
+ActiveRecord::Schema.define(version: 20140826042147) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -28,11 +28,6 @@ ActiveRecord::Schema.define(version: 20140826045553) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
-
-  create_table "department_parts", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "departments", force: true do |t|
     t.string   "dep_id",       null: false
@@ -53,6 +48,24 @@ ActiveRecord::Schema.define(version: 20140826045553) do
 
 # Could not dump table "fixedasset_changeds" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
+
+  create_table "fixedasset_legacy_infos", force: true do |t|
+    t.integer  "fixedasset_id"
+    t.float    "revaluated_value"
+    t.float    "revaluated_scrap_value"
+    t.date     "revaluated_date"
+    t.float    "redepreciated_value"
+    t.float    "redepreciated_scrap_value"
+    t.date     "redepreciated_date"
+    t.date     "redepreciated_start_date"
+    t.date     "redepreciated_end_date"
+    t.float    "redepreciated_price_per_month"
+    t.float    "redepreciated_price_last_month"
+    t.float    "end_price"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fixedasset_parts", force: true do |t|
     t.integer  "part_no"
@@ -76,6 +89,14 @@ ActiveRecord::Schema.define(version: 20140826045553) do
     t.datetime "updated_at"
     t.integer  "re_depreciated_value_this_year"
     t.date     "re_end_use_date"
+  end
+
+  create_table "fixedasset_transferreds", force: true do |t|
+    t.integer  "fixedasset_id"
+    t.integer  "department_id"
+    t.integer  "original_department_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "fixedassets", force: true do |t|
@@ -140,16 +161,14 @@ ActiveRecord::Schema.define(version: 20140826045553) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
   create_table "vendor_addresses", force: true do |t|
+    t.integer  "vendor_id"
+    t.integer  "address_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "building_and_street"
     t.string   "zipcode"
     t.string   "country"
-    t.integer  "address_type"
-    t.integer  "vendor_id"
   end
-
-  add_index "vendor_addresses", ["vendor_id"], name: "index_vendor_addresses_on_vendor_id"
 
   create_table "vendor_contacts", force: true do |t|
     t.integer  "vendor_id",  null: false
