@@ -13,5 +13,5 @@ widgets.each do |record|
   inserts.push "('#{record.dep_no}','#{record.name}','#{record.name0}',#{dep_id},#{account_type},'#{DateTime.now.to_s}','#{DateTime.now.to_s}')"
 end
 
-sql = "INSERT INTO departments ('department_id', 'name', 'alias', 'docket_head', 'account_type','created_at','updated_at') VALUES #{inserts.join(", ")}"
+sql = "INSERT INTO departments ('dep_id', 'name', 'alias', 'docket_head', 'account_type','created_at','updated_at') VALUES #{inserts.join(", ")}"
 CONN.execute sql
