@@ -2,7 +2,7 @@
   <div class="panel-heading">
     <h1 class="panel-title">Users</h1>
   </div>
- <%= link_to 'All users', :action => "index" ,:class => "btn btn-primary btn-sm"%>
+ <%= link_to 'All users', {:action => "index"} , {:class => "btn btn-primary btn-sm"} %>
   <%= link_to 'Users waiting approval', {:action => "index", :approved => "false"} , {:class => "btn btn-primary btn-sm"} %>
   <div class="panel-body">
     <table class="table table-striped">
@@ -24,7 +24,6 @@
         <% end %>
       </tbody>
     </table>
-
   </div>
 
   <div class="pull-left" style="padding-bottom: 20px;">

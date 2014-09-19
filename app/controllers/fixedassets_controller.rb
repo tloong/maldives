@@ -1,10 +1,16 @@
 class FixedassetsController < ApplicationController
   include FixedassetsHelper
+  require 'fileutils'
+
   def index
     #@fixedassets = Fixedasset.all.page(params[:page])
     @q = Fixedasset.search(params[:q])
     @fixedassets = @q.result.paginate(:page => params[:page])
+    if (params[:page] == nil)
+      params[:page] = "1"
+    end
     cookies[:last_fixedassets_paginated] = params[:page]
+    
   end
 
   def get_file_names( path )
@@ -12,8 +18,6 @@ class FixedassetsController < ApplicationController
     files_by_ctime = {}
     Dir.chdir(path)
     Dir.entries(Dir.pwd).each do |f|
-     # next if f == '.'
-     # next if f == '..'
       next if f =~ /^\./    # ignore dot-files and dot-directories                                    
 
       full_filename = File.join( Dir.pwd , f)
@@ -30,6 +34,40 @@ class FixedassetsController < ApplicationController
     return files_by_ctime
   end
 
+  def do_batch_redep
+    date = params['redep_date']
+    if date ==""
+      year = DateTime.now.year
+      month = DateTime.now.month
+    else
+      year = date[0..3]
+      month = date[5..6]
+    end
+    query_date = Date.new(year.to_i,month.to_i,1)
+    @already_redep_fixedassets = []
+    @valid_fixedassets = []
+
+    ff = Fixedasset.where("final_scrap_value >= 100000 and end_use_date = ?", query_date)
+
+    ff.each do |f|
+      redep = f.fixedasset_redepreciation
+      if redep == nil
+        @valid_fixedassets.push(f)
+        f_redep = FixedassetRedepreciation.new
+        f_redep.fixedasset_id = f.id
+        f_redep.re_original_value = f.final_scrap_value
+        f_redep.re_final_scrap_value = (f.final_scrap_value.to_f/4).round
+        f_redep.re_depreciated_value_per_month = ((f_redep.re_original_value - f_redep.re_final_scrap_value).to_f / 36).round
+        f_redep.re_depreciated_value_last_month = f_redep.re_original_value - f_redep.re_final_scrap_value - (f_redep.re_depreciated_value_per_month*(35))
+        f_redep.re_start_use_date = query_date + 1.month
+        f_redep.re_end_use_date = query_date + 36.month
+        f_redep.save
+      else
+        @already_redep_fixedassets.push(f)
+      end
+    end
+  end
+
   def do_print
     date = params['print_date']
     print_type = params['print_type']
@@ -42,16 +80,18 @@ class FixedassetsController < ApplicationController
       month = date[5..6]
     end
     
-    if print_type == "1"
-      based_on = params['optionsRadios']
-      PrintServices.new(year.to_i,month.to_i,based_on).perform
+    case print_type
+    when "1"
+      based_on = params['print_base_on']
       
+      case params['report_type']
+      when "all"
+      PrintServices.new(year.to_i,month.to_i,based_on).perform
+      when "simple"
+        PrintServices2.new(year.to_i,month.to_i,based_on).perform
+      end
       #Delayed::Job.enqueue PrintServices.new(year.to_i,month.to_i,based_on)
-    elsif print_type == "2"
-      based_on = params['optionsRadios']
-      PrintServices3.new(year.to_i,month.to_i,based_on).perform
-      #Delayed::Job.enqueue PrintServices3.new(year.to_i,month.to_i,based_on)
-    elsif print_type == "3"
+    when "2"
       #is_mortgaged = params['is_mortgaged']
       if (params['is_mortgaged'] == nil)
         is_mortgaged = false
@@ -60,16 +100,29 @@ class FixedassetsController < ApplicationController
       end
       
       #PrintServices2.new.do_print(year.to_i, month.to_i)
-      Delayed::Job.enqueue PrintServices2.new(year.to_i,month.to_i, is_mortgaged)
+      Delayed::Job.enqueue PrintServices3.new(year.to_i,month.to_i, is_mortgaged)
+    when "3"
+      
+      p4 = PrintServices4.new(year.to_i,month.to_i,params['print_base_on'])
+      p4.perform
+      
     end
 
     redirect_to reports_fixedassets_path
   end
 
   def reports
+
     Dir.chdir(Rails.root.to_s)
-    @files_map =  get_file_names(Rails.root.to_s + "/public/fixedassets_pdf")  #Dir.glob('public/fixedassets/*')
-    @files =  Dir.glob(Rails.root.to_s + "/public/fixedassets_pdf/*")
+    report_path = Rails.root.to_s + "/public/fixedassets_pdf/"
+    
+    unless File.directory?(report_path)
+      FileUtils.mkdir_p(report_path)
+    end
+    @files_map =  get_file_names(report_path)  #Dir.glob('public/fixedassets/*')
+  
+
+    @files =  Dir.glob(report_path+"/*")
 
   end
 
@@ -85,38 +138,69 @@ class FixedassetsController < ApplicationController
   end
 
   def create
+
     f_params = fixedasset_params 
-    fixed_asset_id = f_params[:fixed_asset_id]
-    f_params[:ab_type] = fixed_asset_id[0]
-    f_params[:year] = fixed_asset_id[1..2].to_i
-    f_params[:category_id] = fixed_asset_id[3].to_i
-    f_params[:category_lv2] = fixed_asset_id[4]
-    f_params[:serial_no] = fixed_asset_id[5..7].to_i
-    f_params[:sequence_no] = fixed_asset_id[9..10].to_i
-    #parse fixed_asset_id to ab_type, year, category_id, category_lv2, serial_no, sequene
-    original_cost = f_params[:original_cost].to_i
+    f_params[:fixed_asset_id] = f_params[:fixed_asset_id].upcase
+      
+    f_keys = ["fixed_asset_id","service_life_year","service_life_month"]
+    error_code = check_fixedasset_params(f_params, f_keys)
+
+    if (error_code == Fixedasset::NO_ERROR)
+      fixed_asset_id = f_params[:fixed_asset_id]
+
+      f_params[:ab_type] = fixed_asset_id[0]
+      f_params[:year] = fixed_asset_id[1..2].to_i
+      f_params[:category_id] = fixed_asset_id[3].to_i
+      f_params[:category_lv2] = fixed_asset_id[4]
+      f_params[:serial_no] = fixed_asset_id[5..7].to_i
+      f_params[:sequence_no] = fixed_asset_id[9..10].to_i
     
-    if !f_params[:service_life_year].blank? and !f_params[:service_life_month].blank?
+      if f_params[:sequence_no] != 0
+        # 檢查並修正 service_life
+        
+        start_use_date = Date.new(f_params["start_use_date(1i)"].to_i, f_params["start_use_date(2i)"].to_i,f_params["start_use_date(3i)"].to_i)
+        service_life_year, service_life_month = get_correct_service_life(fixed_asset_id,start_use_date) 
+        f_params[:service_life_year] = service_life_year
+        f_params[:service_life_month] = service_life_month
+      end
+
       service_life_year = f_params[:service_life_year].to_i
       service_life_month = f_params[:service_life_month].to_i
 
-      total_depreciated_month = (service_life_year*12) + service_life_month
-      scrap_value = ((original_cost * 12).to_f / (total_depreciated_month+12)).round
-      total_depreciated_price = original_cost - scrap_value
+      if (service_life_month == 0 && service_life_year == 0)
+        f_params[:depreciated_value_last_month] = 0
+        f_params[:depreciated_value_per_month] = 0
+        f_params[:final_scrap_value] = f_params[:original_cost];
+      else
+        original_cost = f_params[:original_cost].to_i
+        total_depreciated_month = (service_life_year*12) + service_life_month
+        scrap_value = ((original_cost * 12).to_f / (total_depreciated_month+12)).round
+        total_depreciated_price = original_cost - scrap_value
+        f_params[:final_scrap_value] = scrap_value;
+        depreciated_value_per_month  = (total_depreciated_price.to_f / total_depreciated_month).round
+        if (total_depreciated_month == 1)
+          f_params[:depreciated_value_last_month] = depreciated_value_per_month
+          f_params[:depreciated_value_per_month] = 0
+        else
+          f_params[:depreciated_value_last_month] = total_depreciated_price - (depreciated_value_per_month*(total_depreciated_month-1))
+          f_params[:depreciated_value_per_month] = depreciated_value_per_month
+        end
+      end
 
-      depreciated_value_per_month  = (total_depreciated_price.to_f / total_depreciated_month).round
-
-      f_params[:depreciated_value_last_month] = total_depreciated_price - (depreciated_value_per_month*(total_depreciated_month-1))
-      f_params[:depreciated_value_per_month] = depreciated_value_per_month
+      @fixedasset = Fixedasset.new(f_params)
+      @fixedasset.status = :in_use
+      @fixedasset.end_use_date = @fixedasset.start_use_date + (service_life_year*12 + service_life_month -1).month
+      @fixedasset.username = current_user.username
+    else
+      @fixedasset = Fixedasset.new(f_params)
     end
-    f_params[:accumulated_depreciated_value] = 0
-    f_params[:update_value_date] = DateTime.now
-    @fixedasset = Fixedasset.new(f_params)
-
-    @fixedasset.status = :in_use
 
     if @fixedasset.save
-      redirect_to 'admin_fixedassets_path'
+      if f_params[:sequence_no] != 0 && service_life_month == 0 && service_life_year == 0
+        # check if need to create redepreciation
+        create_redepreciations_according_to_base_asset(fixed_asset_id,@fixedasset.start_use_date) 
+      end 
+      redirect_to fixedassets_path(@fixedasset, :page => cookies[:last_fixedassets_paginated])
     else
       render :new
     end
@@ -137,7 +221,7 @@ class FixedassetsController < ApplicationController
     f_params[:serial_no] = fixed_asset_id[5..7].to_i
     f_params[:sequence_no] = fixed_asset_id[9..10].to_i
     if @fixedasset.update(f_params)
-      redirect_to admin_fixedassets_path(@fixedasset, :page => cookies[:last_fixedassets_paginated])
+      redirect_to fixedassets_path(@fixedasset, :page => cookies[:last_fixedassets_paginated])
     else
       render :edit
     end
@@ -148,7 +232,7 @@ class FixedassetsController < ApplicationController
   def fixedasset_params
     params.require(:fixedasset).permit(:fixed_asset_id, 
       :voucher_no, :name, :spec, :quantity, :unit, :original_cost, :get_date, 
-      :service_life_year, :service_life_month, :owned_department, :vendor_id, :note, :start_use_date,
+      :service_life_year, :service_life_month, :department_id, :vendor_id, :note, :start_use_date,
       :is_mortgaged)
   end
 
