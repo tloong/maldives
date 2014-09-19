@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826042147) do
+ActiveRecord::Schema.define(version: 20140916072027) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -49,24 +49,6 @@ ActiveRecord::Schema.define(version: 20140826042147) do
 # Could not dump table "fixedasset_changeds" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
 
-  create_table "fixedasset_legacy_infos", force: true do |t|
-    t.integer  "fixedasset_id"
-    t.float    "revaluated_value"
-    t.float    "revaluated_scrap_value"
-    t.date     "revaluated_date"
-    t.float    "redepreciated_value"
-    t.float    "redepreciated_scrap_value"
-    t.date     "redepreciated_date"
-    t.date     "redepreciated_start_date"
-    t.date     "redepreciated_end_date"
-    t.float    "redepreciated_price_per_month"
-    t.float    "redepreciated_price_last_month"
-    t.float    "end_price"
-    t.date     "end_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "fixedasset_parts", force: true do |t|
     t.integer  "part_no"
     t.integer  "department_id"
@@ -77,40 +59,29 @@ ActiveRecord::Schema.define(version: 20140826042147) do
   end
 
   create_table "fixedasset_redepreciations", force: true do |t|
-    t.string   "fixedasset_id",                    null: false
+    t.string   "fixedasset_id",                   null: false
     t.integer  "re_original_value"
     t.integer  "re_final_scrap_value"
     t.integer  "re_depreciated_value_per_month"
     t.integer  "re_depreciated_value_last_month"
-    t.integer  "re_accumulated_depreciated_value"
     t.date     "re_start_use_date"
-    t.date     "re_update_value_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "re_depreciated_value_this_year"
     t.date     "re_end_use_date"
   end
 
-  create_table "fixedasset_transferreds", force: true do |t|
-    t.integer  "fixedasset_id"
-    t.integer  "department_id"
-    t.integer  "original_department_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "fixedassets", force: true do |t|
-    t.string   "fixed_asset_id",                            null: false
-    t.string   "ab_type",                                   null: false
-    t.integer  "year",                                      null: false
-    t.integer  "category_id",                               null: false
-    t.string   "category_lv2",                              null: false
-    t.integer  "serial_no",                                 null: false
-    t.integer  "sequence_no",                               null: false
+    t.string   "fixed_asset_id",                           null: false
+    t.string   "ab_type",                                  null: false
+    t.integer  "year",                                     null: false
+    t.integer  "category_id",                              null: false
+    t.string   "category_lv2",                             null: false
+    t.integer  "serial_no",                                null: false
+    t.integer  "sequence_no",                              null: false
     t.integer  "voucher_no"
-    t.string   "name",                                      null: false
+    t.string   "name",                                     null: false
     t.text     "spec"
-    t.integer  "quantity",                      default: 0, null: false
+    t.integer  "quantity",                     default: 0, null: false
     t.string   "unit"
     t.integer  "original_cost"
     t.date     "get_date"
@@ -118,7 +89,6 @@ ActiveRecord::Schema.define(version: 20140826042147) do
     t.integer  "service_life_month"
     t.integer  "depreciated_value_per_month"
     t.integer  "depreciated_value_last_month"
-    t.integer  "accumulated_depreciated_value"
     t.integer  "department_id"
     t.integer  "vendor_id"
     t.integer  "status"
@@ -128,9 +98,7 @@ ActiveRecord::Schema.define(version: 20140826042147) do
     t.datetime "updated_at"
     t.string   "username"
     t.integer  "depreciation84"
-    t.date     "update_value_date"
     t.integer  "final_scrap_value"
-    t.integer  "depreciated_value_this_year"
     t.boolean  "is_mortgaged"
     t.date     "end_use_date"
     t.date     "out_date"

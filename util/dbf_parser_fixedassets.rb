@@ -1,5 +1,9 @@
 require 'dbf'
 
+def get_department_id(depno)
+  d = Department.find_by_dep_id(depno)
+  return d.id
+end
 
 def month_difference(end_date, start_date)
   year_diff = end_date.year - start_date.year
@@ -43,40 +47,7 @@ fixedassets.each do |f|
   service_life_year = f.dyear
   service_life_month = f.dmonth
 
-  case f.depno
-  when '0000'
-    department_id = 120
-  when '1261'
-    department_id = 67
-  when '2260'
-    department_id = 75
-  when '2261'
-    department_id = 76
-  when '2262'
-    department_id = 77
-  when '2263'
-    department_id = 78
-  when '2264'
-    department_id = 79
-  when '2265'
-    department_id = 80
-  when '2266'
-    department_id = 81
-  when '2267'
-    department_id = 82
-  when '2268'
-    department_id = 83
-  when '2269'
-    department_id = 84
-  when '2271'
-    department_id = 86
-  when '2272'
-    department_id = 99
-  when '3261'
-    department_id = 87
-  when '226A'
-    department_id = 91
-  end
+  department_id = get_department_id(f.depno)
 
   vendor_id = f.fno.to_i
   note = f.ps
@@ -113,10 +84,8 @@ fixedassets.each do |f|
   
   if now_date > end_use_date
     status = 2 # depreciation_done
-    accumulated_depreciated_value = total_depreciated_price
   else
     status = 0 # in_use
-    accumulated_depreciated_value = depreciated_value_per_month * month_difference(DateTime.now,start_use_date)
   end
   
   record_date = f.usedate
@@ -165,7 +134,6 @@ fixedassets.each do |f|
     fa.is_mortgaged = false
   end
 
-  fa.update_value_date = DateTime.now
   fa.save!
 end
 

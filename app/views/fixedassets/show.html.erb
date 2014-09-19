@@ -43,13 +43,13 @@
 
     <%  unless @fixedasset.fixedasset_changeds.empty? %>
     <h3> 變更資訊</h3>
-     <%= render(:partial => "fixedasset_changed", :collection => @fixedasset_changeds )%>
+     <%= render(:partial => "fixedasset_changed", :collection => @fixedasset.fixedasset_changeds )%>
     <% end %>
   </div>
   <div class="col-md-6 pull-left" style="padding-left: 10px;">
   <hr>
     
-    <%= link_to '回上頁', :back ,:class => "btn btn-primary btn-sm pull-right"%>
+    <%= link_to '回上頁', fixedassets_path(:page => cookies[:last_fixedassets_paginated]) ,:class => "btn btn-primary btn-sm pull-right"%>
     <%= render partial: "fixedasset_opmenu", locals: {fixedasset: @fixedasset} %>
 
   </div>

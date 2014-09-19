@@ -20,6 +20,8 @@
       <%= f.input :spec, label: '規格' %>
       <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456' %>
       <%= f.association :department, :label_method => :to_label, label:'使用部門', collection: Department.where('docket_head <> ?',1) %>
+      <%= f.association :vendor, :label_method => :to_label, label:'購買廠商' %>
+      
       <%= f.input :original_cost, label: '取得成本'%>
     </div>
     <div class="col-sm-6">
@@ -35,3 +37,14 @@
   </div>
 <% end %>
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){    
+    $("[data-behaviour~=datepicker]").datepicker({
+                           format: 'yyyy/mm',
+                           autoclose: true,
+                           viewMode: "months", 
+                           minViewMode: "months"
+                           })
+
+  })
+</script> 

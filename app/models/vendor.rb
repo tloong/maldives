@@ -47,4 +47,8 @@ class Vendor < ActiveRecord::Base
   enum payment_time: {"regular"=>0, "in_normal_time"=>1}
   enum notification_method: {"not_notify" =>0, "fax"=>1, "phone"=>2, "email"=>3}
 
+  def to_label
+    "#{id.to_s.rjust(4,'0')} #{self.alias}"
+  end
+
 end

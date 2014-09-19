@@ -81,6 +81,7 @@ gem 'paper_trail'
 # For frontend effect
 gem 'jquery-ui-rails'
 gem 'bootstrap-datepicker-rails'
+gem 'twitter-bootstrap-rails'
 
 # PDF maker
 gem 'prawn', '~> 1.2.1'

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get :print_report
       post :do_print
       get :reports
+      post :do_batch_redep
     end
   end
 
