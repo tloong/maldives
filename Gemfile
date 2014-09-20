@@ -43,8 +43,14 @@ group :development do
   gem "annotate"
   gem "letter_opener"
   gem 'roadie', '~> 2.4'
-  gem "curb"  
 end
+
+group :production do
+  gem 'mysql2'
+end
+
+# curl
+gem "curb"  
 
 # Email validator
 gem 'ValidateEmail'

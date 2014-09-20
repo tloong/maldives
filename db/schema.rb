@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916072027) do
+ActiveRecord::Schema.define(version: 20140919064514) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -46,8 +46,22 @@ ActiveRecord::Schema.define(version: 20140916072027) do
     t.datetime "updated_at"
   end
 
-# Could not dump table "fixedasset_changeds" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "fixedasset_changeds", force: true do |t|
+    t.integer  "fixedasset_id",         null: false
+    t.integer  "voucher_no"
+    t.integer  "department_id"
+    t.integer  "price"
+    t.date     "changed_date"
+    t.string   "username"
+    t.text     "reason"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "old_department_id"
+    t.integer  "change_type"
+    t.integer  "evaluated_value"
+    t.integer  "evaluated_scrap_value"
+  end
 
   create_table "fixedasset_parts", force: true do |t|
     t.integer  "part_no"
@@ -107,12 +121,12 @@ ActiveRecord::Schema.define(version: 20140916072027) do
   add_index "fixedassets", ["is_mortgaged"], name: "index_fixedassets_on_is_mortgaged"
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -121,6 +135,7 @@ ActiveRecord::Schema.define(version: 20140916072027) do
     t.datetime "updated_at"
     t.string   "username"
     t.boolean  "approved"
+    t.boolean  "is_admin",               default: false
   end
 
   add_index "users", ["approved"], name: "index_users_on_approved"

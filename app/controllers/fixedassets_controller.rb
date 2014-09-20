@@ -200,6 +200,7 @@ class FixedassetsController < ApplicationController
         # check if need to create redepreciation
         create_redepreciations_according_to_base_asset(fixed_asset_id,@fixedasset.start_use_date) 
       end 
+      flash[:notice] = "已成功新增固定資產: #{@fixedasset.fixed_asset_id}"
       redirect_to fixedassets_path(@fixedasset, :page => cookies[:last_fixedassets_paginated])
     else
       render :new
@@ -212,15 +213,9 @@ class FixedassetsController < ApplicationController
 
   def update
     @fixedasset = Fixedasset.find(params[:id])
-    f_params = fixedasset_params 
-    fixed_asset_id = f_params[:fixed_asset_id]
-    f_params[:ab_type] = fixed_asset_id[0]
-    f_params[:year] = fixed_asset_id[1..2].to_i
-    f_params[:category_id] = fixed_asset_id[3].to_i
-    f_params[:category_lv2] = fixed_asset_id[4]
-    f_params[:serial_no] = fixed_asset_id[5..7].to_i
-    f_params[:sequence_no] = fixed_asset_id[9..10].to_i
-    if @fixedasset.update(f_params)
+    
+    if @fixedasset.update_attributes(fixedasset_params)
+      flash[:notice] = "已成功修改固定資產: #{@fixedasset.fixed_asset_id}"
       redirect_to fixedassets_path(@fixedasset, :page => cookies[:last_fixedassets_paginated])
     else
       render :edit

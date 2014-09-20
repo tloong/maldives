@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+  def admin?
+   is_admin
+  end
+
   def login=(login)
     @login = login
   end

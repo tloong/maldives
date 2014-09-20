@@ -110,7 +110,6 @@ fixedassets.each do |f|
   fa.service_life_year = service_life_year
   fa.depreciated_value_per_month = depreciated_value_per_month
   fa.depreciated_value_last_month = depreciated_value_last_month
-  fa.accumulated_depreciated_value = accumulated_depreciated_value
   fa.department_id = department_id
   fa.vendor_id = vendor_id
   fa.status = status

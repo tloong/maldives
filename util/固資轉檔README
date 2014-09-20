@@ -17,3 +17,5 @@ a904f004-06 需特別修改 續提end date
 select id from fixedassets where fixed_asset_id= "A904F004-06"
 
 A944Z004-02 需特別修改 續提end date (多提了一年)
+
+A954L002-01
