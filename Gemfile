@@ -82,7 +82,7 @@ gem 'cocoon'
 gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4.1"
 
 # Model version control
-gem 'paper_trail'
+gem 'paper_trail',  '~> 3.0.5'
 
 # For frontend effect
 gem 'jquery-ui-rails'
