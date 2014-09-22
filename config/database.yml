@@ -22,4 +22,10 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  database: db/production.mysql
+  pool: 5
+  username: root
+  password: BveilnlceeK25
+  socket: /var/run/mysqld/mysqld.sock
