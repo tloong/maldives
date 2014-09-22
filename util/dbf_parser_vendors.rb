@@ -7,8 +7,10 @@ vendors = DBF::Table.new("./util/MADER.DBF", nil, 'big5')
 #puts widget.attributes
 
 inserts = []
-set = "SET sql_mode='NO_AUTO_VALUE_ON_ZERO'"
-CONN.execute set
+if ActiveRecord::Base.connection.adapter_name == "Mysql2"
+  set = "SET sql_mode='NO_AUTO_VALUE_ON_ZERO'"
+  CONN.execute set
+end
 vendors.each do |vendor|
   sno  = vendor.sno
 
