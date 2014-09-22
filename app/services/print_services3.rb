@@ -169,8 +169,14 @@ class PrintServices3 < Struct.new(:pyear, :pmonth, :pis_mortgaged)
     order_by_index2 = "get_date"
     title_ary = ["資產編號","資產名稱 規格","資產部門","數量","取得日期","取得原價","耐年","預留殘值","重估總值","重估殘值","續提總值","續提殘值","續年","應提總額","本期折舊","本年折舊","累計折舊","未折減餘額"]
 
+    if (Rails.env =="development")
+      out_date_string = "typeof(fixedassets.out_date) = 'null'"
+    elsif (Rails.env=="production")
+      out_date_string = "fixedassets.out_date is NULL"
+    end
+
     f = Fixedasset.select(
-                  :category_id).where("#{query_string}ab_type='A' and get_date <= ? and (typeof(fixedassets.out_date) = 'null' or out_date>?)",query_date,query_date).group(sort_index1).order(order_by_index1, order_by_index2)
+                  :category_id).where("#{query_string}ab_type='A' and get_date <= ? and (#{out_date_string} or out_date>?)",query_date,query_date).group(sort_index1).order(order_by_index1, order_by_index2)
  
     data_hash = {}
     row_count = {}
@@ -184,7 +190,7 @@ class PrintServices3 < Struct.new(:pyear, :pmonth, :pis_mortgaged)
       data_hash[index] = Hash.new
 
       # select basic data from fixedasset 
-      ff = Fixedasset.includes(:department).where("#{query_string}get_date <= ? and category_id = ? and ab_type='A' and (typeof(fixedassets.out_date) = 'null' or out_date>?)",query_date,fe.category_id,query_date).order(order_by_index1, order_by_index2)
+      ff = Fixedasset.includes(:department).where("#{query_string}get_date <= ? and category_id = ? and ab_type='A' and (#{out_date_string} or out_date>?)",query_date,fe.category_id,query_date).order(order_by_index1, order_by_index2)
 
       ff.each do |ffe|
         #puts ffe.id
@@ -265,7 +271,7 @@ class PrintServices3 < Struct.new(:pyear, :pmonth, :pis_mortgaged)
                           :re_start_use_date,
                           :re_end_use_date,
                           :fixedasset_id
-                          ).joins(:fixedasset).where("#{query_string2}fixedassets.get_date <= ? and fixedassets.ab_type='A' and (typeof(fixedassets.out_date) = 'null' or fixedassets.out_date > ? ) and fixedassets.category_id = ?",query_date ,query_date,fe.category_id)
+                          ).joins(:fixedasset).where("#{query_string2}fixedassets.get_date <= ? and fixedassets.ab_type='A' and (#{out_date_string} or fixedassets.out_date > ? ) and fixedassets.category_id = ?",query_date ,query_date,fe.category_id)
 
       f_redep.each do |ffe|
 
@@ -310,7 +316,7 @@ class PrintServices3 < Struct.new(:pyear, :pmonth, :pis_mortgaged)
                       "fixedassets.department_id",
                       :original_cost,
                       :final_scrap_value,
-                      :id).where("#{query_string}get_date <= ? and ab_type='A' and category_id = ? and (typeof(out_date) = 'null' or out_date > ? ) and change_type=3",query_date,fe.category_id,query_date)
+                      :id).where("#{query_string}get_date <= ? and ab_type='A' and category_id = ? and (#{out_date_string} or out_date > ? ) and change_type=3",query_date,fe.category_id,query_date)
 
       f_reev.each do |ffe|
         
@@ -343,7 +349,7 @@ class PrintServices3 < Struct.new(:pyear, :pmonth, :pis_mortgaged)
       def header(page_size,title, subtitle, left1, left2, right1, page_number)
         stroke_color "000000"
         #font("/System/Library/Fonts/gkai00mp.ttf") do
-        font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/pmingliu.ttf") do
+        font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
           text title, :size => 18, :align => :center
           text_box right1, :size => 10, :at => [915, 710], :width => 80, :align => :right
           text_box left1, :size => 10, :at => [0, 710], :width => 300, :align => :left

@@ -26,7 +26,7 @@
       <%= f.input :change_type, :as => :hidden, :input_html => { :value => "sold" } %>
       <%= f.input :old_department_id, :as => :hidden, :input_html => { :value => "#{@fixedasset.department_id}" } %>
       <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456' %>
-      <%= f.input :changed_date, label: '異動單日期',  :as => :string, input_html: { class: "datepicker"}  %>
+      <%= f.input :changed_date, label: '異動單日期',  :as => :string, input_html: { "data-behaviour"=> "datepicker-month"}  %>
       <%= f.input :price,  label: '出售價格' %>
       <%= f.input :reason,  label: '出售原因' %>
       <%= f.input :note,  label: '備註' %>

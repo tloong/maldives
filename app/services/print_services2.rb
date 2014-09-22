@@ -108,13 +108,19 @@ class PrintServices2 < Struct.new(:pyear, :pmonth, :pacco)
       title_ary = ["資產代號","資產種類","部門代號","部門名稱","本期折舊額","折舊額小計","備註"]
     end
 
+    if (Rails.env =="development")
+      out_date_string = "typeof(fixedassets.out_date) = 'null'"
+    elsif (Rails.env=="production")
+      out_date_string = "fixedassets.out_date is NULL"
+    end
+
     f = Fixedasset.
                   select(
                   "id",
                   "departments.dep_id as dep_depid",
                   "departments.alias as dep_alias",
                   :category_id,
-                  :department_id).joins(:department).where("ab_type='A' and get_date <= ? and category_id != ? and (typeof(fixedassets.out_date) = 'null' or out_date>?)", query_date,1, query_date).group(sort_index1, sort_index2).order(order_by_index1, order_by_index2)
+                  :department_id).joins(:department).where("ab_type='A' and get_date <= ? and category_id != ? and (#{out_date_string} or out_date>?)", query_date,1, query_date).group(sort_index1, sort_index2).order(order_by_index1, order_by_index2)
 
     data_hash = {}
     row_count = {}
@@ -154,7 +160,7 @@ class PrintServices2 < Struct.new(:pyear, :pmonth, :pacco)
                       :depreciated_value_per_month,
                       :depreciated_value_last_month,
                       :end_use_date,
-                      :start_use_date).where("get_date <= ? and ab_type='A' and (typeof(fixedassets.out_date) = 'null' or out_date > ? ) and department_id = ? and category_id = ?",query_date,query_date,fe.department_id,fe.category_id)
+                      :start_use_date).where("get_date <= ? and ab_type='A' and (#{out_date_string} or out_date > ? ) and department_id = ? and category_id = ?",query_date,query_date,fe.department_id,fe.category_id)
       ff.each do |ffe|
 
         redep = ffe.fixedasset_redepreciation
@@ -180,7 +186,7 @@ class PrintServices2 < Struct.new(:pyear, :pmonth, :pacco)
                           :re_depreciated_value_last_month,
                           :re_start_use_date,
                           :re_end_use_date
-                          ).joins(:fixedasset).where("fixedassets.get_date <= ? and fixedassets.ab_type='A' and (typeof(fixedassets.out_date) = 'null' or fixedassets.out_date > ? ) and fixedassets.department_id = ? and fixedassets.category_id = ?",query_date,query_date,fe.department_id,fe.category_id)
+                          ).joins(:fixedasset).where("fixedassets.get_date <= ? and fixedassets.ab_type='A' and (#{out_date_string} or fixedassets.out_date > ? ) and fixedassets.department_id = ? and fixedassets.category_id = ?",query_date,query_date,fe.department_id,fe.category_id)
 
       f_redep.each do |ffe|
         
@@ -308,7 +314,7 @@ class PrintServices2 < Struct.new(:pyear, :pmonth, :pacco)
 
 
         #font("/System/Library/Fonts/gkai00mp.ttf") do
-        font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/pmingliu.ttf") do
+        font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
           text title, :size => 18, :align => :center
           text_box right1, :size => 10, :at => [r1_x, r1_y], :width => r_width, :align => :right
           text_box left1, :size => 10, :at => [l1_x, l1_y], :width => l_width, :align => :left
@@ -359,7 +365,7 @@ class PrintServices2 < Struct.new(:pyear, :pmonth, :pacco)
             columns(4..5).width = 75
             column(6).width=85
 
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/pmingliu.ttf"
+            cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..1).align = :left
           end     

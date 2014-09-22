@@ -20,18 +20,18 @@
 
 // Do not keep bank spaces between included files.
   $(document).ready(function(){    
-    $(".datepicker").datepicker({
+    $("[data-behaviour~=datepicker").datepicker({
                            format: "yyyy/mm/dd",
                            autoclose: true,
                            }).on('changeDate', function(ev){
         // do what you want here
-        $(".datepicker").datepicker('hide');})
-    $(".datepicker_month").datepicker({
+        $("[data-behaviour~=datepicker]").datepicker('hide');})
+    $("[data-behaviour~=datepicker-month]").datepicker({
                            format: "yyyy/mm",                    
                            viewMode: "months", 
                            minViewMode: "months",
                            autoclose: true,
                            }).on('changeDate', function(ev){
         // do what you want here
-        $(".datepicker_month").datepicker('hide');})
+        $("[data-behaviour~=datepicker-month]").datepicker('hide');})
   })

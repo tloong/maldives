@@ -28,7 +28,7 @@
         <%= f.input :price,  label: '報廢殘值', :input_html => { :value => "#{@fixedasset.scrap_value}"}%>
         <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456' %>
         
-        <%= f.input :changed_date, label: '異動單日期',  :as => :string, input_html: { class: "datepicker"}  %>
+        <%= f.input :changed_date, label: '異動單日期',  :as => :string, input_html: { "data-behaviour"=> "datepicker-month"}  %>
         
         <%= f.input :reason,  label: '報廢原因' %>
         <%= f.input :note,  label: '備註' %>
@@ -41,3 +41,4 @@
   </div>
 <% end %>  
 </div>
+
