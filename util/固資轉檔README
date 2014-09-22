@@ -13,7 +13,8 @@ rails runner util/dbf_parser_fixedasset_category.rb
 
 ***** 重要 *****
 
-a904f004-06 需特別修改 續提end date
-select id from fixedassets where fixed_asset_id= "A904F004-06"
-
-A944Z004-02 需特別修改 續提end date (多提了一年)
+A904F004-06 需特別修改 續提end date
+  select id from fixedassets where fixed_asset_id= "A904F004-06"
+  update fixedasset_redepreciations set re_end_use_date = '2012-06-01' where fixedasset_id =
+A944Z004-02 需確認是否修改續提 re_end_use_date (多提了1年)
+A954L002-01 需確認是否修改續提 re_end_use_date (多提了1年3個月)

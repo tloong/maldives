@@ -50,7 +50,7 @@
             </label>
           </div>
           <div><label>報表月份</label> </div>
-          <input type="text" class='datepicker_month' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
           <input type="hidden" name="print_type" value="1" >
           <hr>
           <div>
@@ -67,7 +67,7 @@
         <div class="col-sm-6">
           <legend> 財產目錄總表 </legend>
           <div><label>報表月份</label> </div>
-          <input type="text" class='datepicker_month' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
           <input type="hidden" name="print_type" value="2" > 
           <div class="checkbox">
             <label>
@@ -114,7 +114,7 @@
             </label>
           </div>
           <div><label>報表月份</label> </div>
-          <input type="text" class='datepicker_month' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
           <input type="hidden" name="print_type" value="3" >
           <hr>
           <div>
@@ -130,7 +130,7 @@
         <div class="col-sm-6">
           <legend> 批次續提 </legend>
           <div><label>請選擇欲續提固定資產之折舊到期月份</label> </div>
-          <input type="text" class='datepicker_month' name="redep_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="text" data-behaviour='datepicker' name="redep_date" value="<%= Time.now.strftime('%Y/%m') %>">
           <hr>
           <div>
             <%= submit_tag "確定續提"%>

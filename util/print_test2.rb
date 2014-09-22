@@ -5,7 +5,7 @@ include FixedassetsHelper
 def header(page_size,title, subtitle, left1, left2, right1, page_number)
   stroke_color "000000"
   #font("/System/Library/Fonts/gkai00mp.ttf") do
-  font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf") do
+  font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
     text title, :size => 18, :align => :center
     text_box right1, :size => 10, :at => [915, 710], :width => 80, :align => :right
     text_box left1, :size => 10, :at => [0, 710], :width => 100, :align => :left
@@ -386,8 +386,8 @@ if (is_mortgaged==true)
           row_number = document_data_array[page][i].count - 1 
           
           cells.borders = []    
-            column(0).width = 66
-            column(1).width = 157
+          column(0).width = 66
+          column(1).width = 157
           column(2).width = 32
           column(3).width = 22
           columns(4).width = 37
@@ -402,7 +402,7 @@ if (is_mortgaged==true)
           columns(14..15).width = 54
           column(16).width = 68
           column(17).width = 57
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/pmingliu.ttf"
+          cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
           cells.align = :right
           columns(0..1).align = :left
             cells.style(:size =>10)

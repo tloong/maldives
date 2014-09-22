@@ -34,7 +34,7 @@
 
 
       #font("/System/Library/Fonts/gkai00mp.ttf") do
-      font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf") do
+      font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
         text title, :size => 18, :align => :center
         text_box right1, :size => 10, :at => [r1_x, r1_y], :width => r_width, :align => :right
         text_box left1, :size => 10, :at => [l1_x, l1_y], :width => l_width, :align => :left
@@ -358,7 +358,7 @@ data_hash = Hash[data_hash.sort_by{|k,v| "#{v[0]}#{v[2]}"}]
             columns(4..5).width = 75
             column(6).width=85
 
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf"
+            cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..1).align = :left
           end     

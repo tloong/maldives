@@ -7,6 +7,10 @@ vendors = DBF::Table.new("./util/MADER.DBF", nil, 'big5')
 #puts widget.attributes
 
 inserts = []
+if ActiveRecord::Base.connection.adapter_name == "Mysql2"
+  set = "SET sql_mode='NO_AUTO_VALUE_ON_ZERO'"
+  CONN.execute set
+end
 vendors.each do |vendor|
   sno  = vendor.sno
 
@@ -61,12 +65,12 @@ vendors.each do |vendor|
   #remark = (vendor.remark =="")? "NULL" : "'#{vendor.remark}'"
   pay30 = (vendor.pay30 =="")? "NULL" : "'#{vendor.pay30}'"
   
-  sql = "INSERT INTO vendors ('id', 'name', 'alias', 'pic_name', 'fax'," +
-      "'vat_id', 'product_type', 'main_business', 'payment_location', 'payment_type', 'payment_time'," +
-      "'check_usance', 'bank_id', 'bank_account_id', 'bank_account_name', 'receipter_vat_id'," +
-      "'notification_method', 'is_pay_for_wire_fee'," +
-      "'created_at','updated_at') VALUES" + 
-      "(#{sno},#{name},#{name0},#{name1},#{fax},#{idno},#{kind},#{mas_item},#{payfid}, #{payid}, #{paystat},#{check},#{bank_no},#{depo_no}, #{name_d},#{depo_id},#{notify},#{pay30},'#{DateTime.now.to_s}','#{DateTime.now.to_s}')"
+  sql = "INSERT INTO vendors (`id`, `name`, `alias`, `pic_name`, `fax`," +
+      "`vat_id`, `product_type`, `main_business`, `payment_location`, `payment_type`, `payment_time`," +
+      "`check_usance`, `bank_id`, `bank_account_id`, `bank_account_name`, `receipter_vat_id`," +
+      "`notification_method`, `is_pay_for_wire_fee`," +
+      "`created_at`,`updated_at`) VALUES" + 
+      "(#{sno},#{name},#{name0},#{name1},#{fax},#{idno},#{kind},#{mas_item},#{payfid}, #{payid}, #{paystat},#{check},#{bank_no},#{depo_no}, #{name_d},#{depo_id},#{notify},#{pay30},'#{DateTime.now.to_s(:db)}','#{DateTime.now.to_s(:db)}')"
 
   CONN.execute sql
 end

@@ -19,7 +19,7 @@
         <tr>
           <td> <%= user.email %> </td>
           <td> <%= user.approved %> </td>
-          <td> <%= link_to "Edit", "#" %></td>
+          <td> <%= link_to "Approve", approve_user_admin_manage_users_path(:user_id => user) unless user.approved%></td>
         </tr>
         <% end %>
       </tbody>
