@@ -125,7 +125,7 @@ GEM
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
-    paper_trail (3.0.3)
+    paper_trail (3.0.5)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
     pdf-core (0.2.5)
@@ -239,7 +239,7 @@ DEPENDENCIES
   letter_opener
   mini_magick
   mysql2
-  paper_trail
+  paper_trail (~> 3.0.5)
   prawn (~> 1.2.1)
   prawn-manual_builder
   prawn-table

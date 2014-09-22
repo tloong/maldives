@@ -20,7 +20,7 @@
 
 // Do not keep bank spaces between included files.
   $(document).ready(function(){    
-    $("[data-behaviour~=datepicker").datepicker({
+    $("[data-behaviour~=datepicker]").datepicker({
                            format: "yyyy/mm/dd",
                            autoclose: true,
                            }).on('changeDate', function(ev){
