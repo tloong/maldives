@@ -82,12 +82,16 @@ module FixedassetsHelper
   def is_scraped_how_many_month (service_life_year, service_life_month, start_use_date) 
     total_month = service_life_month + service_life_year*12
     end_use_date =  start_use_date + total_month.month 
-
+    month = 0
     if DateTime.now > end_use_date
-      total_month
+      month = total_month
     else
-      month_difference(DateTime.now,start_use_date)
+      month = month_difference(DateTime.now,start_use_date)
     end
+  
+    month = 0 if (month<0)
+
+    return month
   end
 
   def check_fixedasset_params(f_params,f_keys)

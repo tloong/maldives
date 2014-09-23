@@ -155,10 +155,22 @@ class FixedassetsController < ApplicationController
       f_params[:serial_no] = fixed_asset_id[5..7].to_i
       f_params[:sequence_no] = fixed_asset_id[9..10].to_i
     
+      year = f_params["get_date"][0..3].to_i
+      month = f_params["get_date"][5..6].to_i
+      day = f_params["get_date"][8..9].to_i
+      if day > 15
+        if (month == 12)
+          month = 1
+          year = year + 1
+        else
+          month = month + 1
+        end
+      end
+      day = 1 
+      start_use_date = Date.new(year,month,day)
+
       if f_params[:sequence_no] != 0
         # 檢查並修正 service_life
-        
-        start_use_date = Date.new(f_params["start_use_date(1i)"].to_i, f_params["start_use_date(2i)"].to_i,f_params["start_use_date(3i)"].to_i)
         service_life_year, service_life_month = get_correct_service_life(fixed_asset_id,start_use_date) 
         f_params[:service_life_year] = service_life_year
         f_params[:service_life_month] = service_life_month
@@ -189,6 +201,7 @@ class FixedassetsController < ApplicationController
 
       @fixedasset = Fixedasset.new(f_params)
       @fixedasset.status = :in_use
+      @fixedasset.start_use_date = start_use_date
       @fixedasset.end_use_date = @fixedasset.start_use_date + (service_life_year*12 + service_life_month -1).month
       @fixedasset.username = current_user.username
     else
@@ -227,7 +240,7 @@ class FixedassetsController < ApplicationController
   def fixedasset_params
     params.require(:fixedasset).permit(:fixed_asset_id, 
       :voucher_no, :name, :spec, :quantity, :unit, :original_cost, :get_date, 
-      :service_life_year, :service_life_month, :department_id, :vendor_id, :note, :start_use_date,
+      :service_life_year, :service_life_month, :department_id, :vendor_id, :note,
       :is_mortgaged)
   end
 
