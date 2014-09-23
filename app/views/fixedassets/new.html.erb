@@ -29,7 +29,6 @@
       <%= f.input :service_life_month, label: '使用月數', placeholder: '8個月請輸入: 8' %>
    
       <%= f.input :get_date, label: '取得日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}  %>
-      <%= f.input :start_use_date, label: '起始月份', discard_day: true, :as => :string, input_html: { "data-behaviour"=> "datepicker-month", class: "datepicker"}  %>
       <%= f.input :note, label: '備註' %>
     
     <%= f.submit "新增資產", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
