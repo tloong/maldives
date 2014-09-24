@@ -1,0 +1,54 @@
+<h2> 批次續提結果 </h2>
+<legend>成功續提</legend>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>資產編號</th>
+      <th>資產名稱</th>
+      <th>續提折舊總額</th>
+      <th>續提最終殘值</th>
+      <th>續提期間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= notice_message %>
+    <% @valid_fixedassets.each do |f, f_redep = FixedassetRedepreciation.find_by_fixedasset_id(f.id)| %>
+    <tr>
+      <td> <%= f.fixed_asset_id %></td>
+      <td> <%= f.name %>      </td>
+      <td><%= f_redep.re_original_value - f_redep.re_final_scrap_value %></td>
+      <td><%= f_redep.re_final_scrap_value %></td>
+      <td><%= "#{f_redep.re_start_use_date} - #{f_redep.re_end_use_date}"%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<legend>失敗續提 - 已續提過的資產</legend>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>資產編號</th>
+      <th>資產名稱</th>
+      <th>續提折舊總額</th>
+      <th>續提最終殘值</th>
+      <th>續提期間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= notice_message %>
+    <% @already_redep_fixedassets.each do |f, f_redep = FixedassetRedepreciation.find_by_fixedasset_id(f.id)| %>
+    <tr>
+      <td> <%= f.fixed_asset_id %></td>
+      <td> <%= f.name %>      </td>
+      <td><%= f_redep.re_original_value - f_redep.re_final_scrap_value %></td>
+      <td><%= f_redep.re_final_scrap_value %></td>
+      <td><%= "#{f_redep.re_start_use_date} - #{f_redep.re_end_use_date}"%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+

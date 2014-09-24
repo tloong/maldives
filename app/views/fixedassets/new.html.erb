@@ -20,14 +20,15 @@
       <%= f.input :spec, label: '規格' %>
       <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456' %>
       <%= f.association :department, :label_method => :to_label, label:'使用部門', collection: Department.where('docket_head <> ?',1) %>
+      <%= f.association :vendor, :label_method => :to_label, label:'購買廠商' %>
+      
       <%= f.input :original_cost, label: '取得成本'%>
     </div>
     <div class="col-sm-6">
       <%= f.input :service_life_year, label: '使用年限', placeholder: '5年請輸入: 5'%>
       <%= f.input :service_life_month, label: '使用月數', placeholder: '8個月請輸入: 8' %>
    
-      <%= f.input :get_date, label: '取得日期'%>
-      <%= f.input :start_use_date, label: '起始日期', discard_day: true%>
+      <%= f.input :get_date, label: '取得日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}  %>
       <%= f.input :note, label: '備註' %>
     
     <%= f.submit "新增資產", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
@@ -35,3 +36,14 @@
   </div>
 <% end %>
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){    
+    $("[data-behaviour~=datepicker]").datepicker({
+                           format: 'yyyy/mm',
+                           autoclose: true,
+                           viewMode: "months", 
+                           minViewMode: "months"
+                           })
+
+  })
+</script> 

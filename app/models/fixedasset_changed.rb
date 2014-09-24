@@ -25,7 +25,7 @@ class FixedassetChanged < ActiveRecord::Base
   belongs_to :old_department,
              :class_name => "Department",
              :foreign_key => "old_department_id"
-
+             
   enum change_type: { "transfer" => 0, "depreciation" => 1, "sold"=>2, "reevaluation" =>3}
 
 end

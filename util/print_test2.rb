@@ -1,14 +1,11 @@
 include ActionView::Helpers::NumberHelper
-
-def month_difference(end_date, start_date)
-  (end_date.year * 12 + end_date.month) - (start_date.year * 12 + start_date.month)
-end
+include FixedassetsHelper
 
 
 def header(page_size,title, subtitle, left1, left2, right1, page_number)
   stroke_color "000000"
   #font("/System/Library/Fonts/gkai00mp.ttf") do
-  font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf") do
+  font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
     text title, :size => 18, :align => :center
     text_box right1, :size => 10, :at => [915, 710], :width => 80, :align => :right
     text_box left1, :size => 10, :at => [0, 710], :width => 100, :align => :left
@@ -32,6 +29,7 @@ def generate_data(data_hash,title_ary)
   table_ary = Array.new
   data_ary = Array.new   
   type_count = {}
+    item_count = {}
   # deal with by department or category.
   data_hash.each do |index, asset_hash|
     sum_array = Array.new
@@ -44,7 +42,7 @@ def generate_data(data_hash,title_ary)
     cat_sum_array[4] = ""
     cat_sum_array[6] = ""
     cat_sum_array[12] = ""
-    row_per_page = 37
+      row_per_page = 44
     row_last = row_per_page
     data_array = asset_hash.values
           puts "data_array.count=#{data_array.count}"
@@ -141,21 +139,28 @@ def generate_data(data_hash,title_ary)
       end 
     end
     type_count [data_array[0][0][3]] = page_num
+      item_count [data_array[0][0][3]] = data_array.count
     #puts page_num
 
   end
 
   #puts page_ary
-  return [page_ary, type_count]
+    return [page_ary, type_count, item_count]
 end
-
+is_mortgaged = false
+year = 2014
+month = 8
+if (is_mortgaged==true)
+      query_string = "is_mortgaged = 't' and "
+    else
+      query_string = ""
+    end
   # input1: query_date
-  query_date = DateTime.new(2014,7,31,0,0,0)
-
+  query_date = DateTime.new(year,month,Time.days_in_month(month,year),0,0,0)
   # input2: according_to (department or category)
   according_to = :cat
 
-
+  d84_date = DateTime.new(1997,1,1,0,0,0)
   today = DateTime.now
   this_year = DateTime.new(today.year,1,1,0,0,0)
   sort_index1 = :category_id
@@ -165,16 +170,12 @@ end
   title_ary = ["資產編號","資產名稱及規格","資產部門","數量","取得日期","取得原價","耐年","預留殘值","重估總值","重估殘值","續提總值","續提殘值","續年","應提總額","本期折舊","本年折舊","累計折舊","未折減餘額"]
 
   f = Fixedasset.select(
-                :category_id).where("ab_type='A' and get_date <= ?  and (typeof(fixedassets.out_date) = 'null' or out_date>?)",query_date,query_date).group(sort_index1).order(order_by_index1, order_by_index2)
-
-
+                  :category_id).where("#{query_string}ab_type='A' and get_date <= ? and (typeof(fixedassets.out_date) = 'null' or out_date>?)",query_date,query_date).group(sort_index1).order(order_by_index1, order_by_index2)
  
   data_hash = {}
   row_count = {}
   row_count.default = 0 # 計算分類後資料有幾個row, 畫分隔線使用
-  today = DateTime.now
-  this_year = DateTime.new(today.year,1,1,0,0,0)
-
+ 
 
   f.each do |fe|
     index = fe.category_id
@@ -183,7 +184,7 @@ end
     data_hash[index] = Hash.new
 
     # select basic data from fixedasset 
-    ff = Fixedasset.includes(:department).where("category_id = ? and ab_type='A' and get_date < ? and (typeof(fixedassets.out_date) = 'null' or out_date>?)",fe.category_id,query_date,query_date).order(order_by_index1, order_by_index2)
+      ff = Fixedasset.includes(:department).where("#{query_string}get_date <= ? and category_id = ? and ab_type='A' and (typeof(fixedassets.out_date) = 'null' or out_date>?)",query_date,fe.category_id,query_date).order(order_by_index1, order_by_index2)
 
     ff.each do |ffe|
       #puts ffe.id
@@ -211,18 +212,43 @@ end
 
       data_hash[index][ffe.id][13] = ffe.original_cost - ffe.final_scrap_value
       
-      if (month_difference(ffe.end_use_date,query_date)==0)
+        redep = ffe.fixedasset_redepreciation
+        e_date = get_end_date(ffe.end_use_date,redep)
+
+        if ffe.start_use_date >= e_date
+          next
+        end
+
+        if (month_difference(e_date,query_date)==0)
         data_hash[index][ffe.id][14] = data_hash[index][ffe.id][14] + ffe.depreciated_value_last_month
         data_hash[index][ffe.id][15] = data_hash[index][ffe.id][15] + ffe.depreciated_value_per_month * (month_difference(query_date,this_year)) + ffe.depreciated_value_last_month 
+          if (ffe.depreciation84 > 0)
+            data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciation84 + ffe.depreciated_value_per_month * (month_difference(query_date,d84_date)) + ffe.depreciated_value_last_month 
+          else
         data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciated_value_per_month * (month_difference(query_date,ffe.start_use_date)) + ffe.depreciated_value_last_month 
-      elsif (month_difference(ffe.end_use_date,query_date)<0)
-          if (month_difference(ffe.end_use_date,this_year)>0)
-            data_hash[index][ffe.id][15] = data_hash[index][ffe.id][15] + ffe.depreciated_value_per_month * (month_difference(ffe.end_use_date,this_year)) + ffe.depreciated_value_last_month 
           end
-        data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciated_value_per_month * (month_difference(ffe.end_use_date,ffe.start_use_date)) + ffe.depreciated_value_last_month 
+
+        elsif (month_difference(e_date,query_date)<0)
+          if (month_difference(e_date,this_year)>=0)
+            data_hash[index][ffe.id][15] = data_hash[index][ffe.id][15] + ffe.depreciated_value_per_month * (month_difference(e_date,this_year)) + ffe.depreciated_value_last_month 
+          end
+    if (ffe.id == 211582)
+      puts "a=#{data_hash[index][ffe.id][15]}"
+    end
+          if (ffe.depreciation84 > 0)
+            data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciation84 + ffe.depreciated_value_per_month * (month_difference(e_date,d84_date)) + ffe.depreciated_value_last_month 
+          else
+            data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciated_value_per_month * (month_difference(e_date,ffe.start_use_date)) + ffe.depreciated_value_last_month 
+          end      
       elsif(month_difference(query_date,ffe.start_use_date)>=0)
         data_hash[index][ffe.id][14] = data_hash[index][ffe.id][14] + ffe.depreciated_value_per_month
+          if (ffe.depreciation84 > 0)
+            data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciation84 + ffe.depreciated_value_per_month * (month_difference(query_date,d84_date) +1)
+          else
         data_hash[index][ffe.id][16] = data_hash[index][ffe.id][16] + ffe.depreciated_value_per_month * (month_difference(query_date,ffe.start_use_date) +1)
+          end
+
+
         if (this_year > ffe.start_use_date)
           data_hash[index][ffe.id][15] = data_hash[index][ffe.id][15] + ffe.depreciated_value_per_month * (month_difference(query_date,this_year) +1)
         else
@@ -231,7 +257,11 @@ end
 
       end
     end
-
+      if (is_mortgaged==true)
+        query_string2 = "fixedassets.is_mortgaged = 't' and "
+      else
+        query_string2 = ""
+      end
     # for redepreciated fixedassets
     f_redep = FixedassetRedepreciation.
                         select(
@@ -242,13 +272,14 @@ end
                         :re_start_use_date,
                         :re_end_use_date,
                         :fixedasset_id
-                        ).joins(:fixedasset).where("fixedassets.ab_type='A' and fixedassets.get_date < ? and (typeof(fixedassets.out_date) = 'null' or fixedassets.out_date > ? ) and fixedassets.category_id = ?",query_date,query_date,fe.category_id)
+                          ).joins(:fixedasset).where("#{query_string2}fixedassets.get_date <= ? and fixedassets.ab_type='A' and (typeof(fixedassets.out_date) = 'null' or fixedassets.out_date > ? ) and fixedassets.category_id = ?",query_date ,query_date,fe.category_id)
 
     f_redep.each do |ffe|
 
-      if ffe.re_start_use_date < ffe.fixedasset.end_use_date
-        next
-      end
+        #if ffe.re_start_use_date < ffe.fixedasset.end_use_date
+        #  next
+        #end
+        
       #puts index + ffe.fixedasset_id
       fid =  ffe.fixedasset_id.to_i
       data_hash[index][fid][12] = 3
@@ -262,14 +293,18 @@ end
         data_hash[index][fid][15] = data_hash[index][fid][15] + ffe.re_depreciated_value_per_month * (month_difference(query_date,this_year)) + ffe.re_depreciated_value_last_month 
         data_hash[index][fid][16] = data_hash[index][fid][16] + ffe.re_depreciated_value_per_month * (month_difference(query_date,ffe.re_start_use_date)) + ffe.re_depreciated_value_last_month 
       elsif (month_difference(ffe.re_end_use_date,query_date)<0)
-          if (month_difference(ffe.re_end_use_date,this_year)>0)
-            data_hash[index][fid][15] = data_hash[index][fid][15] + ffe.re_depreciated_value_per_month * (month_difference(ffe.re_end_use_date,this_year)) + ffe.re_depreciated_value_last_month 
-          end
+        if (month_difference(ffe.re_end_use_date,this_year)>=0)
+          data_hash[index][fid][15] = data_hash[index][fid][15] + ffe.re_depreciated_value_per_month * (month_difference(ffe.re_end_use_date,this_year)) + ffe.re_depreciated_value_last_month 
+        end
         data_hash[index][fid][16] = data_hash[index][fid][16] + ffe.re_depreciated_value_per_month * (month_difference(ffe.re_end_use_date,ffe.re_start_use_date)) + ffe.re_depreciated_value_last_month 
       elsif (month_difference(query_date,ffe.re_start_use_date)>=0)
         data_hash[index][fid][14] = data_hash[index][fid][14] + ffe.re_depreciated_value_per_month
-        data_hash[index][fid][15] = data_hash[index][fid][15] + ffe.re_depreciated_value_per_month * (month_difference(query_date,this_year) +1)
         data_hash[index][fid][16] = data_hash[index][fid][16] + ffe.re_depreciated_value_per_month * (month_difference(query_date,ffe.re_start_use_date) +1)
+        if (this_year > ffe.re_start_use_date)
+          data_hash[index][fid][15] = data_hash[index][fid][15] + ffe.re_depreciated_value_per_month * (month_difference(query_date,this_year) +1)
+        else
+          data_hash[index][fid][15] = data_hash[index][fid][15] + ffe.re_depreciated_value_per_month * (month_difference(query_date,ffe.re_start_use_date) +1)
+        end
       end
     end 
 
@@ -282,7 +317,7 @@ end
                     "fixedassets.department_id",
                     :original_cost,
                     :final_scrap_value,
-                    :id).where("fixedassets.ab_type='A' and fixedassets.get_date < ? and fixedassets.category_id = ? and (typeof(fixedassets.out_date) = 'null' or fixedassets.out_date > ? ) and fixedasset_changeds.change_type=3",query_date,fe.category_id,query_date)
+                      :id).where("#{query_string}get_date <= ? and ab_type='A' and category_id = ? and (typeof(out_date) = 'null' or out_date > ? ) and change_type=3",query_date,fe.category_id,query_date)
 
     f_reev.each do |ffe|
       
@@ -291,8 +326,8 @@ end
 
       data_hash[index][ffe.id][8] = ffe.evaluated_value
       data_hash[index][ffe.id][9] = ffe.evaluated_scrap_value
+        data_hash[index][ffe.id][17] = ffe.evaluated_scrap_value - ffe.final_scrap_value
       data_hash[index][ffe.id][13] = data_hash[index][ffe.id][13] + (data_hash[index][ffe.id][8] - ffe.original_cost) - (data_hash[index][ffe.id][9] - ffe.final_scrap_value) 
-      data_hash[index][ffe.id][11] = ffe.evaluated_scrap_value - ffe.final_scrap_value
     end
 
     data_hash[index].each do |k,v|
@@ -302,14 +337,22 @@ end
     end
   end
   
-  document_data_array,page_count = generate_data(data_hash,title_ary)
+    document_data_array,page_count,item_count = generate_data(data_hash,title_ary)
+    if (is_mortgaged==true)
+      filename_postfix = "(已抵押)"
+    else
+      filename_postfix = ""
+    end 
+    Rails.logger.error "filename_postfix=#{filename_postfix}"
   # start print pdf
   Prawn::Document.generate("dd.pdf",:page_size=>[1071,792], :layout => :landscape) do
     page_count_a = page_count.to_a
+      item_count_a = item_count.to_a
     page_index = 0
     page_num = 0
     page_string = ""
     total_page = page_count_a[page_index][1]
+      total_item = item_count_a[page_index][1]
     #puts "total_page = #{document_data_array.count}"
     (0..document_data_array.count-1).each do |page|
       if (page > 0)
@@ -321,24 +364,30 @@ end
         page_index = page_index + 1
         page_num = 0
         total_page = page_count_a[page_index][1]
+          total_item = item_count_a[page_index][1]
       end
 
       if (page_num ==0)
         fc = FixedassetCategory.select(:cat_name).where("cat_id = ?", page_count_a[page_index][0])
-        page_string = "類別: #{page_count_a[page_index][0]} #{fc.first.cat_name}"
+          page_string = "類別: #{page_count_a[page_index][0]} #{fc.first.cat_name} (共#{total_item}項)" 
       end
       page_num = page_num + 1
 
-      header(:us_std_fanfold, "東隆興業股份有限公司", "各部門折舊明細表", "折舊期間: 103/06-103/06",page_string,"折舊方法:平均法","#{page_num} / #{total_page}")
+        if (is_mortgaged==true)
+          title_postfix = "(已抵押)"
+        else
+          title_postfix = ""
+        end 
+        Rails.logger.error "title_postfix=#{title_postfix}"
+        header(:us_std_fanfold, "東隆興業股份有限公司", "財產目錄總表#{title_postfix}", "折舊期間: #{year}/#{month}",page_string,"折舊方法:平均法","#{page_num} / #{total_page}")
 
       (0..document_data_array[page].count-1).each do |i|
         table document_data_array[page][i] do
           row_number = document_data_array[page][i].count - 1 
           
-        
           cells.borders = []    
-          column(0).width = 65
-          column(1).width = 158
+          column(0).width = 66
+          column(1).width = 157
           column(2).width = 32
           column(3).width = 22
           columns(4).width = 37
@@ -353,11 +402,10 @@ end
           columns(14..15).width = 54
           column(16).width = 68
           column(17).width = 57
-          cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf"
+          cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
           cells.align = :right
           columns(0..1).align = :left
-          cells.style(:size =>11)
-          #row(0).column(6).style(:size => 6)
+            cells.style(:size =>10)
           case row_number
           when 0
           when 1
@@ -377,7 +425,6 @@ end
             rows(1..row_number-1).padding = [0, 5, 0, 0]
             row(row_number).padding = [0, 5, 10, 0]
           end
-      
         end     
 
         if (i == 0)

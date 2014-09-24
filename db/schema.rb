@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826045553) do
+ActiveRecord::Schema.define(version: 20140919064514) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -28,11 +28,6 @@ ActiveRecord::Schema.define(version: 20140826045553) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
-
-  create_table "department_parts", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "departments", force: true do |t|
     t.string   "dep_id",       null: false
@@ -51,8 +46,22 @@ ActiveRecord::Schema.define(version: 20140826045553) do
     t.datetime "updated_at"
   end
 
-# Could not dump table "fixedasset_changeds" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "fixedasset_changeds", force: true do |t|
+    t.integer  "fixedasset_id",         null: false
+    t.integer  "voucher_no"
+    t.integer  "department_id"
+    t.integer  "price"
+    t.date     "changed_date"
+    t.string   "username"
+    t.text     "reason"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "old_department_id"
+    t.integer  "change_type"
+    t.integer  "evaluated_value"
+    t.integer  "evaluated_scrap_value"
+  end
 
   create_table "fixedasset_parts", force: true do |t|
     t.integer  "part_no"
@@ -64,32 +73,29 @@ ActiveRecord::Schema.define(version: 20140826045553) do
   end
 
   create_table "fixedasset_redepreciations", force: true do |t|
-    t.string   "fixedasset_id",                    null: false
+    t.string   "fixedasset_id",                   null: false
     t.integer  "re_original_value"
     t.integer  "re_final_scrap_value"
     t.integer  "re_depreciated_value_per_month"
     t.integer  "re_depreciated_value_last_month"
-    t.integer  "re_accumulated_depreciated_value"
     t.date     "re_start_use_date"
-    t.date     "re_update_value_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "re_depreciated_value_this_year"
     t.date     "re_end_use_date"
   end
 
   create_table "fixedassets", force: true do |t|
-    t.string   "fixed_asset_id",                            null: false
-    t.string   "ab_type",                                   null: false
-    t.integer  "year",                                      null: false
-    t.integer  "category_id",                               null: false
-    t.string   "category_lv2",                              null: false
-    t.integer  "serial_no",                                 null: false
-    t.integer  "sequence_no",                               null: false
+    t.string   "fixed_asset_id",                           null: false
+    t.string   "ab_type",                                  null: false
+    t.integer  "year",                                     null: false
+    t.integer  "category_id",                              null: false
+    t.string   "category_lv2",                             null: false
+    t.integer  "serial_no",                                null: false
+    t.integer  "sequence_no",                              null: false
     t.integer  "voucher_no"
-    t.string   "name",                                      null: false
+    t.string   "name",                                     null: false
     t.text     "spec"
-    t.integer  "quantity",                      default: 0, null: false
+    t.integer  "quantity",                     default: 0, null: false
     t.string   "unit"
     t.integer  "original_cost"
     t.date     "get_date"
@@ -97,7 +103,6 @@ ActiveRecord::Schema.define(version: 20140826045553) do
     t.integer  "service_life_month"
     t.integer  "depreciated_value_per_month"
     t.integer  "depreciated_value_last_month"
-    t.integer  "accumulated_depreciated_value"
     t.integer  "department_id"
     t.integer  "vendor_id"
     t.integer  "status"
@@ -107,9 +112,7 @@ ActiveRecord::Schema.define(version: 20140826045553) do
     t.datetime "updated_at"
     t.string   "username"
     t.integer  "depreciation84"
-    t.date     "update_value_date"
     t.integer  "final_scrap_value"
-    t.integer  "depreciated_value_this_year"
     t.boolean  "is_mortgaged"
     t.date     "end_use_date"
     t.date     "out_date"
@@ -118,12 +121,12 @@ ActiveRecord::Schema.define(version: 20140826045553) do
   add_index "fixedassets", ["is_mortgaged"], name: "index_fixedassets_on_is_mortgaged"
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -132,6 +135,7 @@ ActiveRecord::Schema.define(version: 20140826045553) do
     t.datetime "updated_at"
     t.string   "username"
     t.boolean  "approved"
+    t.boolean  "is_admin",               default: false
   end
 
   add_index "users", ["approved"], name: "index_users_on_approved"
@@ -140,16 +144,14 @@ ActiveRecord::Schema.define(version: 20140826045553) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
   create_table "vendor_addresses", force: true do |t|
+    t.integer  "vendor_id"
+    t.integer  "address_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "building_and_street"
     t.string   "zipcode"
     t.string   "country"
-    t.integer  "address_type"
-    t.integer  "vendor_id"
   end
-
-  add_index "vendor_addresses", ["vendor_id"], name: "index_vendor_addresses_on_vendor_id"
 
   create_table "vendor_contacts", force: true do |t|
     t.integer  "vendor_id",  null: false

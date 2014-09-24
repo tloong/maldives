@@ -2,7 +2,7 @@
   <div class="panel-heading">
     <h1 class="panel-title">Users</h1>
   </div>
- <%= link_to 'All users', :action => "index" ,:class => "btn btn-primary btn-sm"%>
+ <%= link_to 'All users', {:action => "index"} , {:class => "btn btn-primary btn-sm"} %>
   <%= link_to 'Users waiting approval', {:action => "index", :approved => "false"} , {:class => "btn btn-primary btn-sm"} %>
   <div class="panel-body">
     <table class="table table-striped">
@@ -19,12 +19,11 @@
         <tr>
           <td> <%= user.email %> </td>
           <td> <%= user.approved %> </td>
-          <td> <%= link_to "Edit", "#" %></td>
+          <td> <%= link_to "Approve", approve_user_admin_manage_users_path(:user_id => user) unless user.approved%></td>
         </tr>
         <% end %>
       </tbody>
     </table>
-
   </div>
 
   <div class="pull-left" style="padding-bottom: 20px;">

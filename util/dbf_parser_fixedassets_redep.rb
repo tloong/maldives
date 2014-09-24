@@ -66,21 +66,8 @@ fixedassets.each do |f|
       fd.re_end_use_date = end_use_date + 1.month
     end
 
-    fd.re_accumulated_depreciated_value = 0
-    
-    if (f.dwhy =="D" or f.dwhy =="S")
-      fd.re_accumulated_depreciated_value = fd.re_depreciated_value_per_month * (month_difference(end_use_date,start_use_date)+1)
-
-    elsif (now_date >= end_use_date)
-      fd.re_accumulated_depreciated_value = fd.re_depreciated_value_per_month * 35
-    else
-      fd.re_accumulated_depreciated_value = fd.re_depreciated_value_per_month * (month_difference(now_date,start_use_date)+1)
-    end
-
-    fd.re_update_value_date = DateTime.now
     fd.save!
-    puts "[#{fixno}][#{fd.re_original_value}].per = #{f.dtotal}, accu= #{fd.re_accumulated_depreciated_value}, #{start_use_date}"
-
+    
   elsif (f.bwhy=="E" && (f.dwhy=="" || f.dwhy=="M") && j+1 == i)
 
     fd.re_depreciated_value_last_month = f.dtotal.to_i
@@ -91,13 +78,7 @@ fixedassets.each do |f|
       start_use_date = DateTime.new(year,month,1,0,0,0)    
     end
 
-    if (now_date >= start_use_date)
-      fd.re_accumulated_depreciated_value = fd.re_accumulated_depreciated_value + fd.re_depreciated_value_last_month
-      fd.re_update_value_date = DateTime.now
-    end
-
     fd.save!
-    #puts "[#{fixno}].per = #{fd.depreciated_value_per_month},[#{fixno}].last = #{fd.depreciated_value_last_month}"
   elsif (f.bwhy=="C" && (f.dwhy=="D" or f.dwhy=="S"))
 
   end

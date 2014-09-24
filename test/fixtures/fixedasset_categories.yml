@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: fixedasset_categories
+#
+#  id         :integer          not null, primary key
+#  cat_id     :string(255)      not null
+#  cat_name   :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined.  If you add columns to the

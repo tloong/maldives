@@ -1,41 +1,8 @@
 require 'dbf'
 
-def get_deparment_id (dep_id) 
-  case dep_id
-  when '0000'
-    department_id = 120
-  when '1261'
-    department_id = 67
-  when '2260'
-    department_id = 75
-  when '2261'
-    department_id = 76
-  when '2262'
-    department_id = 77
-  when '2263'
-    department_id = 78
-  when '2264'
-    department_id = 79
-  when '2265'
-    department_id = 80
-  when '2266'
-    department_id = 81
-  when '2267'
-    department_id = 82
-  when '2268'
-    department_id = 83
-  when '2269'
-    department_id = 84
-  when '2271'
-    department_id = 86
-  when '2272'
-    department_id = 99
-  when '3261'
-    department_id = 87
-  when '226A'
-    department_id = 91
-  end
-  return department_id
+def get_department_id(depno)
+  d = Department.find_by_dep_id(depno)
+  return d.id
 end
 
 
@@ -71,8 +38,8 @@ fixedassets.each do |f|
   
   # prepare data 
   voucher_no = f.chno  
-  old_department_id = get_deparment_id(f.depno1)
-  new_department_id = get_deparment_id(f.depno2)
+  old_department_id = get_department_id(f.depno1)
+  new_department_id = get_department_id(f.depno2)
 
   fc = FixedassetChanged.new
   fc.fixedasset_id = fixed_asset.id

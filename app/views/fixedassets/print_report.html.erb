@@ -5,65 +5,76 @@
 <div class="tabbable tabs-left">
 <ul class="nav nav-tabs">
     <li class="active">
-      <a href="#print_cat1" data-toggle="tab">明細表(依部門/種類)</a>
+      <a href="#print_cat1" data-toggle="tab">各部門折舊明細表</a>
     </li>
     <li>
-      <a href="#print_cat2" data-toggle="tab">簡表(依部門/種類)</a>
+      <a href="#print_cat2" data-toggle="tab">財產目錄總表</a>
     </li>
     <li>
-      <a href="#print_cat3" data-toggle="tab">財產目錄總表</a>
+      <a href="#print_cat3" data-toggle="tab">固資變更統計表</a>
+    </li>
+    <li>
+      <a href="#batch_redep" data-toggle="tab">批次續提</a>
     </li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="print_cat1">
     <%= form_tag "/fixedassets/do_print" do %>
       <div class="panel-body">
+        <div class="col-sm-6">
           <legend> 各部門折舊明細表 </legend>
-          <div><label>主要分類</label> </div>
+          <div><label>分類索引</label> </div>
           <div class="radio">
             <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="dep" checked>
+              <input type="radio" name="print_base_on" id="print_base_on1" value="dep" checked>
               依資產所屬部門
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios2" value="cat">
+              <input type="radio" name="print_base_on" id="print_base_on2" value="cat">
               依資產類別
             </label>
           </div>
+          <div><label>報表類型</label> </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="report_type" id="report_type1" value="all" checked>
+              總表
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="report_type" id="report_type2" value="simple">
+              簡表
+            </label>
+          </div>
           <div><label>報表月份</label> </div>
-          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="text"  data-behaviour="datepicker-month" class="datepicker" name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
           <input type="hidden" name="print_type" value="1" >
           <hr>
           <div>
             <%= submit_tag "確定列印"%>
           </div>
-        
+        </div>
       </div>    
     <% end %>
   </div>
+  
   <div class="tab-pane" id="print_cat2">
     <%= form_tag "/fixedassets/do_print" do %>
       <div class="panel-body">
         <div class="col-sm-6">
-          <legend> 各部門折舊簡表 </legend>
-          <div><label>主要分類</label> </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="dep" checked>
-              依資產所屬部門
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios2" value="cat">
-              依資產類別
-            </label>
-          </div>
+          <legend> 財產目錄總表 </legend>
           <div><label>報表月份</label> </div>
-          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
-          <input type="hidden" name="print_type" value="2" >
+          <input type="text" data-behaviour='datepicker-month' class="datepicker" name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="hidden" name="print_type" value="2" > 
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="checked" name="is_mortgaged">
+              只列印抵押資產
+            </label>
+          </div>
           <hr>
           <div>
             <%= submit_tag "確定列印"%>
@@ -76,19 +87,53 @@
     <%= form_tag "/fixedassets/do_print" do %>
       <div class="panel-body">
         <div class="col-sm-6">
-          <legend> 財產目錄總表 </legend>
-          <div><label>報表月份</label> </div>
-          <input type="text" data-behaviour='datepicker' name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
-          <input type="hidden" name="print_type" value="3" > 
-          <div class="checkbox">
+          <legend> 固資變更統計表 </legend>
+          <div><label>分類索引</label> </div>
+          <div class="radio">
             <label>
-              <input type="checkbox" value="checked" name="is_mortgaged">
-              只列印抵押資產
+              <input type="radio" name="print_base_on" id="print_base_on1" value="new" checked>
+              新增統計表
             </label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="print_base_on" id="print_base_on2" value="depreciation">
+              報廢統計表
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="print_base_on" id="print_base_on3" value="sold">
+              出售統計表
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="print_base_on" id="print_base_on4" value="transfer">
+              部門移轉統計表
+            </label>
+          </div>
+          <div><label>報表月份</label> </div>
+          <input type="text"  data-behaviour='datepicker-month' class="datepicker" name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <input type="hidden" name="print_type" value="3" >
           <hr>
           <div>
             <%= submit_tag "確定列印"%>
+          </div>
+        </div>
+      </div>    
+    <% end %>
+  </div>
+  <div class="tab-pane" id="batch_redep">
+    <%= form_tag "/fixedassets/do_batch_redep" do %>
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <legend> 批次續提 </legend>
+          <div><label>請選擇欲續提固定資產之折舊到期月份</label> </div>
+          <input type="text"  data-behaviour='datepicker-month' class="datepicker" name="redep_date" value="<%= Time.now.strftime('%Y/%m') %>">
+          <hr>
+          <div>
+            <%= submit_tag "確定續提"%>
           </div>
         </div>
       </div>    

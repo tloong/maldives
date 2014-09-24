@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   devise_for :users
   namespace :admin do
-    resources :manage_users
+    resources :manage_users do
+      collection do
+        get :approve_user
+      end
+    end 
   end
 
   resources :fixedassets do
@@ -16,6 +20,7 @@ Rails.application.routes.draw do
       get :print_report
       post :do_print
       get :reports
+      post :do_batch_redep
     end
   end
 

@@ -34,7 +34,7 @@
 
 
       #font("/System/Library/Fonts/gkai00mp.ttf") do
-      font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf") do
+      font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
         text title, :size => 18, :align => :center
         text_box right1, :size => 10, :at => [r1_x, r1_y], :width => r_width, :align => :right
         text_box left1, :size => 10, :at => [l1_x, l1_y], :width => l_width, :align => :left
@@ -180,14 +180,23 @@
       data_hash[index][6] = ""
       # for normal status fixedassets
       ff = Fixedasset.select(
+                      :id,
                       :depreciated_value_per_month,
                       :depreciated_value_last_month,
                       :end_use_date,
                       :start_use_date).where("get_date <= ? and ab_type='A' and (typeof(fixedassets.out_date) = 'null' or out_date > ? ) and department_id = ? and category_id = ?",query_date,query_date,fe.department_id,fe.category_id)
       ff.each do |ffe|
-        if (month_difference(ffe.end_use_date,query_date)==0)
+
+        redep = ffe.fixedasset_redepreciation
+        e_date = get_end_date(ffe.end_use_date,redep)
+
+        if ffe.start_use_date > e_date
+          next
+        end
+
+        if (month_difference(e_date,query_date)==0)
           data_hash[index][4] = data_hash[index][4] + ffe.depreciated_value_last_month
-        elsif (month_difference(ffe.end_use_date,query_date)>0)
+        elsif (month_difference(e_date,query_date)>0 && month_difference(query_date,ffe.start_use_date)>=0)
           data_hash[index][4] = data_hash[index][4] + ffe.depreciated_value_per_month
         end
       end
@@ -206,7 +215,7 @@
       f_redep.each do |ffe|
         if (month_difference(ffe.re_end_use_date,query_date)==0)
           data_hash[index][4] = data_hash[index][4] + ffe.re_depreciated_value_last_month
-        elsif (month_difference(ffe.re_end_use_date,query_date)>0)
+        elsif (month_difference(ffe.re_end_use_date,query_date)>0 && (month_difference(query_date,ffe.re_start_use_date)>=0))
           data_hash[index][4] = data_hash[index][4] + ffe.re_depreciated_value_per_month
         end
       end                          
@@ -222,10 +231,8 @@
     # process hash, need to separate 0000 to 2xxx and 1261 to 1xxx
       d = Department.find_by_dep_id("0000")
       dep0 = d.id
-      #row_count.except!(dep0)
       d = Department.find_by_dep_id("1261")
       dep1 = d.id
-      #row_count.except!(dep1)
       parts = {}
       
       # collection key to be process
@@ -351,19 +358,10 @@ data_hash = Hash[data_hash.sort_by{|k,v| "#{v[0]}#{v[2]}"}]
             columns(4..5).width = 75
             column(6).width=85
 
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt001.ttf"
+            cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..1).align = :left
-
-            #if (i>0 && row_number >0)
-              #row(row_number-1).columns(2..12).border_lines = [:dashed]
-              #row(row_number-1).columns(2..12).borders = [:bottom]
-              #row(3).borders = [:bottom]
-              #column(0).font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt024.ttf"
-              #column(1).font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/document_data_array[page]/fonts/wt024.ttf"
-            #end
           end     
-
           if (i == 0)
             stroke_horizontal_rule
           elsif (i > 0)

@@ -14,6 +14,7 @@
 #  created_at                       :datetime
 #  updated_at                       :datetime
 #  re_depreciated_value_this_year   :integer
+#  re_end_use_date                  :date
 #
 
 class FixedassetRedepreciation < ActiveRecord::Base

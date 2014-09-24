@@ -19,3 +19,19 @@
 //= require bootstrap-datepicker
 
 // Do not keep bank spaces between included files.
+  $(document).ready(function(){    
+    $("[data-behaviour~=datepicker]").datepicker({
+                           format: "yyyy/mm/dd",
+                           autoclose: true,
+                           }).on('changeDate', function(ev){
+        // do what you want here
+        $("[data-behaviour~=datepicker]").datepicker('hide');})
+    $("[data-behaviour~=datepicker-month]").datepicker({
+                           format: "yyyy/mm",                    
+                           viewMode: "months", 
+                           minViewMode: "months",
+                           autoclose: true,
+                           }).on('changeDate', function(ev){
+        // do what you want here
+        $("[data-behaviour~=datepicker-month]").datepicker('hide');})
+  })

@@ -1,0 +1,18 @@
+# config/application.yml
+
+defaults: &defaults
+  stripe:
+    private_key: "sk_test_QlN8eNCBo1FqG3n2Uq6rme1C"
+    public_key: "pk_test_u4dYPP1DQB7Ya4AIvJ1NK4Nz"
+  mailgun:
+    user_name: "postmaster@sandboxfc2d85875b0a4d8abee1fd0625993873.mailgun.org"
+    password: "00m9w62bz960"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

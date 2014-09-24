@@ -43,8 +43,14 @@ group :development do
   gem "annotate"
   gem "letter_opener"
   gem 'roadie', '~> 2.4'
-  gem "curb"  
 end
+
+group :production do
+  gem 'mysql2'
+end
+
+# curl
+gem "curb"  
 
 # Email validator
 gem 'ValidateEmail'
@@ -76,11 +82,12 @@ gem 'cocoon'
 gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4.1"
 
 # Model version control
-gem 'paper_trail'
+gem 'paper_trail',  '~> 3.0.5'
 
 # For frontend effect
 gem 'jquery-ui-rails'
 gem 'bootstrap-datepicker-rails'
+gem 'twitter-bootstrap-rails'
 
 # PDF maker
 gem 'prawn', '~> 1.2.1'

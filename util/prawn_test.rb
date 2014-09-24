@@ -28,7 +28,7 @@
 def header(page_size,title, subtitle, left1, left2, right1, page_number)
   stroke_color "000000"
   #font("/System/Library/Fonts/gkai00mp.ttf") do
-  font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt024.ttf") do
+  font(Rails.root.to_s+"/resources/fonts/wt003.ttf") do
     text title, :size => 18, :align => :center
     text_box right1, :size => 10, :at => [915, 710], :width => 80, :align => :right
     text_box left1, :size => 10, :at => [0, 710], :width => 100, :align => :left
@@ -178,7 +178,7 @@ Prawn::Document.generate("bbb.pdf",:page_size=>[1071,792], :layout => :landscape
         column(9).width=70
         columns(10..11).width = 85
         column(12).width = 75
-        cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt024.ttf"
+        cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
         cells.align = :right
         columns(0..1).align = :left
 
