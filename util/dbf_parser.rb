@@ -20,3 +20,4 @@ widgets.each do |record|
   d.save
   
 end
+

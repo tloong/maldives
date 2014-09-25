@@ -1,0 +1,28 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h2 class="panel-title">新增部門</h2>
+	</div>
+<%= simple_form_for [ @department] , :html => { :class => 'form-horizontal'},
+	wrapper: :horizontal_form,
+	wrapper_mappings: {
+		check_boxes: :horizontal_radio_and_checkboxes,
+		radio_buttons: :horizontal_radio_and_checkboxes,
+		file: :horizontal_file_input,
+		boolean: :horizontal_boolean
+	} do |f| %>
+	<div class="panel-body">
+		<div class="col-sm-6">
+			<legend>部門基本資料</legend>
+			<%= f.input :dep_id, label: '部門代號' %>
+			<%= f.input :name, label: '部門名稱' %>
+			<%= f.input :alias, label: '部門別名' %>
+			<%= f.input :docket_head, label: '摘要' %>
+			<%= f.input :account_type, label: '會計科目' %>
+		</div>
+	</div>	
+	<div class="panel-body">
+		<%= f.submit "新增部門" , :class => "btn btn-primary btn-lg pull-right" %>
+<% end %>
+</div>
+
+
