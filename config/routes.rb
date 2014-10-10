@@ -9,8 +9,13 @@ Rails.application.routes.draw do
     end 
   end
 
+
+  resources :meetings do
+    resources :reports
+  end
+
   resources :fixedassets do
-    resources :transfer, shallow: true, controller: "fixedasset_transfer"
+    resources :transfer, controller: "fixedasset_transfer"
     resources :sell, shallow: true, controller: "fixedasset_sell"
     resources :depreciate, shallow:true, controller: "fixedasset_depreciate"
 

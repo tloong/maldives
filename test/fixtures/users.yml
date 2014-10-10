@@ -17,6 +17,7 @@
 #  updated_at             :datetime
 #  username               :string(255)
 #  approved               :boolean
+#  is_admin               :boolean          default(FALSE)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

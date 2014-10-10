@@ -16,7 +16,7 @@
 #  old_department_id     :integer
 #  change_type           :integer
 #  evaluated_value       :integer
-#  evaluated_scrap_value :inetger
+#  evaluated_scrap_value :integer
 #
 
 require 'test_helper'

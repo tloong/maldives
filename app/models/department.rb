@@ -18,9 +18,9 @@ class Department < ActiveRecord::Base
 #   
 #   accepts_nested_attributes_for :fixedasset_parts
 
-#   def to_label
-#     "#{dep_id}: #{self.alias}"
-#   end
+   def to_label
+     "#{dep_id}: #{self.alias}"
+   end
 
 self.per_page = 20
 
