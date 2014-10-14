@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919064514) do
+ActiveRecord::Schema.define(version: 20141011151504) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -119,6 +119,23 @@ ActiveRecord::Schema.define(version: 20140919064514) do
   end
 
   add_index "fixedassets", ["is_mortgaged"], name: "index_fixedassets_on_is_mortgaged"
+
+  create_table "quality_testings", force: true do |t|
+    t.integer  "vendor_id",        null: false
+    t.date     "test_date",        null: false
+    t.text     "spec",             null: false
+    t.string   "lot_no"
+    t.float    "denier"
+    t.float    "strength"
+    t.float    "elongation"
+    t.float    "oil_content"
+    t.float    "shrinkage"
+    t.integer  "entangling_value"
+    t.float    "cr_value"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false

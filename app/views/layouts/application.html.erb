@@ -15,21 +15,6 @@
     <%= notice_message %>
     <div class="row">
       <div class="col-md-2">
-        <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-          <li> <%= link_to("廠商列表", vendors_path) %> </li>
-        </ul>
-        <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-          <li> <%= link_to("列印及批次續提功能", print_report_fixedassets_path) %> </li>
-        </ul>        
-        <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-          <li> <%= link_to("所有報表", reports_fixedassets_path) %> </li>
-        </ul> 
-        <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-          <li> <%= link_to("設定分攤", parts_departments_path) %> </li>
-        </ul> 
-        <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-          <li> <%= link_to("部門列表", departments_path) %> </li>
-        </ul>
       </div>
       <div class="col-md-10">
         <%= yield %>

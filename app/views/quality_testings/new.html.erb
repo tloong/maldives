@@ -1,0 +1,34 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h2 class="panel-title">新增試驗記錄</h2>
+  </div>
+
+<%= simple_form_for [ @quality_testing ] , :html => { :class => '.form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <%= f.association :vendor, :label_method => :to_label, label:'廠商' , input_html: { "data-behaviour" => "vendor_select2" }%>
+      <%= f.input :test_date, label: '測試日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}  %>
+      <%= f.input :spec, label: '規格' %>
+      <%= f.input :lot_no, label: '批號' %>
+      <%= f.input :denier, label: '丹尼' %>
+      <%= f.input :strength, label: '強度' %>
+      <%= f.input :elongation, label: '伸度'%>
+    </div>
+    <div class="col-sm-6">
+      <%= f.input :oil_content, label: '含油率' %>
+      <%= f.input :shrinkage, label: '沸水收縮率' %>
+      <%= f.input :entangling_value, label: '噴節數(100cm)' %>
+      <%= f.input :cr_value, label: 'CR值' %>
+      <%= f.input :note, label: '備註' %>
+    <%= f.submit "新增資產", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
+    </div>
+  </div>
+<% end %>
+</div>
