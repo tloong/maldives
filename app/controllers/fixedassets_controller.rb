@@ -13,6 +13,13 @@ class FixedassetsController < ApplicationController
     
   end
 
+  def clone
+    @f2 = Fixedasset.find(params[:id])
+
+    @fixedasset = @f2.dup
+    render :new
+  end
+
   def get_file_names( path )
     
     files_by_ctime = {}

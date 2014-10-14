@@ -12,27 +12,36 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require bootstrap/dropdown
 //= require bootstrap/alert
 //= require bootstrap/tab
 //= require cocoon
 //= require bootstrap-datepicker
+//= require select2
+//= require select2_locale_zh-TW
+//= require moment
+//= require daterangepicker
 
 // Do not keep bank spaces between included files.
   $(document).ready(function(){    
     $("[data-behaviour~=datepicker]").datepicker({
-                           format: "yyyy/mm/dd",
+                           format: "yyyy-mm-dd",
                            autoclose: true,
                            }).on('changeDate', function(ev){
         // do what you want here
         $("[data-behaviour~=datepicker]").datepicker('hide');})
     $("[data-behaviour~=datepicker-month]").datepicker({
-                           format: "yyyy/mm",                    
+                           format: "yyyy-mm",                    
                            viewMode: "months", 
                            minViewMode: "months",
                            autoclose: true,
                            }).on('changeDate', function(ev){
         // do what you want here
         $("[data-behaviour~=datepicker-month]").datepicker('hide');})
+
   })
+$(document).ready(function() {
+  $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' });
+});
+  $(document).ready(function() { $("[data-behaviour~=vendor_select2]").select2(); });
+  

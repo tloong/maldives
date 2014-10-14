@@ -13,9 +13,11 @@ Rails.application.routes.draw do
     resources :transfer, controller: "fixedasset_transfer"
     resources :sell, shallow: true, controller: "fixedasset_sell"
     resources :depreciate, shallow:true, controller: "fixedasset_depreciate"
-
-
     
+    member do
+      get :clone
+    end
+
     collection do
       get :print_report
       post :do_print
@@ -26,8 +28,13 @@ Rails.application.routes.draw do
 
   #get 'fixedassets/part/:id', to: 'fixedassets#show_part'
   #get 'fixedassets/show_part/:id', to: 'fixedassets#show_part'
-  
-  
+
+  resources :quality_testings do
+    collection do 
+      get :search, :action => 'search_post', :as => 'search_post'
+      get 'search/:q', :action => 'search', :as => 'search'
+    end
+  end  
   resources :departments do
     collection do 
     get :parts

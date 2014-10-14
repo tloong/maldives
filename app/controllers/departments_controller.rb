@@ -19,7 +19,6 @@ class DepartmentsController < ApplicationController
         @departments[pn.part_no] = d.id
       end
     end
-x
   end
 
   def index 

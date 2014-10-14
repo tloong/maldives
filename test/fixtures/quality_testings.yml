@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: quality_testings
+#
+#  id               :integer          not null, primary key
+#  vendor           :integer          not null
+#  test_date        :date             not null
+#  spec             :text             not null
+#  lot_no           :string(255)
+#  denier           :float
+#  strength         :float
+#  elongation       :float
+#  oil_content      :float
+#  shrinkage        :float
+#  entangling_value :integer
+#  cr_value         :float
+#  note             :text
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+#  column: value

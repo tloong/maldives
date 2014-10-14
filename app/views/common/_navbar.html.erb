@@ -8,13 +8,46 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active">
-          <%= link_to("固資系統", fixedassets_path) %><
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            固資系統
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li> <%= link_to("查詢固資", fixedassets_path) %></li>
+            <li> <%= link_to("列印及批次續提功能", print_report_fixedassets_path) %> </li>
+            <li> <%= link_to("所有報表", reports_fixedassets_path) %> </li>
+            <li> <%= link_to("設定分攤", parts_departments_path) %> </li>
+          </ul>
         </li>
-
       </ul>
-      <ul class="nav navbar-nav navbar-right">
 
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            品研系統
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li> <%= link_to("品質試驗記錄", quality_testings_path) %> </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            基本設置
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li> <%= link_to("廠商列表", vendors_path) %> </li>
+            <li> <%= link_to("部門列表", departments_path) %> </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
         <% if !current_user %>
         <li> <%= link_to("登入", new_user_session_path) %> </li>
         <% else %>

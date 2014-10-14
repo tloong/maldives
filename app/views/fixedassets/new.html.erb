@@ -20,7 +20,7 @@
       <%= f.input :spec, label: '規格' %>
       <%= f.input :voucher_no, label: '異動單編號', placeholder: '例: 123456' %>
       <%= f.association :department, :label_method => :to_label, label:'使用部門', collection: Department.where('docket_head <> ?',1) %>
-      <%= f.association :vendor, :label_method => :to_label, label:'購買廠商' %>
+      <%= f.association :vendor, :label_method => :to_label, label:'購買廠商' , input_html: { "data-behaviour" => "vendor_select2"} %>
       
       <%= f.input :original_cost, label: '取得成本'%>
     </div>
