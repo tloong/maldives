@@ -747,8 +747,8 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
     # input1: query_date
     start_query_date = Date.new(year,month,1)
     end_query_date = Date.new(year,month+1,1)
-    
-    order_by = "get_date"
+    order_by1 = "ab_type"
+    order_by2 = "get_date"
     title_ary = ["異動單","取得日","資產編號","資產名稱及規格","數量","購買廠商","資產部門","資產總值","耐用年限","抵押","備註"]
 
     if (Rails.env =="development")
@@ -757,7 +757,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
       out_date_string = "fixedassets.out_date is NULL"
     end
     
-    f = Fixedasset.includes(:vendor).where("get_date < ? and get_date >= ? and (#{out_date_string} or out_date>?)",end_query_date,start_query_date,start_query_date).order(order_by)
+    f = Fixedasset.includes(:vendor).where("get_date < ? and get_date >= ? and (#{out_date_string} or out_date>?)",end_query_date,start_query_date,start_query_date).order(order_by1,order_by2)
    
     data_hash = {}
 
