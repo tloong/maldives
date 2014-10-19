@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     collection do 
       get :search, :action => 'search_post', :as => 'search_post'
       get 'search/:q', :action => 'search', :as => 'search'
+      post :do_query
+      post :do_query_detail
     end
   end  
   resources :departments do

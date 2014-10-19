@@ -14,7 +14,7 @@
   <div class="panel-body">
     <div class="col-sm-6">
       <%= f.association :vendor, :label_method => :to_label, label:'廠商' , input_html: { "data-behaviour" => "vendor_select2" }%>
-      <%= f.input :test_date, label: '測試日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker",  value: Time.now.strftime('%Y-%m-%d')}  %>
+      <%= f.input :test_date, label: '測試日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}  %>
       <%= f.input :spec, label: '規格' %>
       <%= f.input :lot_no, label: '批號' %>
       <%= f.input :note, label: '備註' %>
@@ -25,12 +25,8 @@
       <%= f.input :elongation, label: '伸度'%>      
       <%= f.input :oil_content, label: '含油率' %>
       <%= f.input :shrinkage, label: '沸水收縮率' %>
-      <% if @type == "dty" || @type == "hk" %>
       <%= f.input :cr_value, label: 'CR值' %>
-      <% end %>
-      <% if @type == "dty" %>
       <%= f.input :entangling_value, label: '噴節數(100cm)' %>
-      <% end %>
     <%= f.submit "新增資產", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
     </div>
   </div>

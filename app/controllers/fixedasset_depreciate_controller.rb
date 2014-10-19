@@ -10,7 +10,8 @@ class FixedassetDepreciateController < ApplicationController
     @fc = FixedassetChanged.new(f_params)
  
     if @fc.save
-      @fixedasset.update_attributes :status => "depreciated_done"
+      @fixedasset.update_attributes :status => "is_scrapped"
+      @fixedasset.update_attributes :out_date => @fc.changed_date
       redirect_to fixedasset_path(@fixedasset)
     else
       render :new

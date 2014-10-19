@@ -1,0 +1,58 @@
+查詢期間: <%= @query_duration %>
+<hr>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>廠商</th>
+      <th>規格</th>
+      <th>丹尼</th>
+      <th>強度</th>
+      <th>伸度</th>
+      <th>含油率</th>
+      <th>沸水</th>
+      <th>CR值</th>
+      <th>噴節數(100cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+    <tr>
+      <td> <%= button_to(
+                          result.vendor_alias, 
+                          do_query_detail_quality_testings_path, 
+                          params: @cond_hash.merge(:vendor_id=>result.vendor_id)
+                          
+                          ) %></td>
+      
+      <td> <%= result.spec%></td>
+      <td> <%= result.de.round(2)%></td>
+      <td> <%= result.st.round(2)%></td>
+      <td> <%= result.el.round(2)%></td>
+      <td> <%= result.oi.round(2)%></td>
+      <td> <%= result.sh.round(2)%></td>
+      <td> <%= result.cr.round(2)%></td>
+      <td> <%= result.en.round(2)%></td>
+    </tr>
+    <% end %>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <% @all.each do |result| %>
+    <tr>
+      <td> <%= button_to(
+                          "所有廠商平均", 
+                          do_query_detail_quality_testings_path, 
+                          params: @cond_hash
+                          ) %></td>
+      
+      <td> <%= result.spec %></td>
+      <td> <%= result.de.round(2)%></td>
+      <td> <%= result.st.round(2)%></td>
+      <td> <%= result.el.round(2)%></td>
+      <td> <%= result.oi.round(2)%></td>
+      <td> <%= result.sh.round(2)%></td>
+      <td> <%= result.cr.round(2)%></td>
+      <td> <%= result.en.round(2)%></td>
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>

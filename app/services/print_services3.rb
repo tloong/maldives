@@ -422,7 +422,7 @@ class PrintServices3 < Struct.new(:pyear, :pmonth, :pis_mortgaged)
             columns(14..15).width = 54
             column(16).width = 68
             column(17).width = 57
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/pmingliu.ttf"
+            cells.font = Rails.root.to_s+"/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..1).align = :left
             cells.style(:size =>10)

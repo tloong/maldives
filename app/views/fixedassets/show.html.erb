@@ -12,6 +12,7 @@
     <div style="height:20px;">規格: <%= @fixedasset.spec %></div>
     <div style="height:20px;">異動單編號: <%= @fixedasset.voucher_no %></div>
     <div style="height:20px;">使用部門: <%= "#{@fixedasset.department.dep_id} #{@fixedasset.department.alias}" %></div>
+    <div style="height:20px;">廠商: <%= @fixedasset.vendor.to_label %></div>
     <div style="height:20px;">使用年限: <%= "#{@fixedasset.service_life_year}年#{@fixedasset.service_life_month}個月" %></div>
     <div style="height:20px;">取得日期: <%= @fixedasset.get_date.strftime("%Y/%m/%d") %></div>
     <div style="height:20px;">折舊期間: <%= @fixedasset.start_use_date.strftime("%Y/%m") %> - <%= @fixedasset.end_use_date.strftime("%Y/%m") %> (共 <%= @fixedasset.total_depreciated_month %> 個月)</div>

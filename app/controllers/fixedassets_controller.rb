@@ -149,7 +149,7 @@ class FixedassetsController < ApplicationController
     f_params = fixedasset_params 
     f_params[:fixed_asset_id] = f_params[:fixed_asset_id].upcase
       
-    f_keys = ["fixed_asset_id","service_life_year","service_life_month"]
+    f_keys = ["fixed_asset_id","service_life_year","service_life_month","get_date"]
     error_code = check_fixedasset_params(f_params, f_keys)
 
     if (error_code == Fixedasset::NO_ERROR)
