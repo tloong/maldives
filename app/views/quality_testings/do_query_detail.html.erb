@@ -1,0 +1,52 @@
+查詢期間: <%= @query_duration %>
+<hr>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>廠商</th>
+      <th>日期</th>
+      <th>規格</th>
+      <th>丹尼</th>
+      <th>強度</th>
+      <th>伸度</th>
+      <th>含油率</th>
+      <th>沸水</th>
+      <th>CR值</th>
+      <th>噴節數(100cm)</th>
+      <th>備註</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+    <tr>
+      <td> <%= link_to result.vendor_alias, edit_quality_testing_path(result.id) %></td>
+      <td> <%= result.test_date %></td>
+      <td> <%= result.spec %></td>
+      <td> <%= result.denier%></td>
+      <td> <%= result.strength%></td>
+      <td> <%= result.elongation%></td>
+      <td> <%= result.oil_content%></td>
+      <td> <%= result.shrinkage%></td>
+      <td> <%= result.cr_value%></td>
+      <td> <%= result.entangling_value%></td>
+      <td> <%= result.note %></td>
+    </tr>
+    <% end %>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <% @average.each do |result| %>
+    <tr>
+      <td>平均</td>
+      <td></td>
+      <td><%= result.spec %></td>
+      <td> <%= result.de.round(2)%></td>
+      <td> <%= result.st.round(2)%></td>
+      <td> <%= result.el.round(2)%></td>
+      <td> <%= result.oi.round(2)%></td>
+      <td> <%= result.sh.round(2)%></td>
+      <td> <%= result.cr.round(2)%></td>
+      <td> <%= result.en.round(2)%></td>
+      <td></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

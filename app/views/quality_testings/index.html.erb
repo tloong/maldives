@@ -5,57 +5,51 @@
 <button type="button" class="btn btn-default btn-lg">
   <div> <%= link_to("新增試驗記錄(DTY)", new_quality_testing_path(:type => "dty")) %>&nbsp;<span class="glyphicon glyphicon-plus"></span></div>
 </button>
-
+&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-default btn-lg">
+  <div> <%= link_to("新增試驗記錄(新光)", new_quality_testing_path(:type => "hk")) %>&nbsp;<span class="glyphicon glyphicon-plus"></span></div>
+</button>
 <br><br>
-
-
-
-<%= form_tag "/fixedassets/do_print" do %>
+<hr>
+<%= form_tag "/quality_testings/do_query" do %>
       <div class="panel-body">
         <div class="col-sm-6">
-          <legend> 查詢試驗記 &nbsp;<span class="glyphicon glyphicon-search"></span></legend>
-          <div><label>分類索引</label> </div>
+          <legend> 查詢試驗記錄 &nbsp;<span class="glyphicon glyphicon-search"></span></legend>
+          <div>
+            <label>
+              廠商名稱&nbsp;<input type="text" name="vendor_name" id="vendor_name">
+            </label>
+          </div>
+          <div>
+            <label>
+              指定規格&nbsp;<input type="text" name="spec" id="spec_name">
+            </label>
+          </div>
+          <div>
+            <label>
+              指定批號&nbsp;<input type="text" name="lot_no" id="lot_no">
+            </label>
+          </div>
+          <div><label>查詢期間</label> </div>
           <div class="radio">
             <label>
-              <input type="radio" name="print_base_on" id="print_base_on1" value="dep" checked>
-              依資產所屬部門
+              <input type="radio" name="specific_duration" id="specific_duration1" value="all" checked>
+              不指定期間
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="print_base_on" id="print_base_on2" value="cat">
-              依資產類別
-            </label>
-          </div>
-          <div><label>報表類型</label> </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="report_type" id="report_type1" value="all" checked>
-              總表
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="report_type" id="report_type2" value="simple">
-              簡表
-            </label>
-          </div>
-          <div><label>報表月份</label> </div>
-          <input type="text"  data-behaviour="datepicker-month" class="datepicker" name="print_date" value="<%= Time.now.strftime('%Y/%m') %>">
-          <input type="hidden" name="print_type" value="1" >
+              <input type="radio" name="specific_duration" id="specific_duration2" value="specific">
+              指定期間
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="duration" id="reportrange" class="form-control" value="<%= Date.today.strftime("%Y/%m/%d") %> - <%= Date.today.strftime("%Y/%m/%d") %>" />
+            </div>
           <hr>
           <div>
-            <%= submit_tag "確定列印"%>
+            <%= submit_tag "查詢"%>
           </div>
         </div>
       </div>    
     <% end %>
-<form>
-  <div class="form-group">
-    <label for="reservationtime">Reservation dates:</label>
-    <div class="input-group">
-      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="reservation" id="reservationtime" class="form-control" value="07/10/2014 1:00 PM - 07/10/2014 1:30 PM" />
-    </div>
-  </div>
-</form>
+
 

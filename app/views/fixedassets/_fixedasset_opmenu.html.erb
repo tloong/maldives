@@ -2,5 +2,6 @@
       <%= link_to '轉移', new_fixedasset_transfer_path(fixedasset.id), :class => "btn btn-primary btn-sm"%>
       <%= link_to '報廢', new_fixedasset_depreciate_path(fixedasset.id), :class => "btn btn-primary btn-sm"%>
       <%= link_to '出售', new_fixedasset_sell_path(fixedasset.id), :class => "btn btn-primary btn-sm"%>
+      <%= link_to '修改', edit_fixedasset_path(fixedasset.id), :class => "btn btn-primary btn-sm"%>
       <%= link_to '複製', clone_fixedasset_path(fixedasset.id), :class => "btn btn-primary btn-sm" %>
     <% end %>

@@ -353,7 +353,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
       def header(page_size,title, subtitle, left1, left2, right1, page_number)
         stroke_color "000000"
         #font("/System/Library/Fonts/gkai00mp.ttf") do
-        font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt003.ttf") do
+        font("/resources/fonts/wt003.ttf") do
           text title, :size => 18, :align => :center
           text_box right1, :size => 11, :at => [885, 710], :width => 80, :align => :right
           text_box left1, :size => 11, :at => [0, 710], :width => 200, :align => :left
@@ -401,7 +401,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
             column(10).width = 64
             column(11).width = 100
 
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt003.ttf"
+            cells.font = "/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..6).align = :left
             cells.style(:size =>11)
@@ -527,7 +527,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
       def header(page_size,title, subtitle, left1, left2, right1, page_number)
         stroke_color "000000"
         #font("/System/Library/Fonts/gkai00mp.ttf") do
-        font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt003.ttf") do
+        font("/resources/fonts/wt003.ttf") do
           text title, :size => 18, :align => :center
           text_box right1, :size => 11, :at => [885, 710], :width => 80, :align => :right
           text_box left1, :size => 11, :at => [0, 710], :width => 200, :align => :left
@@ -574,7 +574,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
             column(10).width = 64
             column(11).width = 100
 
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt003.ttf"
+            cells.font = "/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..6).align = :left
             cells.style(:size =>11)
@@ -657,7 +657,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
       def header(page_size,title, subtitle, left1, left2, right1, page_number)
         stroke_color "000000"
         #font("/System/Library/Fonts/gkai00mp.ttf") do
-        font("/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt003.ttf") do
+        font("/resources/fonts/wt003.ttf") do
           text title, :size => 18, :align => :center
           text_box right1, :size => 11, :at => [885, 710], :width => 80, :align => :right
           text_box left1, :size => 11, :at => [0, 710], :width => 200, :align => :left
@@ -703,7 +703,7 @@ class PrintServices4 < Struct.new(:pyear, :pmonth, :ptype)
             column(10).width = 64
             column(11).width = 100
 
-            cells.font = "/Users/jakobcho/.rvm/gems/ruby-2.0.0-p481/gems/prawn-1.2.1/data/fonts/wt003.ttf"
+            cells.font = "/resources/fonts/wt003.ttf"
             cells.align = :right
             columns(0..6).align = :left
             cells.style(:size =>11)

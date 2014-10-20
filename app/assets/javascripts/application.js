@@ -41,7 +41,37 @@
 
   })
 $(document).ready(function() {
-  $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' });
+  $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'YYYY/MM/DD' });
 });
+
+$(document).ready(function() {
+$('#reportrange').daterangepicker(
+    {
+      format: 'YYYY/MM/DD',
+      ranges: {
+         'Today': [moment(), moment()],
+         'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+         'Last 7 Days': [moment().subtract('days', 6), moment()],
+         'Last 30 Days': [moment().subtract('days', 29), moment()],
+         'This Month': [moment().startOf('month'), moment().endOf('month')],
+         'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+      },
+      startDate: moment().subtract('days', 29),
+      endDate: moment()
+    },
+    function(start, end) {
+        $('#reportrange').html(start.format('M/D, YYYY') + ' - ' + end.format('M/D, YYYY'));
+    }
+);
+
+$('#reportrange').on('show.daterangepicker', function(ev, picker) {
+  //do something, like clearing an input
+  var $radios = $('input:radio[name=specific_duration]');
+        $radios.filter('[value=specific]').prop('checked', true);
+});
+
+});
+
+
   $(document).ready(function() { $("[data-behaviour~=vendor_select2]").select2(); });
   

@@ -24,7 +24,7 @@ production:
   <<: *default
   adapter: mysql2
   encoding: utf8
-  database: db/production.mysql
+  database: db/test_production.mysql
   pool: 5
   username: root
   password: BveilnlceeK25
