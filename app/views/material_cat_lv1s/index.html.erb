@@ -1,0 +1,27 @@
+<h2>原物料大類列表</h2>
+
+<div class="pull-right" style="padding-bottom: 20px;">
+  <%= link_to("新增大類", new_material_cat_lv1_path, :class => "btn btn-primary btn-sm") %>
+</div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>代號</th>
+			<th>名稱</th>
+		</tr>
+	</thead>
+	<tbody>		
+		<% @material_cat_lv1s.each do |material_cat_lv1| %>
+		<tr>
+			<td><%= material_cat_lv1.cat_id %></td>
+			<td><%= material_cat_lv1.cat_name %></td>			
+			<td>
+				<%= link_to("[修改]" , edit_material_cat_lv1_path(material_cat_lv1)) %>
+				<%= link_to("[刪除]" , material_cat_lv1_path(material_cat_lv1) , method: :delete ) %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+
+

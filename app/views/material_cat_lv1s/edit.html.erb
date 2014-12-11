@@ -1,0 +1,26 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h2 class="panel-title">修改原物料大類</h2>
+	</div>
+<%= simple_form_for [ @material_cat_lv1] , :html => { :class => 'form-horizontal'},
+	wrapper: :horizontal_form,
+	wrapper_mappings: {
+		check_boxes: :horizontal_radio_and_checkboxes,
+		radio_buttons: :horizontal_radio_and_checkboxes,
+		file: :horizontal_file_input,
+		boolean: :horizontal_boolean
+	} do |f| %>
+	<div class="panel-body">
+		<div class="col-sm-6">
+			<legend>大類資料</legend>
+			<%= f.input :cat_id, label: '大類代號' %>
+			<%= f.input :cat_name, label: '大類名稱' %>			
+		</div>
+	</div>	
+	<div class="panel-body">
+		<%= f.submit "修改大類" , :class => "btn btn-primary btn-lg pull-right" %>
+<% end %>
+</div>
+
+
+

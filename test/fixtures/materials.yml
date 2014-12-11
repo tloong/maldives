@@ -1,0 +1,67 @@
+# == Schema Information
+#
+# Table name: materials
+#
+#  id                  :integer          not null, primary key
+#  mat_id              :string(255)
+#  vendor_lot_no       :string(255)
+#  material_cat_lv1_id :integer
+#  material_cat_lv2_id :integer
+#  name                :string(255)
+#  condition_id        :string(255)
+#  description         :text
+#  note                :text
+#  accounting_type     :integer
+#  debit_code          :integer
+#  credit_code         :integer
+#  is_shared_id        :boolean
+#  is_quantity_control :boolean
+#  is_sample           :boolean
+#  measure_unit        :string(255)
+#  vendor_id           :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  safe_quantity       :integer
+#  stocktake_quantity  :integer
+#  last_quantity       :integer
+#  total_quantity      :integer
+#  sno                 :string(255)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mat_id: MyString
+  vendor_lot_no: MyString
+  material_cat_lv1_id: 
+  material_cat_lv2_id: 
+  name: MyString
+  condition_id: MyString
+  description: MyText
+  note: MyText
+  accounting_type: 1
+  debit_code: 1
+  credit_code: 1
+  is_shared_id: false
+  is_quantity_control: false
+  is_sample: false
+  measure_unit: MyString
+  vendor_id: MyString
+
+two:
+  mat_id: MyString
+  vendor_lot_no: MyString
+  material_cat_lv1_id: 
+  material_cat_lv2_id: 
+  name: MyString
+  condition_id: MyString
+  description: MyText
+  note: MyText
+  accounting_type: 1
+  debit_code: 1
+  credit_code: 1
+  is_shared_id: false
+  is_quantity_control: false
+  is_sample: false
+  measure_unit: MyString
+  vendor_id: MyString

@@ -53,5 +53,11 @@ en:
         phone: 電話
         email: 電子郵件
 
+      material:
+        material_cat_lv1_id:
+          aa: aa
+          bb: bb
+          cc: cc
+
 
   

@@ -1,0 +1,38 @@
+<h2>原物料列表</h2>
+
+<div><%= will_paginate @materials, renderer: BootstrapPagination::Rails %></div>
+<div><%= page_entries_info @materials, renderer: BootstrapPagination::Rails %></div>
+
+<div class="pull-right" style="padding-bottom: 20px;">
+  <%= link_to("新增原料", new_material_path, :class => "btn btn-primary btn-sm") %>
+</div>
+<div class="pull-right" style="padding-bottom: 20px;">
+  <%= link_to("新增物料", 'new1', :class => "btn btn-primary btn-sm") %>
+</div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>原物料編號</th>
+			<th>料號</th>
+			<th>原料名稱</th>
+			<th>條件代號</th>
+		</tr>
+	</thead>
+	<tbody>		
+		<% @materials.each do |material| %>
+		<tr>
+			<td><%= link_to(material.mat_id, material_path(material)) %></td>
+			<td><%= material.vendor_lot_no %></td>
+			<td><%= link_to(material.name, material_path(material)) %></td>
+			<td><%= material.condition_id %></td>			
+			<td>				
+				<%= link_to("[修改]" , edit_material_path(material)) %>
+				<%= link_to("[刪除]" , material_path(material) , method: :delete ) %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+
+

@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: material_vendors
+#
+#  id         :integer          not null, primary key
+#  sno        :string(255)
+#  name       :string(255)
+#  sid        :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sno: MyString
+  name: MyString
+  sid: MyString
+
+two:
+  sno: MyString
+  name: MyString
+  sid: MyString

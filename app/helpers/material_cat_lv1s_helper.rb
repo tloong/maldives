@@ -1,0 +1,2 @@
+module MaterialCatLv1sHelper
+end
