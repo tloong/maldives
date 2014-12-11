@@ -1,0 +1,26 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h2 class="panel-title">新增廠商簡稱</h2>
+	</div>
+<%= simple_form_for [ @material_vendor] , :html => { :class => 'form-horizontal'},
+	wrapper: :horizontal_form,
+	wrapper_mappings: {
+		check_boxes: :horizontal_radio_and_checkboxes,
+		radio_buttons: :horizontal_radio_and_checkboxes,
+		file: :horizontal_file_input,
+		boolean: :horizontal_boolean
+	} do |f| %>
+	<div class="panel-body">
+		<div class="col-sm-6">
+			<legend>簡稱資料</legend>
+			<%= f.input :sno, label: '廠商編號' %>
+			<%= f.input :name, label: '廠商簡稱' %>
+			<%= f.input :sid, label: 'ID' %>
+		</div>
+	</div>	
+	<div class="panel-body">
+		<%= f.submit "新增簡稱" , :class => "btn btn-primary btn-lg pull-right" %>
+<% end %>
+</div>
+
+

@@ -1,0 +1,38 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h2 class="panel-title">新增原物料</h2>
+	</div>
+<%= simple_form_for [ @material] , :html => { :class => 'form-horizontal'},
+	wrapper: :horizontal_form,
+	wrapper_mappings: {
+		check_boxes: :horizontal_radio_and_checkboxes,
+		radio_buttons: :horizontal_radio_and_checkboxes,
+		file: :horizontal_file_input,
+		boolean: :horizontal_boolean
+	} do |f| %>
+	<div class="panel-body">
+		<div class="col-sm-6">
+			<legend>原物料資料</legend>
+			<%= f.input :mat_id, label: '原物料編號' %>
+			<%= f.input :vendor_lot_no, label: '料號' %>
+			<%= f.input :material_cat_lv1_id, label: '大類', :selected => "aa" %>
+			<%= f.input :material_cat_lv2_id, label: '中類' %>
+			<%= f.input :name, label: '原料名稱' %>
+			<%= f.input :condition_id, label: '條件代號' %>
+			<%= f.input :description, label: '原料特性描述' %>
+			<%= f.input :note, label: '備註' %>
+		</div>
+		<div class="col-sm-6">			
+			<%= f.input :accounting_type, label: '會計分類' %>
+			<%= f.input :debit_code, label: '借方代號' %>
+			<%= f.input :credit_code, label: '貸方代號' %>
+			<%= f.input :measure_unit, label: '單位' %>
+			<%= f.association :vendor, :label_method => :to_label, label:'購買廠商' %>
+		</div>
+	</div>	
+	<div class="panel-body">
+		<%= f.submit "新增原物料" , :class => "btn btn-primary btn-lg pull-right" %>
+<% end %>
+</div>
+
+

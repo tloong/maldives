@@ -1,0 +1,28 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h1 class="panel-title">原物料: <%= "#{@material.mat_id.to_s.rjust(4,'0')} #{@material.name}" %></h1>
+  </div>
+
+<div class="panel-body">
+   <div class="col-sm-4">
+    <h3> 原物料資訊</h3>
+    <div style="height:20px;">原物料編號: <%= @material.mat_id %></div>
+    <div style="height:20px;">料號: <%= @material.vendor_lot_no %></div>
+    <div style="height:20px;">大類: <%= @material.material_cat_lv1_id %></div>
+    <div style="height:20px;">中類: <%= @material.material_cat_lv2_id %></div>
+    <div style="height:20px;">原料名稱: <%= @material.name %></div>
+    <div style="height:20px;">條件代號: <%= @material.condition_id %></div>
+    <div style="height:20px;">廠商簡稱: <%= @material.sno %></div>
+    <div style="height:20px;">原料特性描述: <%= @material.description %></div>
+    <div style="height:20px;">備註: <%= @material.note %></div>
+    <div style="height:20px;">會計分類: <%= @material.accounting_type %></div>
+    <div style="height:20px;">借方代號: <%= @material.debit_code %></div>
+    <div style="height:20px;">貸方代號: <%= @material.credit_code %></div>
+    <div style="height:20px;">單位: <%= @material.measure_unit %></div>    
+  </div>
+  
+  <div class="pull-left" style="padding-bottom: 20px;">
+    <br>
+    <%= link_to '回上頁', :back ,:class => "btn btn-primary btn-sm"%>
+  </div>
+</div>
