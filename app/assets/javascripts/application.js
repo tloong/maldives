@@ -21,6 +21,7 @@
 //= require select2_locale_zh-TW
 //= require moment
 //= require daterangepicker
+//= require jquery_nested_form
 
 // Do not keep bank spaces between included files.
   $(document).ready(function(){    

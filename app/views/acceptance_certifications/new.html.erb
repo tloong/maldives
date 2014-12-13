@@ -1,0 +1,55 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h2 class="panel-title">新增驗收單</h2>
+  </div>
+<%= simple_form_for [ @acceptance_certification ] , :html => { :class => 'form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+<div class="panel-body">
+  <div class="col-sm-6">
+    <legend> 驗收單 
+      <%= link_to("返回", acceptance_certifications_path , :class => "btn btn-primary pull-right" ) %>
+    </legend>  
+    
+    <%= f.input :accept_cert_no, label: '驗收單號'%>
+    <%= f.input :accept_cert_date, label: '驗收日期'%>
+    <%= f.input :currency, label: '幣別'%>
+    <%= f.input :exchange_rate, label: '匯率'%>
+    <%= f.input :amount, label: '總金額'%>
+    <%= f.input :tax, label: '稅額'%>
+    <%= f.input :discount_amount, label: '折讓金額'%>
+    <%= f.input :discount_tax, label: '折讓稅額'%>
+    <%= f.input :invoice_no, label: '發票號碼'%>
+    <%= f.input :invoice_date, label: '發票日期'%>
+    <%= f.input :note_for_payment, label: '備註'%>
+    <%= f.input :acc_type, label: '會計分類'%>
+    <%= f.association :vendor, :label_method => :to_label, label:'廠商',  input_html: { "data-behaviour" => "vendor_select2"} %>
+    <%= f.association :department, :label_method => :to_label, label:'驗收部門', collection: Department.where('docket_head <> ?',1) %>  
+   
+  </div> 
+</div>
+
+<div class="panel-body">
+  <legend> 驗收明細 </legend>
+  <div class="col-sm-6">
+    <%= f.simple_fields_for :acceptance_lineitems do |c| %>
+      <% render 'acceptance_lineitem_fields', f: c %>
+    <% end %>
+    <div>
+      <%= link_to_add_association '新增明細', f, :acceptance_lineitems %>
+    </div>
+  </div>  
+</div>
+  <div class="panel-body">
+    <%= f.submit "新增驗收單", :class => "btn btn-primary btn-lg pull-right", :disable_with => 'Submiting...'%> 
+  </div>
+  <!fftf +TAB !>
+  <!fftf +TAB !>
+  <!ffs +TAB !>
+<% end %>
+</div>

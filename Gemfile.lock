@@ -127,6 +127,7 @@ GEM
     momentjs-rails (2.8.3)
       railties (>= 3.1)
     multi_json (1.10.1)
+    nested_form (0.3.2)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
@@ -248,6 +249,7 @@ DEPENDENCIES
   letter_opener
   mini_magick
   momentjs-rails
+  nested_form
   paper_trail (~> 3.0.5)
   prawn (~> 1.2.1)
   prawn-manual_builder

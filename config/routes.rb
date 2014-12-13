@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :material_cat_lv1s
   resources :material_cat_lv2s
   resources :material_vendors
+  resources :acceptance_certifications
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,93 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h1 class="panel-title">驗收單: <%= "#{@acceptance_certification.id.to_s.rjust(4,'0')} #{@acceptance_certification.accept_cert_no}" %></h1>    
+
+  </div>
+<%= simple_form_for [ @acceptance_certification ] , :html => { :class => 'form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+<div class="panel-body">
+    <div class="col-sm-8">
+    <h3> 驗收單
+      <%= link_to("編輯驗收單", edit_acceptance_certification_path(@acceptance_certification) , :class => "btn btn-primary pull-right")%>
+      <%= link_to("返回", acceptance_certifications_path , :class => "btn btn-primary pull-right" ) %> 
+    </h3>     
+    <div style="height:20px;">驗收日期: <%= @acceptance_certification.accept_cert_date %></div>
+    <div style="height:20px;">幣別:     <%= @acceptance_certification.currency %></div>       
+    <div style="height:20px;">匯率:     <%= @acceptance_certification.exchange_rate %></div>   
+    <div style="height:20px;">總金額:   <%= @acceptance_certification.amount %></div>          
+    <div style="height:20px;">稅金:     <%= @acceptance_certification.tax %></div>             
+    <div style="height:20px;">折讓金:   <%= @acceptance_certification.discount_amount %></div> 
+    <div style="height:20px;">折讓稅:   <%= @acceptance_certification.discount_tax %></div>    
+    <div style="height:20px;">發票號碼: <%= @acceptance_certification.invoice_no %></div>      
+    <div style="height:20px;">發票日期: <%= @acceptance_certification.invoice_date %></div>    
+    <div style="height:20px;">備註:     <%= @acceptance_certification.note_for_payment %></div>
+    <div style="height:20px;">會計分類: <%= @acceptance_certification.acc_type_i18n %></div>        
+    <div style="height:20px;">廠商:     <%= @acceptance_certification.vendor.alias %></div> 
+
+    <div style="height:20px;">驗收部門:     <%= @acceptance_certification.department.alias %></div> 
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>驗收明細</th>
+        <th>到貨數量</th>
+        <th>驗收數量</th>
+        <th>不良數量</th>
+        <th>單價</th>
+        <th>金額</th>
+        <th>稅額</th>
+        <th>折讓金額</th>
+        <th>折讓稅額</th>  
+        <th>驗收部門</th>
+        <th>成本部門</th>
+        <th>代購廠區</th>   
+      </tr>
+    </thead>    
+    <tbody>
+      <% @acceptance_lineitems.each do |acceptance_lineitem| %> 
+        <tr>          
+          <td> <%= acceptance_lineitem.purchasing_order_lineitem_id %> </td> 
+          <td> <%= acceptance_lineitem.received_quantity %> </td>            
+          <td> <%= acceptance_lineitem.accepted_quantity %> </td>            
+          <td> <%= acceptance_lineitem.ng_quantity %> </td>                  
+          <td> <%= acceptance_lineitem.unit_price %> </td>                   
+          <td> <%= acceptance_lineitem.total_amount %> </td>                 
+          <td> <%= acceptance_lineitem.tax %> </td>                          
+          <td> <%= acceptance_lineitem.discount_amount %> </td>              
+          <td> <%= acceptance_lineitem.discount_tax %> </td>                 
+          <td> <%= acceptance_lineitem.received_department.alias %> </td>                               
+          <td> <%= acceptance_lineitem.cost_department.alias %> </td>           
+          <td> <%= acceptance_lineitem.special_flag_i18n %> </td>                                                            
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>
+
+<div class="panel-body">
+  <legend> 驗收明細 </legend>
+  <div class="col-sm-6">
+  <%= f.simple_fields_for :acceptance_lineitems do |c| %>
+    <% render 'acceptance_lineitem_fields', f: c %>
+  <% end %>
+  <div>
+    <%= link_to_add_association '新增明細', f, :acceptance_lineitems %>
+  </div>
+</div>
+  <div class="panel-body">
+    <%= f.submit "確認修改", :class => "btn btn-primary btn-lg pull-right", :disable_with => 'Submiting...'%>
+  </div>
+  <!fftf +TAB !>
+  <!fftf +TAB !>
+  <!ffs +TAB !>
+<% end %>
+</div>
+
+</div>

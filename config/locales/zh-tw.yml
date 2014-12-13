@@ -30,6 +30,21 @@ zh-TW:
         fax: 傳真
         phone: 電話
         email: 電子郵件
+    acceptance_certification:
+      acc_type:
+        sale: 營業費用
+        manager: 管理費用
+        d_labor: 直接人工
+        nd_labor: 間接人工
+    acceptance_lineitem:
+      acc_type:
+        sale: 營業費用
+        manager: 管理費用
+        d_labor: 直接人工
+        nd_labor: 間接人工
+      special_flag:
+        tlvn: 越香廠
+        sarah: 平準廠     
   will_paginate:
     previous_label: "&#8592; 前一頁"
     next_label: "下一頁 &#8594;"

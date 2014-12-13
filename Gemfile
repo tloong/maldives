@@ -107,6 +107,9 @@ gem 'prawn-manual_builder'
 # background job
 gem 'delayed_job_active_record'
 
+# Use Nested_form to create Master-Detail Form
+gem 'nested_form'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
