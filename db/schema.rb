@@ -13,6 +13,48 @@
 
 ActiveRecord::Schema.define(version: 20141018170249) do
 
+  create_table "acceptance_certifications", force: true do |t|
+    t.string   "accept_cert_no"
+    t.date     "accept_cert_date"
+    t.integer  "currency"
+    t.float    "exchange_rate"
+    t.float    "amount"
+    t.float    "tax"
+    t.float    "discount_amount"
+    t.float    "discount_tax"
+    t.string   "invoice_no"
+    t.date     "invoice_date"
+    t.text     "note_for_payment"
+    t.string   "voucher_no"
+    t.date     "voucher_date"
+    t.integer  "acc_type"
+    t.integer  "vendor_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "department_id"
+  end
+
+  create_table "acceptance_lineitems", force: true do |t|
+    t.integer  "acceptance_certification_id"
+    t.integer  "purchasing_order_lineitem_id"
+    t.float    "received_quantity"
+    t.float    "accepted_quantity"
+    t.float    "ng_quantity"
+    t.float    "unit_price"
+    t.float    "total_amount"
+    t.float    "tax"
+    t.float    "discount_amount"
+    t.float    "discount_tax"
+    t.integer  "received_department_id"
+    t.integer  "acc_type"
+    t.integer  "cost_department_id"
+    t.integer  "special_flag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "material_id"
+  end 
+
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false

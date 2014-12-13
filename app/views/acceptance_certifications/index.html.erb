@@ -1,0 +1,54 @@
+<h2> 驗收單列表 </h2>
+<div><%= will_paginate @acceptance_certifications, renderer: BootstrapPagination::Rails %></div>
+<div><%= page_entries_info @acceptance_certifications, renderer:  BootstrapPagination::Rails %></div>
+<%= search_form_for @q , :class => "navbar-form navbar-left" do |f| %>
+  <div class="form-group">
+  <%= f.search_field :accept_cert_no_or_invoice_no_cont, {:class=>"form-control",   :placeholder =>"搜尋驗收單"}%>
+  </div>
+  <button type="submit" class="btn btn-default btn-sm">Submit</button>
+<% end %>
+<div class="pull-right" style="padding-bottom: 20px;">
+  <div class="acceptance_certification">
+    <%= link_to("新增", new_acceptance_certification_path , :class => "btn btn-primary pull-right" ) %>
+  </div>
+
+  <table class="table table-hover">
+    <thead> 
+      <tr>
+        <td> # </td>       
+        <td>驗收單號</td>
+        <td>驗收日期</td>        
+        <td>發票號碼</td>
+        <td>發票日期</td>       
+        <td>廠商</td>
+        <td>驗收部門</td>
+        <td>登錄員</td>
+      </tr>
+    </thead>
+
+    <tbody>
+            <% @acceptance_certifications.each do |acceptance_certification| %> 
+    <tr>
+      <td> # </td>
+      <td>  <%= link_to(acceptance_certification.accept_cert_no, acceptance_certification_path(acceptance_certification)) %> </td>
+      <td>  <%= acceptance_certification.accept_cert_date %> </td>
+      <td>  <%= acceptance_certification.invoice_no %> </td>
+      <td>  <%= acceptance_certification.invoice_date %> </td>
+      <td>  <%= acceptance_certification.vendor.alias %> </td>
+      <td>  <%= acceptance_certification.department.alias %> </td>
+      <td>  <%= acceptance_certification.owner.username %> </td>
+      <td>  <%= link_to("編輯", 
+                        edit_acceptance_certification_path(acceptance_certification), 
+                        :class => "btn btn-sm btn-default")%>
+
+            <%= link_to("刪除", 
+                        acceptance_certification_path(acceptance_certification), 
+                        :class => "btn btn-sm btn-default", 
+                        :method=>:delete,
+                        data: { confirm: "確定刪除?" } )%></td> 
+    </tr>
+            <% end %> 
+    </tbody>
+  </table>
+</div>
+

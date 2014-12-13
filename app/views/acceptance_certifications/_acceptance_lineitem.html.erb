@@ -1,0 +1,14 @@
+ 	<div>訂購項次:<%= acceptance_lineitem.purchasing_order_lineitem_id %> </div>
+	<div>來貨數量:<%= acceptance_lineitem.received_quantity %> </div>
+	<div>驗收數量:<%= acceptance_lineitem.accepted_quantity %> </div>
+	<div>不良數量:<%= acceptance_lineitem.ng_quantity %> </div>
+	<div>單價    :<%= acceptance_lineitem.unit_price %> </div>
+	<div>本項金額:<%= acceptance_lineitem.total_amount %> </div>
+	<div>本項稅額:<%= acceptance_lineitem.tax %> </div>
+	<div>折讓金額:<%= acceptance_lineitem.discount_amount %> </div>
+	<div>折讓稅額:<%= acceptance_lineitem.discount_tax %> </div>
+	<div>驗收部門:<%= acceptance_lineitem.received_department.alias %> </div>
+	<div>會計分類:<%= acceptance_lineitem.acc_type %> </div>
+	<div>成本部門:<%= acceptance_lineitem.cost_department.alias %> </div>
+	<div>代購廠區:<%= acceptance_lineitem.special_flag %> </div>
+

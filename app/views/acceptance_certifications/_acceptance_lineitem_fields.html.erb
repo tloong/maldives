@@ -1,0 +1,19 @@
+<div class="nested-fields">
+<%= f.input :purchasing_order_lineitem_id, label: '訂購項次' %>
+<%= f.input :received_quantity, label: '來貨數量' %>
+<%= f.input :accepted_quantity, label: '驗收數量' %>                       
+<%= f.input :ng_quantity, label: '不良數量' %>
+<%= f.input :unit_price, label: '單價' %>
+<%= f.input :total_amount, label: '金額' %>
+<%= f.input :tax, label: '稅額' %>
+<%= f.input :discount_amount, label: '折讓金額' %>                               
+<%= f.input :discount_tax, label: '折讓稅額' %>
+<%= f.association :received_department, :label_method => :to_label, label:'驗收部門', collection: Department.where('docket_head <> ?',1) %>            
+<%= f.input :acc_type, label: '會計分類'%>
+<%= f.input :acc_type, :as => :hidden, :input_html => { :value => "#{@acceptance_certification.acc_type}" } %>
+<%= f.association :cost_department, :label_method => :to_label, label:'成本部門', collection: Department.where('docket_head <> ?',1) %> 
+<%= f.input :special_flag, label: '代購廠區' %>
+<%= f.input :_destroy, as: :hidden %>
+  &nbsp;&nbsp;&nbsp;
+<%= link_to_remove_association "刪除驗收明細", f %>
+</div>

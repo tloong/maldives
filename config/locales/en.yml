@@ -52,12 +52,26 @@ en:
         fax: 傳真
         phone: 電話
         email: 電子郵件
-
       material:
         material_cat_lv1_id:
           aa: aa
           bb: bb
-          cc: cc
+          cc: 
+    acceptance_certification:
+      acc_type:
+        sale: 營業費用
+        manager: 管理費用
+        d_labor: 直接人工
+        nd_labor: 間接人工
+    acceptance_lineitem:
+      acc_type:
+        sale: 營業費用
+        manager: 管理費用
+        d_labor: 直接人工
+        nd_labor: 間接人工
+      special_flag:
+        tlvn: 越香廠
+        sarah: 平準廠               
 
 
   

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  acceptance_certification_id: 1
+  purchasing_order_lineitem_id: 1
+  received_quantity: 1.5
+  accepted_quantity: 1.5
+  ng_quantity: 1.5
+  unit_price: 1.5
+  total_amount: 1.5
+  tax: 1.5
+  discount_amount: 1.5
+  discount_tax: 1.5
+  received_department_id: 1
+  acc_type: 1
+  cost_department_id: 1
+  special_flag: 1
+
+two:
+  acceptance_certification_id: 1
+  purchasing_order_lineitem_id: 1
+  received_quantity: 1.5
+  accepted_quantity: 1.5
+  ng_quantity: 1.5
+  unit_price: 1.5
+  total_amount: 1.5
+  tax: 1.5
+  discount_amount: 1.5
+  discount_tax: 1.5
+  received_department_id: 1
+  acc_type: 1
+  cost_department_id: 1
+  special_flag: 1
