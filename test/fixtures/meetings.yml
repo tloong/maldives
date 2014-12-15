@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: meetings
+#
+#  id          :integer          not null, primary key
+#  meetingname :string(255)
+#  date        :date
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meetingname: MyString
+  date: 2014-10-27
+
+two:
+  meetingname: MyString
+  date: 2014-10-27

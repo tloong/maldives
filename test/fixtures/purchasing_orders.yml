@@ -1,0 +1,56 @@
+# == Schema Information
+#
+# Table name: purchasing_orders
+#
+#  id                  :integer          not null, primary key
+#  purchasing_order_on :string(255)
+#  purchase_date       :date
+#  vendor_id           :integer
+#  department_id       :integer
+#  currency            :integer
+#  exchange_rate       :float
+#  amount              :float
+#  payment_location    :integer
+#  payment_type        :integer
+#  check_usance        :integer
+#  purchase_method     :integer
+#  purchase_category   :integer
+#  purchase_employee   :integer
+#  is_prepaid          :boolean
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  purchasing_order_on: MyString
+  purchase_date: 2014-11-02
+  vendor_id: 1
+  department_id: 1
+  currency: 1
+  exchange_rate: 1.5
+  amount: 1.5
+  payment_location: 1
+  payment_type: 1
+  check_usance: 1
+  purchase_method: 1
+  purchase_category: 1
+  purchase_employee: 1
+  is_prepaid: false
+
+two:
+  purchasing_order_on: MyString
+  purchase_date: 2014-11-02
+  vendor_id: 1
+  department_id: 1
+  currency: 1
+  exchange_rate: 1.5
+  amount: 1.5
+  payment_location: 1
+  payment_type: 1
+  check_usance: 1
+  purchase_method: 1
+  purchase_category: 1
+  purchase_employee: 1
+  is_prepaid: false

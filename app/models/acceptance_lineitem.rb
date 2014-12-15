@@ -28,7 +28,7 @@ class AcceptanceLineitem < ActiveRecord::Base
 	belongs_to :received_department,
    	           :class_name => "Department",
                :foreign_key => "received_department_id"
-    belongs_to :cost_department,
+  belongs_to :cost_department,
    	           :class_name => "Department",
                :foreign_key => "cost_department_id"
 

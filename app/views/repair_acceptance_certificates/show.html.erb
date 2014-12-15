@@ -1,0 +1,125 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel-body">
+    <div class="col-sm-6">
+<p>
+  <strong>請修驗收單編號:</strong>
+  <%= @repair_acceptance_certificate.repair_accept_cert_no %>
+</p>
+
+<p>
+  <strong>請修單日期:</strong>
+  <%= @repair_acceptance_certificate.request_date %>
+</p>
+
+<p>
+  <strong>請修單編號:</strong>
+  <%= @repair_acceptance_certificate.repair_requisition_no %>
+</p>
+
+<p>
+  <strong>請修部門:</strong>
+  <%= @repair_acceptance_certificate.repair_requisition_department %>
+</p>
+
+<p>
+  <strong>驗收日:</strong>
+  <%= @repair_acceptance_certificate.accept_cert_date %>
+</p>
+
+<p>
+  <strong>驗收部門:</strong>
+  <%= @repair_acceptance_certificate.accept_cert_department %>
+</p>
+
+<p>
+  <strong>廠商:</strong>
+  <%= @repair_acceptance_certificate.vendor_id %>
+</p>
+</div>
+<div class="col-sm-6">
+<p>
+  <strong>金額:</strong>
+  <%= @repair_acceptance_certificate.amount %>
+</p>
+
+<p>
+  <strong>稅額:</strong>
+  <%= @repair_acceptance_certificate.tax %>
+</p>
+
+<p>
+  <strong>扣款:</strong>
+  <%= @repair_acceptance_certificate.discount_amount %>
+</p>
+
+<p>
+  <strong>扣款稅額:</strong>
+  <%= @repair_acceptance_certificate.discount_tax %>
+</p>
+
+<p>
+  <strong>發票號碼:</strong>
+  <%= @repair_acceptance_certificate.invoice_no %>
+</p>
+
+<p>
+  <strong>發票日期:</strong>
+  <%= @repair_acceptance_certificate.invoice_date %>
+</p>
+</div>
+</div>
+<%= link_to '編輯', edit_repair_acceptance_certificate_path(@repair_acceptance_certificate) %> |
+<%= link_to '返回', repair_acceptance_certificates_path %>
+<%= link_to '新增檔身', new_repair_acceptance_certificate_repair_acceptance_certificate_line_path(@repair_acceptance_certificate) %> 
+<table  class="table">
+  <thead>
+    <tr>
+      <th>請修驗收單編號</th>
+      <th>項次</th>
+      <th>原料</th>
+      <th>實收數量</th>
+      <th>成交單價</th>
+      <th>總金額</th>
+      <th>稅額</th>
+      <th>扣款</th>
+      <th>扣款稅額</th>
+      <th>修理原因</th>
+      <th>機器分類</th>
+      <th>機器編號</th>
+      <th>使用部門</th>
+      <th>成本部門</th>
+      <th>驗收日</th>
+      <th>品別</th>
+      <th>委託代修廠區</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+      <%  @repair_acceptance_certificate.repair_acceptance_certificate_lines.each do |repair_acceptance_certificate_line| %>
+        <tr>                                     
+          <td><%= repair_acceptance_certificate_line.repair_acceptance_certificate_id %></td>
+          <td><%= repair_acceptance_certificate_line.sequence_no %></td>
+          <td><%= repair_acceptance_certificate_line.material_id %></td>
+          <td><%= repair_acceptance_certificate_line.received_quantity %></td>
+          <td><%= repair_acceptance_certificate_line.unit_price %></td>
+          <td><%= repair_acceptance_certificate_line.total_amount %></td>
+          <td><%= repair_acceptance_certificate_line.tax %></td>
+          <td><%= repair_acceptance_certificate_line.discount_amount %></td>
+          <td><%= repair_acceptance_certificate_line.discount_tax %></td>
+          <td><%= repair_acceptance_certificate_line.repair_reason %></td>
+          <td><%= repair_acceptance_certificate_line.machine_category %></td>
+          <td><%= repair_acceptance_certificate_line.machine_id %></td>
+          <td><%= repair_acceptance_certificate_line.repair_requisition_department %></td>
+          <td><%= repair_acceptance_certificate_line.cost_department %></td>
+          <td><%= repair_acceptance_certificate_line.repair_accept_cert_date %></td>
+          <td><%= repair_acceptance_certificate_line.acc_type %></td>
+          <td><%= repair_acceptance_certificate_line.speical_code %></td>
+          <td><%= link_to '顯示細項', repair_acceptance_certificate_line %></td>
+          <td><%= link_to("編輯", edit_repair_acceptance_certificate_repair_acceptance_certificate_line_path(@repair_acceptance_certificate,repair_acceptance_certificate_line)) %> </td>
+          <td><%= link_to '刪除', repair_acceptance_certificate_line, method: :delete, data: { confirm: '確認刪除?' } %></td>
+        </tr>
+      <% end %>
+ </tbody>
+</table>
+

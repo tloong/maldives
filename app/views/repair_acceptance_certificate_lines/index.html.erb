@@ -1,0 +1,57 @@
+<h1>E請修驗收單檔身</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Repair acceptance certification</th>
+       <th>項次</th>
+      <th>原料</th>
+      <th>實收數量</th>
+      <th>成交單價</th>
+      <th>總金額</th>
+      <th>稅額</th>
+      <th>扣款</th>
+      <th>扣款稅額</th>
+      <th>修理原因</th>
+      <th>機器分類</th>
+      <th>機器編號</th>
+      <th>使用部門</th>
+      <th>成本部門</th>
+      <th>驗收日</th>
+      <th>品別</th>
+      <th>委託代修廠區</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @repair_acceptance_certificate_lines.each do |repair_acceptance_certificate_line| %>
+      <tr>
+        <td><%= repair_acceptance_certificate_line.repair_acceptance_certificate_id %></td>
+        <td><%= repair_acceptance_certificate_line.sequence_no %></td>
+        <td><%= repair_acceptance_certificate_line.material_id %></td>
+        <td><%= repair_acceptance_certificate_line.received_quantity %></td>
+        <td><%= repair_acceptance_certificate_line.unit_price %></td>
+        <td><%= repair_acceptance_certificate_line.total_amount %></td>
+        <td><%= repair_acceptance_certificate_line.tax %></td>
+        <td><%= repair_acceptance_certificate_line.discount_amount %></td>
+        <td><%= repair_acceptance_certificate_line.discount_tax %></td>
+        <td><%= repair_acceptance_certificate_line.repair_reason %></td>
+        <td><%= repair_acceptance_certificate_line.machine_category %></td>
+        <td><%= repair_acceptance_certificate_line.machine_id %></td>
+        <td><%= repair_acceptance_certificate_line.repair_requisition_department %></td>
+        <td><%= repair_acceptance_certificate_line.cost_department %></td>
+        <td><%= repair_acceptance_certificate_line.repair_accept_cert_date %></td>
+        <td><%= repair_acceptance_certificate_line.acc_type %></td>
+        <td><%= repair_acceptance_certificate_line.speical_code %></td>
+        <td><%= link_to '細項', repair_acceptance_certificate_line %></td>
+        <td><%= link_to '編輯', edit_repair_acceptance_certificate_line_path(repair_acceptance_certificate_line) %></td>
+        <td><%= link_to '刪除', repair_acceptance_certificate_line, method: :delete, data: { confirm: '確認刪除?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Repair acceptance certificate line', new_repair_acceptance_certificate_line_path %>

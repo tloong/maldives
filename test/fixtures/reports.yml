@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: reports
+#
+#  id             :integer          not null, primary key
+#  meeting_id     :integer
+#  name           :string(255)
+#  module         :text
+#  this_week_work :text
+#  need_help      :text
+#  next_week_work :text
+#  share_tech     :text
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meeting_id: 1
+  name: MyString
+  module: MyText
+  this_week_work: MyText
+  need_help: MyText
+  next_week_work: MyText
+  share_tech: MyText
+
+two:
+  meeting_id: 1
+  name: MyString
+  module: MyText
+  this_week_work: MyText
+  need_help: MyText
+  next_week_work: MyText
+  share_tech: MyText

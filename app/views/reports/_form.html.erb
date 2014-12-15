@@ -1,0 +1,16 @@
+<%= simple_form_for([@meeting,@report], :html => {:class => 'form-horizontal' } ) do |f| %>
+
+  <%= f.error_notification %>
+<div class="panel-body">
+  <div class="col-sm-4">
+    <%= f.hidden_field  :meeting_id  %> 
+    <%= f.input :name ,label:'同仁姓名' %>
+    <%= f.input :module ,label:'維護的模組' %>
+    <%= f.input :this_week_work ,label:'本週工作內容' %>
+    <%= f.input :need_help ,label:'需要討論或協助的項目' %>
+    <%= f.input :next_week_work ,label:'下週工作內容' %>
+    <%= f.input :share_tech ,label:'分享技術' %>
+    <%= f.button :submit %>
+  </div>
+</div>
+<% end %>

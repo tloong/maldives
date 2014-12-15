@@ -1,0 +1,37 @@
+<%= simple_form_for [@repair_acceptance_certificate_line] , :html => {:class => 'form-horizontal' }, 
+ wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+} do |f| %>
+
+  <%= f.error_notification %>
+
+<div class="panel-body">
+  <div class="col-sm-5">
+    <%= f.hidden_field  :repair_acceptance_certificate_id %>
+    <%= f.input :sequence_no  ,label:'項次'%>
+    <%= f.input :material_id  ,label:'原料'%>
+    <%= f.input :received_quantity ,label:'實收數量'%>
+    <%= f.input :unit_price  ,label:'成交單價'%>
+    <%= f.input :total_amount  ,label:'總金額'%>
+    <%= f.input :tax  ,label:'稅額'%>
+    <%= f.input :discount_amount  ,label:'扣款'%>
+    <%= f.input :discount_tax  ,label:'扣款稅額'%>
+  </div>
+  <div class="col-sm-5">
+    <%= f.input :repair_reason  ,label:'修理原因'%>
+    <%= f.input :machine_category  ,label:'機器分類'%>
+    <%= f.input :machine_id  ,label:'機器編號'%>
+    <%= f.association :repair_requisition_department, :label_method => :to_label, label:'驗收部門', collection: Department.where('docket_head <> ?',1) %>
+    <%= f.association :cost_department, :label_method => :to_label, label:'成本部門', collection: Department.where('docket_head <> ?',1) %>
+    <%= f.input :repair_accept_cert_date ,label:'驗收日' , :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}%>
+    <%= f.input :acc_type ,label:'品別', :selected => "sale" %>
+    <%= f.input :speical_code ,label:'委託代修廠區', :selected => "ss" %>
+    <%= f.submit "確認", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
+  </div>
+</div>
+ 
+<% end %>

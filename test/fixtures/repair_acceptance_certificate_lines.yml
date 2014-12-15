@@ -1,0 +1,65 @@
+# == Schema Information
+#
+# Table name: repair_acceptance_certificate_lines
+#
+#  id                               :integer          not null, primary key
+#  repair_acceptance_certificate_id :integer
+#  sequence_no                      :integer
+#  material_id                      :integer
+#  received_quantity                :float
+#  unit_price                       :float
+#  total_amount                     :float
+#  tax                              :float
+#  discount_amount                  :float
+#  discount_tax                     :float
+#  repair_reason                    :text
+#  machine_category                 :integer
+#  machine_id                       :integer
+#  repair_requisition_department    :integer
+#  cost_department                  :integer
+#  repair_accept_cert_date          :date
+#  acc_type                         :integer
+#  speical_code                     :integer
+#  created_at                       :datetime
+#  updated_at                       :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  repair_acceptance_certification_id: 1
+  sequence_no: 1
+  material_id: 1
+  received_quantity: 1.5
+  unit_price: 1.5
+  total_amount: 1.5
+  tax: 1.5
+  discount_amount: 1.5
+  discount_tax: 1.5
+  repair_reason: MyText
+  machine_category: 1
+  machine_id: 1
+  repair_requisition_department: 1
+  cost_department: 1
+  repair_accept_cert_date: 2014-11-12
+  acc_type: 1
+  speical_code: 1
+
+two:
+  repair_acceptance_certification_id: 1
+  sequence_no: 1
+  material_id: 1
+  received_quantity: 1.5
+  unit_price: 1.5
+  total_amount: 1.5
+  tax: 1.5
+  discount_amount: 1.5
+  discount_tax: 1.5
+  repair_reason: MyText
+  machine_category: 1
+  machine_id: 1
+  repair_requisition_department: 1
+  cost_department: 1
+  repair_accept_cert_date: 2014-11-12
+  acc_type: 1
+  speical_code: 1

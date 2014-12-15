@@ -1,0 +1,1 @@
+json.extract! @repair_acceptance_certificate, :id, :repair_accept_cert_no, :request_date, :repair_requisition_no, :repair_requisition_department, :accept_cert_date, :accept_cert_department, :vendor_id, :amount, :tax, :discount_amount, :discount_tax, :invoice_no, :invoice_date, :created_at, :updated_at

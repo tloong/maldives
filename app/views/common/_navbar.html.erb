@@ -43,8 +43,12 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
+            <li> <%= link_to("訂購單", purchasing_orders_path) %> </li>
             <li> <%= link_to("驗收單", acceptance_certifications_path) %> </li>
+            <li> <%= link_to("請修驗收單", repair_acceptance_certificates_path) %> </li>
+            <li> <%= link_to("會議記錄", meetings_path) %> </li>
           </ul>
+
         </li>
       </ul>
 

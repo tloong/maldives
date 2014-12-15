@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018170249) do
+ActiveRecord::Schema.define(version: 20141204055248) do
 
   create_table "acceptance_certifications", force: true do |t|
     t.string   "accept_cert_no"
@@ -53,7 +53,18 @@ ActiveRecord::Schema.define(version: 20141018170249) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "material_id"
-  end 
+  end
+
+  create_table "addresses", force: true do |t|
+    t.text     "line1_address_building"
+    t.string   "line2_address_street"
+    t.string   "city"
+    t.integer  "zipcode"
+    t.string   "state_province_county"
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -162,10 +173,114 @@ ActiveRecord::Schema.define(version: 20141018170249) do
 
   add_index "fixedassets", ["is_mortgaged"], name: "index_fixedassets_on_is_mortgaged"
 
+  create_table "material_cat_lv1s", force: true do |t|
+    t.string   "cat_id"
+    t.string   "cat_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "material_cat_lv2s", force: true do |t|
+    t.string   "cat_id"
+    t.string   "cat_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "material_cats", force: true do |t|
+    t.string   "lv2"
+    t.string   "cat_id"
+    t.string   "cat_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "material_vendors", force: true do |t|
+    t.string   "sno"
+    t.string   "name"
+    t.string   "sid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "materials", force: true do |t|
+    t.string   "mat_id"
+    t.string   "vendor_lot_no"
+    t.integer  "material_cat_lv1_id"
+    t.integer  "material_cat_lv2_id"
+    t.string   "name"
+    t.string   "condition_id"
+    t.text     "description"
+    t.text     "note"
+    t.integer  "accounting_type"
+    t.integer  "debit_code"
+    t.integer  "credit_code"
+    t.boolean  "is_shared_id"
+    t.boolean  "is_quantity_control"
+    t.boolean  "is_sample"
+    t.string   "measure_unit"
+    t.string   "vendor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "safe_quantity"
+    t.integer  "stocktake_quantity"
+    t.integer  "last_quantity"
+    t.integer  "total_quantity"
+    t.string   "sno"
+  end
+
+  create_table "meetings", force: true do |t|
+    t.string   "meetingname"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchasing_order_lineitems", force: true do |t|
+    t.integer  "purchasing_order_id"
+    t.integer  "sequence_no"
+    t.integer  "material_id"
+    t.integer  "quantity"
+    t.float    "purchased_unit_price"
+    t.float    "amount"
+    t.float    "tax"
+    t.string   "purchasing_requisition_no"
+    t.integer  "purchasing_requsition_seq_no"
+    t.string   "purchasing_purpose"
+    t.date     "purchasing_requisition_date"
+    t.date     "goods_need_date"
+    t.integer  "shipping_location"
+    t.integer  "acceptance_certification_no"
+    t.boolean  "close_case"
+    t.integer  "acc_type"
+    t.integer  "cost_department"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchasing_orders", force: true do |t|
+    t.string   "purchasing_order_on"
+    t.date     "purchase_date"
+    t.integer  "vendor_id"
+    t.integer  "department_id"
+    t.integer  "currency"
+    t.float    "exchange_rate"
+    t.float    "amount"
+    t.integer  "payment_location"
+    t.integer  "payment_type"
+    t.integer  "check_usance"
+    t.integer  "purchase_method"
+    t.integer  "purchase_category"
+    t.integer  "purchase_employee"
+    t.boolean  "is_prepaid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "quality_testings", force: true do |t|
     t.integer  "vendor_id",                      null: false
     t.date     "test_date",                      null: false
-    t.text     "spec",                           null: false
+    t.string   "spec",                           null: false
     t.string   "lot_no"
     t.float    "denier",           default: 0.0
     t.float    "strength",         default: 0.0
@@ -175,6 +290,58 @@ ActiveRecord::Schema.define(version: 20141018170249) do
     t.integer  "entangling_value", default: 0
     t.float    "cr_value",         default: 0.0
     t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "repair_acceptance_certificate_lines", force: true do |t|
+    t.integer  "repair_acceptance_certificate_id"
+    t.integer  "sequence_no"
+    t.integer  "material_id"
+    t.float    "received_quantity"
+    t.float    "unit_price"
+    t.float    "total_amount"
+    t.float    "tax"
+    t.float    "discount_amount"
+    t.float    "discount_tax"
+    t.text     "repair_reason"
+    t.integer  "machine_category"
+    t.integer  "machine_id"
+    t.integer  "repair_requisition_department"
+    t.integer  "cost_department"
+    t.date     "repair_accept_cert_date"
+    t.integer  "acc_type"
+    t.integer  "speical_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "repair_acceptance_certificates", force: true do |t|
+    t.string   "repair_accept_cert_no"
+    t.date     "request_date"
+    t.string   "repair_requisition_no"
+    t.integer  "repair_requisition_department"
+    t.date     "accept_cert_date"
+    t.integer  "accept_cert_department"
+    t.integer  "vendor_id"
+    t.float    "amount"
+    t.float    "tax"
+    t.float    "discount_amount"
+    t.float    "discount_tax"
+    t.string   "invoice_no"
+    t.date     "invoice_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reports", force: true do |t|
+    t.integer  "meeting_id"
+    t.string   "name"
+    t.text     "module"
+    t.text     "this_week_work"
+    t.text     "need_help"
+    t.text     "next_week_work"
+    t.text     "share_tech"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
