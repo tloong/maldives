@@ -1,0 +1,65 @@
+# == Schema Information
+#
+# Table name: purchasing_order_lineitems
+#
+#  id                           :integer          not null, primary key
+#  purchasing_order_id          :integer
+#  sequence_no                  :integer
+#  material_id                  :integer
+#  quantity                     :integer
+#  purchased_unit_price         :float
+#  amount                       :float
+#  tax                          :float
+#  purchasing_requisition_no    :string(255)
+#  purchasing_requsition_seq_no :integer
+#  purchasing_purpose           :string(255)
+#  purchasing_requisition_date  :date
+#  goods_need_date              :date
+#  shipping_location            :integer
+#  acceptance_certification_no  :integer
+#  close_case                   :boolean
+#  acc_type                     :integer
+#  cost_department              :integer
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  purchasing_order_id: 1
+  sequence_no: 1
+  material_id: 1
+  quantity: 1
+  purchased_unit_price: 1.5
+  amount: 1.5
+  tax: 1.5
+  purchasing_requisition_no: MyString
+  purchasing_requsition_seq_no: 1
+  purchasing_purpose: MyString
+  purchasing_requisition_date: 2014-11-02
+  goods_need_date: 2014-11-02
+  shipping_location: 1
+  acceptance_certification_no: 1
+  close_case: false
+  acc_type: 1
+  cost_department: 1
+
+two:
+  purchasing_order_id: 1
+  sequence_no: 1
+  material_id: 1
+  quantity: 1
+  purchased_unit_price: 1.5
+  amount: 1.5
+  tax: 1.5
+  purchasing_requisition_no: MyString
+  purchasing_requsition_seq_no: 1
+  purchasing_purpose: MyString
+  purchasing_requisition_date: 2014-11-02
+  goods_need_date: 2014-11-02
+  shipping_location: 1
+  acceptance_certification_no: 1
+  close_case: false
+  acc_type: 1
+  cost_department: 1

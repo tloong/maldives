@@ -1,0 +1,57 @@
+<h1>訂購單檔身</h1>
+
+<table  class="table">
+  <thead>
+    <tr>
+      <th>訂購單檔頭ID</th>
+      <th>項次</th>
+      <th>Material</th>
+      <th>數量</th>
+      <th>成交單價</th>
+      <th>金額</th>
+      <th>稅金</th>
+      <th>請購單編號</th>
+      <th>請購單項次</th>
+      <th>請購目的</th>
+      <th>請購日期</th>
+      <th>需要日期</th>
+      <th>交貨地點</th>
+      <th>驗收單</th>
+      <th>結案</th>
+      <th>Acc type</th>
+      <th>成本部門</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchasing_order_lineitems.each do |purchasing_order_lineitem| %>
+      <tr>
+        <td><%= purchasing_order_lineitem.purchasing_order_id %></td>
+        <td><%= purchasing_order_lineitem.sequence_no %></td>
+        <td><%= purchasing_order_lineitem.material_id %></td>
+        <td><%= purchasing_order_lineitem.quantity %></td>
+        <td><%= purchasing_order_lineitem.purchased_unit_price %></td>
+        <td><%= purchasing_order_lineitem.amount %></td>
+        <td><%= purchasing_order_lineitem.tax %></td>
+        <td><%= purchasing_order_lineitem.purchasing_requisition_no %></td>
+        <td><%= purchasing_order_lineitem.purchasing_requsition_seq_no %></td>
+        <td><%= purchasing_order_lineitem.purchasing_purpose %></td>
+        <td><%= purchasing_order_lineitem.purchasing_requisition_date %></td>
+        <td><%= purchasing_order_lineitem.goods_need_date %></td>
+        <td><%= purchasing_order_lineitem.shipping_location %></td>
+        <td><%= purchasing_order_lineitem.acceptance_certification_no %></td>
+        <td><%= purchasing_order_lineitem.close_case %></td>
+        <td><%= purchasing_order_lineitem.acc_type %></td>
+        <td><%= purchasing_order_lineitem.cost_department %></td>
+        <td><%= link_to 'Show', purchasing_order_lineitem %></td>
+        <td><%= link_to 'Edit', edit_purchasing_order_lineitem_path(purchasing_order_lineitem) %></td>
+        <td><%= link_to 'Destroy', purchasing_order_lineitem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Purchasing order lineitem', new_purchasing_order_lineitem_path %>

@@ -1,0 +1,14 @@
+<%= simple_form_for(@meeting, :html => {:class => 'form-horizontal' } ) do |f| %>
+
+  <%= f.error_notification %>
+ <div class="panel-body">
+    <div class="col-sm-6">
+      <%= f.input :meetingname ,label:'會議名稱' %>
+      <%= f.input :date ,label:'會議日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}  %>
+      <%= f.submit "新增會議", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
+      
+    </div>
+
+</div>
+<% end %>
+

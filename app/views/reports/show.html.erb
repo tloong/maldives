@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Meeting:</strong>
+  <%= @report.meeting_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @report.name %>
+</p>
+
+<p>
+  <strong>Module:</strong>
+  <%= @report.module %>
+</p>
+
+<p>
+  <strong>This week work:</strong>
+  <%= @report.this_week_work %>
+</p>
+
+<p>
+  <strong>Need help:</strong>
+  <%= @report.need_help %>
+</p>
+
+<p>
+  <strong>Next week work:</strong>
+  <%= @report.next_week_work %>
+</p>
+
+<p>
+  <strong>Share tech:</strong>
+  <%= @report.share_tech %>
+</p>
+
+<%= link_to '編輯', edit_report_path(@report) %> |
+<%= link_to '返回', reports_path %>

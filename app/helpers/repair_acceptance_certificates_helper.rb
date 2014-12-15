@@ -1,0 +1,2 @@
+module RepairAcceptanceCertificatesHelper
+end

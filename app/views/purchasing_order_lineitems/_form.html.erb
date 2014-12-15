@@ -1,0 +1,41 @@
+<%= simple_form_for [@purchasing_order_lineitem] , :html => {:class => 'form-horizontal' }, 
+ wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+} do |f| %>
+  <%= f.error_notification %>
+
+  <div class="panel-body">
+    <div class="col-sm-6">
+    <%= f.input :purchasing_order_id ,label:'訂購單編號' %>
+    <%= f.input :sequence_no ,label:'項次' %>
+    <%= f.input :material_id ,label:'原物料ID' %>
+    <%= f.input :quantity ,label:'數量' %>
+    <%= f.input :purchased_unit_price  ,label:'成交單價' %>
+    <%= f.input :amount ,label:'金額' %>
+    <%= f.input :tax ,label:'稅金' %>
+    <%= f.input :purchasing_requisition_no ,label:'請購單編號' %>
+    </div>
+    <div class="col-sm-6">
+    <%= f.input :purchasing_requsition_seq_no ,label:'項次' %>
+    <%= f.input :purchasing_purpose ,label:'請購目的' %>
+    <%= f.input :purchasing_requisition_date ,label:'請購日', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"} %>
+    <%= f.input :goods_need_date ,label:'需要日',:as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"} %>
+    <%= f.input :shipping_location ,label:'交貨地點', :selected => "banqiao" %>
+    <%= f.input :acceptance_certification_no ,label:'驗收單' %>
+    <%= f.input :close_case ,label:'結案' %>
+    <%= f.input :acc_type ,label:'品別', :selected => "sale" %>
+    <%= f.association :cost_department, :label_method => :to_label, label:'成本部門', collection: Department.where('docket_head <> ?',1) %>
+   
+  
+    <%= f.button :submit , :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...'%>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    
+  </div>
+<% end %>

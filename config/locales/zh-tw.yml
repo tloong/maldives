@@ -1,5 +1,43 @@
 zh-TW:
   enums:
+    purchasing_order:
+      payment_location:
+        banqiao: 板橋總公司
+        taoyuan: 桃園廠
+        zhanghua: 彰化廠
+      payment_type: 
+        draw_money: 領款
+        send_ty_post: 郵寄
+   #  purchase_method:
+   #     phone: 電話訂購
+   #     fax:傳真訂購
+   #    order:開訂購單
+   #  purchase_category:
+   #    internal: 內購
+   #    foreign: 外購
+
+    purchasing_order_lineitem:
+      shipping_location:
+        banqiao: 板橋總公司
+        taoyuan: 桃園廠
+        zhanghua: 彰化廠
+      acc_type:  
+        sale: 營業費用
+        manager: 管理費用
+        d_labor: 直接人工
+        nd_labor: 間接人工
+
+    repair_acceptance_certificate_line:
+      acc_type:  
+        sale: 營業費用
+        manager: 管理費用
+        d_labor: 直接人工
+        nd_labor: 間接人工
+      speical_code:
+        S: 平準
+        V: 越南
+        R: 柬埔寨
+        
     fixedasset:
       status:
         in_use: 正常折舊使用中

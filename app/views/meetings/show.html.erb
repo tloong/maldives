@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>會議名稱:</strong>
+  <%= @meeting.meetingname %>
+</p>
+
+<p>
+  <strong>會議日期:</strong>
+  <%= @meeting.date %>
+</p>
+
+<%= link_to '編輯', edit_meeting_path(@meeting) %> |
+<%= link_to '返回', meetings_path %>
+<%= link_to '新增報告', new_meeting_report_path(@meeting) %> 
+<table  class="table">
+  <tr>
+  <th>同仁姓名</th>
+  <th>維護的模組</th>
+  <th>本週工作內容</th>
+  <th>需要討論或協助的項目</th>
+  <th>下週工作內容</th>
+  <th>分享技術</th>
+  </tr>
+<% @meeting.reports.each do |r| %>
+  <tr>
+    <td><%= link_to(r.name, meeting_report_path(@meeting,r)) %> </td>
+    <td><%= r.module %> </td>
+    <td><%= r.this_week_work %> </td>
+    <td><%= r.need_help %> </td>
+    <td><%= r.next_week_work %> </td>
+    <td><%= r.share_tech %> </td>
+  <td><%= link_to("編輯", edit_meeting_report_path(@meeting,r)) %> </td>
+  <td><%= link_to("刪除", meeting_report_path(@meeting,r), :confirm => "Are you sure?", :method => :delete) %> </td>
+  </tr>
+<% end %>
+</table>

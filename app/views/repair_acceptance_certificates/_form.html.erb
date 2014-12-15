@@ -1,0 +1,34 @@
+<%= simple_form_for [ @repair_acceptance_certificate ] , :html => { :class => 'form-horizontal'},
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <%= f.error_notification %>
+
+  <div class="panel-body">
+    <div class="col-sm-6">
+    <%= f.input :repair_accept_cert_no ,label:'請修驗收單編號'%>
+    <%= f.input :request_date ,label:'請修單日期',:as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}  %>
+    <%= f.input :repair_requisition_no ,label:'請修單編號'%>
+    <%= f.association :repair_requisition_department, :label_method => :to_label, label:'請修部門', collection: Department.where('docket_head <> ?',1) %>
+    <%= f.input :accept_cert_date ,label:'驗收日',:as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"} %>
+    <%= f.association :accept_cert_department, :label_method => :to_label, label:'驗收部門', collection: Department.where('docket_head <> ?',1) %>
+    <%= f.input :accept_cert_date ,label:'驗收日',:as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"} %>
+    </div>
+    <div class="col-sm-6">
+    <%= f.association :vendor, :label_method => :to_label, label:'廠商' , input_html: { "data-behaviour" => "vendor_select2"} %>
+    
+    <%= f.input :amount,label:'金額' %>
+    <%= f.input :tax,label:'稅額' %>
+    <%= f.input :discount_amount,label:'扣款' %>
+    <%= f.input :discount_tax,label:'扣款稅額' %>
+    <%= f.input :invoice_no,label:'發票號碼' %>
+    <%= f.input :invoice_date,label:'發票日期', :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"} %>
+    <%= f.submit "確認", :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...' %>
+    </div>
+  </div>
+
+<% end %>

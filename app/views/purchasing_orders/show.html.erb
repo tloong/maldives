@@ -1,0 +1,131 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel-body">
+    <div class="col-sm-6">
+<p>
+  <strong>訂購單編號:</strong>
+  <%= @purchasing_order.purchasing_order_on %>
+</p>
+
+<p>
+  <strong>訂購單日期:</strong>
+  <%= @purchasing_order.purchase_date %>
+</p>
+
+<p>
+  <strong>廠購:</strong>
+  <%= @purchasing_order.vendor_id %>
+</p>
+
+<p>
+  <strong>需求部門:</strong>
+  <%= @purchasing_order.department_id %>
+</p>
+
+<p>
+  <strong>幣別:</strong>
+  <%= @purchasing_order.currency %>
+</p>
+
+<p>
+  <strong>匯率:</strong>
+  <%= @purchasing_order.exchange_rate %>
+</p>
+
+<p>
+  <strong>總金額:</strong>
+  <%= @purchasing_order.amount %>
+</p>
+</div>
+<div class="col-sm-6">
+<p>
+  <strong>付款廠區:</strong>
+  <%= @purchasing_order.payment_location %>
+</p>
+
+<p>
+  <strong>付款方式:</strong>
+  <%= @purchasing_order.payment_type %>
+</p>
+
+<p>
+  <strong>票期:</strong>
+  <%= @purchasing_order.check_usance %>
+</p>
+
+<p>
+  <strong>訂購方式:</strong>
+  <%= @purchasing_order.purchase_method %>
+</p>
+
+<p>
+  <strong>採購別:</strong>
+  <%= @purchasing_order.purchase_category %>
+</p>
+
+<p>
+  <strong>採購員:</strong>
+  <%= @purchasing_order.purchase_employee %>
+</p>
+
+<p>
+  <strong>是否預付款:</strong>
+  <%= @purchasing_order.is_prepaid %>
+</p>
+</div>
+</div>
+<%= link_to '編輯', edit_purchasing_order_path(@purchasing_order) %> |
+<%= link_to '返回', purchasing_orders_path %>
+<%= link_to '新增項次', new_purchasing_order_purchasing_order_lineitem_path(@purchasing_order) %>
+
+<table  class="table">
+  <thead>
+    <tr>
+      <th>訂購單檔頭ID</th>
+      <th>項次</th>
+      <th>原物料ID</th>
+      <th>數量</th>
+      <th>成交單價</th>
+      <th>金額</th>
+      <th>稅金</th>
+      <th>請購單編號</th>
+      <th>請購單項次</th>
+      <th>請購目的</th>
+      <th>請購日期</th>
+      <th>需要日期</th>
+      <th>交貨地點</th>
+      <th>驗收單</th>
+      <th>結案</th>
+      <th>原物料類型</th>
+      <th>成本部門</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchasing_order.purchasing_order_lineitems.each do |purchasing_order_lineitem| %>
+      <tr>
+        <td><%= purchasing_order_lineitem.purchasing_order_id %></td>
+        <td><%= purchasing_order_lineitem.sequence_no %></td>
+        <td><%= purchasing_order_lineitem.material_id %></td>
+        <td><%= purchasing_order_lineitem.quantity %></td>
+        <td><%= purchasing_order_lineitem.purchased_unit_price %></td>
+        <td><%= purchasing_order_lineitem.amount %></td>
+        <td><%= purchasing_order_lineitem.tax %></td>
+        <td><%= purchasing_order_lineitem.purchasing_requisition_no %></td>
+        <td><%= purchasing_order_lineitem.purchasing_requsition_seq_no %></td>
+        <td><%= purchasing_order_lineitem.purchasing_purpose %></td>
+        <td><%= purchasing_order_lineitem.purchasing_requisition_date %></td>
+        <td><%= purchasing_order_lineitem.goods_need_date %></td>
+        <td><%= purchasing_order_lineitem.shipping_location %></td>
+        <td><%= purchasing_order_lineitem.acceptance_certification_no %></td>
+        <td><%= purchasing_order_lineitem.close_case %></td>
+        <td><%= purchasing_order_lineitem.acc_type %></td>
+        <td><%= purchasing_order_lineitem.cost_department %></td>
+        <td><%= link_to '顯示細項', purchasing_order_lineitem %></td>
+        <td><%= link_to("編輯", edit_purchasing_order_purchasing_order_lineitem_path(@purchasing_order,purchasing_order_lineitem)) %> </td>
+        <td><%= link_to '刪除', purchasing_order_lineitem, method: :delete, data: { confirm: '確認刪除?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

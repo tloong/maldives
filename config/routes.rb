@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  resources :repair_acceptance_certificate_lines
+
+  resources :repair_acceptance_certificates
+
+  resources :purchasing_order_lineitems
+
+  resources :purchasing_orders
+
+  resources :reports
+
+  resources :meetings
+
   devise_for :users
   namespace :admin do
     resources :manage_users do
@@ -59,6 +71,17 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root :to => "fixedassets#index"
   
+  resources :meetings do
+    resources :reports
+  end
+
+  resources :purchasing_orders do
+    resources :purchasing_order_lineitems
+  end
+  
+  resources :repair_acceptance_certificates do
+    resources :repair_acceptance_certificate_lines
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

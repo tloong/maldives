@@ -1,0 +1,93 @@
+<p id="notice"><%= notice %></p>
+<div class="panel-body">
+  <div class="col-sm-6">
+<p>
+  <strong>訂購單檔頭ID:</strong>
+  <%= @purchasing_order_lineitem.purchasing_order_id %>
+</p>
+
+<p>
+  <strong>項次:</strong>
+  <%= @purchasing_order_lineitem.sequence_no %>
+</p>
+
+<p>
+  <strong>Material:</strong>
+  <%= @purchasing_order_lineitem.material_id %>
+</p>
+
+<p>
+  <strong>數量:</strong>
+  <%= @purchasing_order_lineitem.quantity %>
+</p>
+
+<p>
+  <strong>成交單價:</strong>
+  <%= @purchasing_order_lineitem.purchased_unit_price %>
+</p>
+
+<p>
+  <strong>金額:</strong>
+  <%= @purchasing_order_lineitem.amount %>
+</p>
+
+<p>
+  <strong>稅金:</strong>
+  <%= @purchasing_order_lineitem.tax %>
+</p>
+
+<p>
+  <strong>請購單編號:</strong>
+  <%= @purchasing_order_lineitem.purchasing_requisition_no %>
+</p>
+</div>
+<div class="col-sm-6">
+<p>
+  <strong>請購單項次:</strong>
+  <%= @purchasing_order_lineitem.purchasing_requsition_seq_no %>
+</p>
+
+<p>
+  <strong>請購目的:</strong>
+  <%= @purchasing_order_lineitem.purchasing_purpose %>
+</p>
+
+<p>
+  <strong>請購日期:</strong>
+  <%= @purchasing_order_lineitem.purchasing_requisition_date %>
+</p>
+
+<p>
+  <strong>需要日期:</strong>
+  <%= @purchasing_order_lineitem.goods_need_date %>
+</p>
+
+<p>
+  <strong>交貨地點:</strong>
+  <%= @purchasing_order_lineitem.shipping_location %>
+</p>
+
+<p>
+  <strong>驗收單號:</strong>
+  <%= @purchasing_order_lineitem.acceptance_certification_no %>
+</p>
+
+<p>
+  <strong>結案:</strong>
+  <%= @purchasing_order_lineitem.close_case %>
+</p>
+
+<p>
+  <strong>Acc type:</strong>
+  <%= @purchasing_order_lineitem.acc_type %>
+</p>
+
+<p>
+  <strong>成本部門:</strong>
+  <%= @purchasing_order_lineitem.cost_department %>
+</p>
+ </div>
+</div>
+<%= link_to '編輯', edit_purchasing_order_lineitem_path(@purchasing_order_lineitem) %> |
+<%= link_to '返回', purchasing_orders_path(@purchasing_order) %>
+

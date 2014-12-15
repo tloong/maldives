@@ -1,0 +1,2 @@
+module RepairAcceptanceCertificateLinesHelper
+end

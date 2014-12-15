@@ -1,0 +1,33 @@
+<%= simple_form_for [@purchasing_order] , :html => {:class => 'form-horizontal' }, 
+ wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+} do |f| %>
+  <%= f.error_notification %>
+
+ <div class="panel-body">
+    <div class="col-sm-6">
+    <%= f.input :purchasing_order_on ,label:'訂購單編號' %>
+    <%= f.input :purchase_date ,label:'訂購單日期' , :as => :string, input_html: { "data-behaviour"=> "datepicker", class: "datepicker"}%>
+    <%= f.association :vendor, :label_method => :to_label, label:'廠商' , input_html: { "data-behaviour" => "vendor_select2"} %>
+    <%= f.association :department, :label_method => :to_label, label:'部門', collection: Department.where('docket_head <> ?',1) %>
+    <%= f.input :currency ,label:'幣別' %>
+    <%= f.input :exchange_rate ,label:'匯率' %>
+    <%= f.input :amount ,label:'總金額' %>
+    </div> 
+    <div class="col-sm-6">
+    <%= f.input :payment_location ,label:'付款廠區', :selected => "banqiao" %>
+    <%= f.input :payment_type ,label:'付款方式', :selected => "draw_money" %>
+    <%= f.input :check_usance ,label:'票期', :placeholder => '天' %>
+    <%= f.input :purchase_method ,label:'訂購方式'  %>
+    <%= f.input :purchase_category ,label:'採購別' ,:selected => "internal" %>
+    <%= f.input :purchase_employee ,label:'採購員' %>
+    <%= f.input :is_prepaid ,label:'是否有預付款' %>
+    </div> 
+   <%= f.button :submit , :class => "btn btn-primary btn-lg pull-right " , :disable_with => 'Submiting...'%>
+  </div>
+
+<% end %>

@@ -1,0 +1,51 @@
+<h1>訂購單列表</h1>
+<%= link_to '新增訂購單', new_purchasing_order_path %>
+<table  class="table">
+  <thead>
+    <tr>
+      <th>訂購單編號</th>
+      <th>訂購單日期</th>
+      <th>廠購</th>
+      <th>需求部門</th>
+      <th>幣別</th>
+      <th>匯率</th>
+      <th>總金額</th>
+      <th>付款廠區</th>
+      <th>付款方式</th>
+      <th>票期</th>
+      <th>訂購方式</th>
+      <th>採購別</th>
+      <th>採購員</th>
+      <th>是否預付款</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchasing_orders.each do |purchasing_order| %>
+      <tr>
+        <td><%= purchasing_order.purchasing_order_on %></td>
+        <td><%= purchasing_order.purchase_date %></td>
+        <td><%= purchasing_order.vendor_id %></td>
+        <td><%= purchasing_order.department_id %></td>
+        <td><%= purchasing_order.currency %></td>
+        <td><%= purchasing_order.exchange_rate %></td>
+        <td><%= purchasing_order.amount %></td>
+        <td><%= purchasing_order.payment_location %></td>
+        <td><%= purchasing_order.payment_type %></td>
+        <td><%= purchasing_order.check_usance %></td>
+        <td><%= purchasing_order.purchase_method %></td>
+        <td><%= purchasing_order.purchase_category %></td>
+        <td><%= purchasing_order.purchase_employee %></td>
+        <td><%= purchasing_order.is_prepaid %></td>
+        <td><%= link_to '細項', purchasing_order %></td>
+        <td><%= link_to '編輯', edit_purchasing_order_path(purchasing_order) %></td>
+        <td><%= link_to '刪除', purchasing_order, method: :delete, data: { confirm: '確認刪除?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

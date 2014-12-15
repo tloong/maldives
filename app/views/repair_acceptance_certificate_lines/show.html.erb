@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Repair acceptance certification:</strong>
+  <%= @repair_acceptance_certificate_line.repair_acceptance_certificate_id %>
+</p>
+
+<p>
+  <strong>Sequence no:</strong>
+  <%= @repair_acceptance_certificate_line.sequence_no %>
+</p>
+
+<p>
+  <strong>Material:</strong>
+  <%= @repair_acceptance_certificate_line.material_id %>
+</p>
+
+<p>
+  <strong>Received quantity:</strong>
+  <%= @repair_acceptance_certificate_line.received_quantity %>
+</p>
+
+<p>
+  <strong>Unit price:</strong>
+  <%= @repair_acceptance_certificate_line.unit_price %>
+</p>
+
+<p>
+  <strong>Total amount:</strong>
+  <%= @repair_acceptance_certificate_line.total_amount %>
+</p>
+
+<p>
+  <strong>Tax:</strong>
+  <%= @repair_acceptance_certificate_line.tax %>
+</p>
+
+<p>
+  <strong>Discount amount:</strong>
+  <%= @repair_acceptance_certificate_line.discount_amount %>
+</p>
+
+<p>
+  <strong>Discount tax:</strong>
+  <%= @repair_acceptance_certificate_line.discount_tax %>
+</p>
+
+<p>
+  <strong>Repair reason:</strong>
+  <%= @repair_acceptance_certificate_line.repair_reason %>
+</p>
+
+<p>
+  <strong>Machine category:</strong>
+  <%= @repair_acceptance_certificate_line.machine_category %>
+</p>
+
+<p>
+  <strong>Machine:</strong>
+  <%= @repair_acceptance_certificate_line.machine_id %>
+</p>
+
+<p>
+  <strong>Repair requisition department:</strong>
+  <%= @repair_acceptance_certificate_line.repair_requisition_department %>
+</p>
+
+<p>
+  <strong>Cost department:</strong>
+  <%= @repair_acceptance_certificate_line.cost_department %>
+</p>
+
+<p>
+  <strong>Repair accept cert date:</strong>
+  <%= @repair_acceptance_certificate_line.repair_accept_cert_date %>
+</p>
+
+<p>
+  <strong>Acc type:</strong>
+  <%= @repair_acceptance_certificate_line.acc_type %>
+</p>
+
+<p>
+  <strong>Speical code:</strong>
+  <%= @repair_acceptance_certificate_line.speical_code %>
+</p>
+
+<%= link_to '編輯', edit_repair_acceptance_certificate_line_path(@repair_acceptance_certificate_line) %> |
+<%= link_to '返回', repair_acceptance_certificate_lines_path %>
